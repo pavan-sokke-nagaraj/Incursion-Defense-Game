@@ -6,6 +6,7 @@ package com.IDG.controller;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 
 import javax.swing.JPanel;
 
@@ -13,20 +14,20 @@ import javax.swing.JPanel;
  * @author p_sokke
  *
  */
-public class Arena extends JPanel implements Runnable {
+public class Arena extends JPanel {
 
 	public Arena() {
-		// setBackground(Color.RED);
-		// System.out.println("A" + this.gridRow);
-		// System.out.println("A" + gridColumn);
-		thread.start();
-		// repaint();
+		setBackground(Color.YELLOW);
+		System.out.println("A" + this.gridRow);
+		System.out.println("A" + gridColumn);
+//		thread.start();
+//		 repaint();
 	}
 
 	private int gridRow;
 	private int gridColumn;
 	private boolean isMapCreated = false;
-	private Thread thread = new Thread(this);
+//	private Thread thread = new Thread(this);
 	private BattleField createBattleField;
 	private GameFileManager gameFileManager;
 	// Image array to import and set it to rectangles
@@ -74,13 +75,13 @@ public class Arena extends JPanel implements Runnable {
 		this.isMapCreated = isMapCreated;
 	}
 
-	public Thread getThread() {
-		return thread;
-	}
-
-	public void setThread(Thread thread) {
-		this.thread = thread;
-	}
+//	public Thread getThread() {
+//		return thread;
+//	}
+//
+//	public void setThread(Thread thread) {
+//		this.thread = thread;
+//	}
 
 	public Image[] getTileset_grass() {
 		return tileset_grass;
@@ -99,23 +100,39 @@ public class Arena extends JPanel implements Runnable {
 	}
 
 	public void paintComponent(Graphics graphics) {
-		// setBackground(Color.RED);
-		// System.out.println(this.gridRow);
-		// System.out.println(gridColumn);
-		// gp.drawOval(50, 50, 50, 50);
-		if (isMapCreated) {
+		 System.out.println("paintComponent x:\t"+this.gridRow);
+		 System.out.println("paintComponent y:\t"+gridColumn);
+//		 setOpaque(true);
+//		 setBackground(Color.RED);
+//		 graphics.fillOval(50, 50, 50, 50);
+//		 removeAll();
+		 super.paintComponent(graphics);
+		 int xOff = 30;
+		 int yOff = 30;
+			
+		 
+		for (int row = 0; row < gridRow; row++) {
+			for (int col = 0; col < gridColumn; col++) {
+//				Rectangle cell = new Rectangle(xOffset + (col * cellWidth),
+//						yOffset + (row * cellHeight), cellWidth, cellHeight);
+				graphics.drawRect(row*30, col*30, 30, 30);
+			}
+		}
+		 
+		/*if (isMapCreated) {
 			defineGame();
 		}
-		setMapCreated(true);
-		graphics.clearRect(0, 0, getWidth(), getHeight());
+		setMapCreated(true)*/;
+//		graphics.clearRect(0, 0, getWidth(), getHeight());
 		// Draw game arena to specify path and validate the same... :])
-		createBattleField.drawArena(graphics);
+//		createBattleField.drawArena(graphics);
+//		repaint();
 	}
 
 	private void defineGame() {
 		
-		setBackground(Color.RED);
-		setVisible(true);
+//		setBackground(Color.RED);
+//		setVisible(true);
 		System.out.println("define the grid game here");
 		/*createBattleField = new BattleField();
 		gameFileManager = new GameFileManager();
@@ -140,7 +157,7 @@ public class Arena extends JPanel implements Runnable {
 		gameFileManager.loadSavedGame("game1.pa1");*/
 	}
 
-	@Override
+	/*@Override
 	public void run() {
 		while (true) {
 			if (!isMapCreated) {
@@ -157,6 +174,6 @@ public class Arena extends JPanel implements Runnable {
 			}
 		}
 
-	}
+	}*/
 
 }

@@ -21,7 +21,7 @@ public class GameFileManager {
 			Scanner loadScanner = new Scanner(file);
 			while (loadScanner.hasNext()) {
 				for(int y = 0; y < 10;y++){
-					Arena.getDefaultLocale();
+//					Arena.getDefaultLocale();
 				}
 //				for (int y = 0; y < PanelPractice.room.block.length; y++) {
 //					for (int x = 0; x < PanelPractice.room.block[0].length; x++) {
