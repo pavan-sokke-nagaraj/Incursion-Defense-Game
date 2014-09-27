@@ -18,8 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 
 /**
  * @author p_sokke
@@ -47,7 +45,9 @@ public class Colosseum extends JFrame implements ActionListener {
 		mapOptionsMenu.add(createMapItem);
 		menuBar.add(mapOptionsMenu);
 		setJMenuBar(menuBar);
-
+		
+		Arena creaeMapArena = new Arena();
+		add(creaeMapArena);
 		setVisible(true);
 	}
 
@@ -81,10 +81,21 @@ public class Colosseum extends JFrame implements ActionListener {
 
 			if (gridRow != 0 || gridColumn != 0) {
 				// removeAll();
+//				Arena creaeMapArena = new Arena();
+//				creaeMapArena.setGridRow(gridRow);
+//				creaeMapArena.setGridColumn(gridColumn);
+//				repaint();
+//				add(creaeMapArena);
+//				revalidate();
+//				setVisible(true);
+//				removeAll();//or remove(JComponent)
+//				revalidate();
 				Arena creaeMapArena = new Arena();
 				creaeMapArena.setGridRow(gridRow);
 				creaeMapArena.setGridColumn(gridColumn);
 				add(creaeMapArena);
+				repaint();
+				setVisible(true);
 
 			}
 
