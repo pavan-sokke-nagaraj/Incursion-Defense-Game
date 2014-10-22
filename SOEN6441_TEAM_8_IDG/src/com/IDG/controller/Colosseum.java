@@ -3,6 +3,7 @@
  */
 package com.IDG.controller;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,29 +24,51 @@ import javax.swing.SwingConstants;
  * @author p_sokke
  *
  */
-public class Colosseum extends JFrame implements ActionListener {
+public class Colosseum extends JFrame /*implements ActionListener*/ {
 	public Colosseum() {
-		setTitle("Sparta's grid");
+		
+		super("Sparta's grid");
+		System.out.println(World.Mode);
+		// setTitle("Sparta's grid");
 		// setSize(1006, 728);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setVisible(true);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		init();
+		
+		LayoutManager menu = new LayoutManager();
+		setJMenuBar(menu.getMenuBar());
+		add(menu.getTabs(), BorderLayout.CENTER);
+		
+//		buildMenu();
+//		init();
+	}
+	
+	/*public void buildMenu(){
+		JMenuBar menuBar = new JMenuBar();
+		JMenu mapOptionsMenu = new JMenu("FILE");
+		JMenuItem createMapItem = new JMenuItem("CREATE MAP");
+		createMapItem.addActionListener(this);
+		mapOptionsMenu.add(createMapItem);
+		menuBar.add(mapOptionsMenu);
+		setJMenuBar(menuBar);
+
+		Arena creaeMapArena = new Arena();
+		add(creaeMapArena);
 	}
 
 	public void init() {
 		setLayout(new GridLayout());
 
 		JMenuBar menuBar = new JMenuBar();
-		JMenu mapOptionsMenu = new JMenu("MAP");
+		JMenu mapOptionsMenu = new JMenu("FILE");
 		JMenuItem createMapItem = new JMenuItem("CREATE MAP");
 		createMapItem.addActionListener(this);
 		mapOptionsMenu.add(createMapItem);
 		menuBar.add(mapOptionsMenu);
 		setJMenuBar(menuBar);
-		
+
 		Arena creaeMapArena = new Arena();
 		add(creaeMapArena);
 		setVisible(true);
@@ -77,30 +100,29 @@ public class Colosseum extends JFrame implements ActionListener {
 				System.out.println("colField col value: " + colField.getText());
 				gridRow = Integer.parseInt(rowField.getText());
 				gridColumn = Integer.parseInt(colField.getText());
-				mapbuilder abc= new mapbuilder(gridColumn,gridRow);
 			}
 
 			if (gridRow != 0 || gridColumn != 0) {
 				// removeAll();
-//				Arena creaeMapArena = new Arena();
-//				creaeMapArena.setGridRow(gridRow);
-//				creaeMapArena.setGridColumn(gridColumn);
-//				repaint();
-//				add(creaeMapArena);
-//				revalidate();
-//				setVisible(true);
-//				removeAll();//or remove(JComponent)
-//				revalidate();
+				// Arena creaeMapArena = new Arena();
+				// creaeMapArena.setGridRow(gridRow);
+				// creaeMapArena.setGridColumn(gridColumn);
+				// repaint();
+				// add(creaeMapArena);
+				// revalidate();
+				// setVisible(true);
+				// removeAll();//or remove(JComponent)
+				// revalidate();
 				Arena creaeMapArena = new Arena();
 				creaeMapArena.setGridRow(gridRow);
 				creaeMapArena.setGridColumn(gridColumn);
 				add(creaeMapArena);
 				repaint();
-				//setVisible(true); // Commented Ajay and Arjun !
+				setVisible(true);
 
 			}
 
 		}
-	}
+	}*/
 
 }
