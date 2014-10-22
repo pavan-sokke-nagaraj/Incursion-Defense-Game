@@ -1,3 +1,5 @@
+package com.IDG.controller;
+
 import javax.swing.*;
 import java.awt.event.*;
 
