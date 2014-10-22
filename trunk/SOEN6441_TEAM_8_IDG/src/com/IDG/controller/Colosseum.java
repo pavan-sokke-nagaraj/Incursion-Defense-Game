@@ -77,6 +77,7 @@ public class Colosseum extends JFrame implements ActionListener {
 				System.out.println("colField col value: " + colField.getText());
 				gridRow = Integer.parseInt(rowField.getText());
 				gridColumn = Integer.parseInt(colField.getText());
+				mapbuilder abc= new mapbuilder(gridColumn,gridRow);
 			}
 
 			if (gridRow != 0 || gridColumn != 0) {
