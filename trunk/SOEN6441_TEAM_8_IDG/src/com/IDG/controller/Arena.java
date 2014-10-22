@@ -110,7 +110,7 @@ public class Arena extends JPanel {
 		 int xOff = 30;
 		 int yOff = 30;
 			
-		 
+		graphics.clearRect(0, 0, getWidth(), getHeight());
 		for (int row = 0; row < gridRow; row++) {
 			for (int col = 0; col < gridColumn; col++) {
 //				Rectangle cell = new Rectangle(xOffset + (col * cellWidth),
