@@ -96,7 +96,7 @@ public class Colosseum extends JFrame implements ActionListener {
 				creaeMapArena.setGridColumn(gridColumn);
 				add(creaeMapArena);
 				repaint();
-				setVisible(true);
+				//setVisible(true); // Commented Ajay and Arjun !
 
 			}
 
