@@ -1,8 +1,16 @@
+package com.IDG.controller;
+
 import javax.swing.*;
 
 import java.awt.event.*;
 import java.awt.*;
-public class mapbuilder extends JFrame {
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.EventListener;
+import java.util.List;
+import java.util.Scanner;
+public class mapbuilder extends JFrame  {
 	JPanel p=new JPanel();
 	JPanel p1=new JPanel();
 	JPanel p2=new JPanel();
@@ -37,13 +45,13 @@ public mapbuilder(int gridRow, int gridcolm){
 	p1.add(reset = new JButton("Reset"));
 	p1.add(load = new JButton("Load"));
 	load.addActionListener(new ListenToLoad());
-	p2.setLayout(new GridBagLayout());
+	p2.setLayout(new FlowLayout());
     p2.add(p);
     p2.add(p1);
-    
-	
-	add(p2);
+    add(p2);
 	setVisible(true);
+	
+	
 
 
 }
