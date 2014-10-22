@@ -3,9 +3,6 @@
  */
 package com.IDG.controller;
 
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 
 /**
  * @author p_sokke
@@ -16,9 +13,14 @@ public class Controller {
 	/**
 	 * @param args
 	 */
-//	asdadsad
+	// asdadsad
 	public static void main(String[] args) {
+
+		// Create an instance of our game and set the layout
 		Colosseum colosseum = new Colosseum();
+
+		// Set its visibility to true
+		colosseum.setVisible(true);
 	}
 
 }
