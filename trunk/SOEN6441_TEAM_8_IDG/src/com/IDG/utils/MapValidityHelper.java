@@ -29,7 +29,6 @@ public class MapValidityHelper {
 			BufferedWriter errorOutput=null;
 			errorOutput = new BufferedWriter(new FileWriter(file));
 			StringBuffer errorDesc =new StringBuffer();
-			System.out.println("Path Followed");
 			List<String> errorList= new ArrayList<String>();
 			String startPositionCoordinate=checkMapStartOrEndPoint(gridMap,"S",errorList,"Start");
 			String endPositionCoordinate=checkMapStartOrEndPoint(gridMap,"E",errorList,"End");
@@ -69,7 +68,7 @@ public class MapValidityHelper {
 				}
 				if(yCoordinate<(gridMap[0].length-1) && gridMap[xCoordinate][yCoordinate+1]!="*" && gridMap[xCoordinate][yCoordinate+1]!="?"){
 					if(isPathFound){
-						errorList.add("Branching of Path found at Row "+xCoordinate+" and Column "+yCoordinate);
+						errorList.add("Branching of Path found at Row "+(xCoordinate+1)+" and Column "+(yCoordinate+1));
 						break;
 					}
 					isPathFound=true;
@@ -78,7 +77,7 @@ public class MapValidityHelper {
 				}
 				if(xCoordinate<(gridMap.length-1) && gridMap[xCoordinate+1][yCoordinate]!="*" && gridMap[xCoordinate+1][yCoordinate]!="?"){
 					if(isPathFound){
-						errorList.add("Branching of Path found at Row "+xCoordinate+" and Column "+yCoordinate);
+						errorList.add("Branching of Path found at Row "+(xCoordinate+1)+" and Column "+(yCoordinate+1));
 						break;
 					}
 					isPathFound=true;
@@ -87,7 +86,7 @@ public class MapValidityHelper {
 				}
 				if(yCoordinate!=0 && gridMap[xCoordinate][yCoordinate-1]!="*" && gridMap[xCoordinate][yCoordinate-1]!="?"){
 					if(isPathFound){
-						errorList.add("Branching of Path found at Row "+xCoordinate+" and Column "+yCoordinate);
+						errorList.add("Branching of Path found at Row "+(xCoordinate+1)+" and Column "+(yCoordinate+1));
 						break;
 					}
 					isPathFound=true;
@@ -101,7 +100,6 @@ public class MapValidityHelper {
 				}
 				xCoordinate=tempXCoordinate;
 				yCoordinate=tempYCoordinate;
-				System.out.println("x="+xCoordinate+",y="+yCoordinate);
 				if(gridMap[xCoordinate][yCoordinate]=="-"){
 					// '?' denotes that the path is already traversed and hence no need to traverse again.
 					gridMap[xCoordinate][yCoordinate]="?";
@@ -138,13 +136,18 @@ public class MapValidityHelper {
 	 * @param gridMap Game Map Matrix
 	 * @param errorList List to be updated with errors
 	 */
-	private static void checkMapForIslandPath(String [][] gridMap,List<String> errorList){
+	public static boolean checkMapForIslandPath(String [][] gridMap,List<String> errorList){
 		for(int i=0;i<gridMap.length;i++){
 			for(int j=0;j<gridMap[0].length;j++){
 				if(gridMap[i][j].equals("-")){
 					errorList.add("Island Path found at Row "+(i+1)+" and Column "+(j+1)+"\n");
 				}
 			}
+		}
+		if(errorList.size()>0){
+			return false;
+		}else{
+			return true;
 		}
 	}
 
@@ -156,7 +159,7 @@ public class MapValidityHelper {
 	 * @param positionName Name for the start or end
 	 * @return Co oridinates for start or end
 	 */
-	private static String checkMapStartOrEndPoint(String [][] gridMap,String position,List<String> errorList,String positionName){
+	public static String checkMapStartOrEndPoint(String [][] gridMap,String position,List<String> errorList,String positionName){
 		int positionCount=0;
 		int positionXCoordinate=0;
 		int positionYCoordinate=0;
@@ -182,7 +185,7 @@ public class MapValidityHelper {
 			errorList.add(positionName+" should be at the boundry positions");
 		}
 		//Check if there is a wall gap between end and start
-		if(position=="S"&&((positionXCoordinate>0&&gridMap[positionXCoordinate-1][positionYCoordinate]=="E")||((positionXCoordinate<(gridMap.length-1))&&gridMap[positionXCoordinate+1][positionYCoordinate]=="E")||((positionXCoordinate<(gridMap[0].length-1))&&gridMap[positionXCoordinate][positionYCoordinate+1]=="E")||((positionYCoordinate>0)&&gridMap[positionXCoordinate][positionYCoordinate-1]=="E"))){
+		if(position=="S"&&((positionXCoordinate>0&&gridMap[positionXCoordinate-1][positionYCoordinate]=="E")||((positionXCoordinate<(gridMap.length-1))&&gridMap[positionXCoordinate+1][positionYCoordinate]=="E")||((positionYCoordinate<(gridMap[0].length-1))&&gridMap[positionXCoordinate][positionYCoordinate+1]=="E")||((positionYCoordinate>0)&&gridMap[positionXCoordinate][positionYCoordinate-1]=="E"))){
 			errorList.add("Atleast a wall gap should be there between Start and End");
 		}
 		if(errorList.size()>0){
