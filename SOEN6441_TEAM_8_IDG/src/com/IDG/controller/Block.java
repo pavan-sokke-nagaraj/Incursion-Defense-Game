@@ -1,10 +1,8 @@
 package com.IDG.controller;
 
-/**
- * @author p@!
- *
- */
+
 import java.awt.Color;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -13,9 +11,12 @@ import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 
+/**
+ * @author p@!
+ *
+ */
 public class Block extends Rectangle {
 
 	private static List<Block> blocks = new ArrayList<Block>();
