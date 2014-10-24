@@ -1,3 +1,5 @@
+package com.IDG.controller;
+
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -7,7 +9,7 @@ public class Tower {
 
 	public String towerDesign = "";
 	public Image design ;
-	public static final Tower lightingTower = new TowerLighting(0).getDesignFile("fightingTower");
+	//public static final Tower lightingTower = new TowerLighting(0).getDesignFile("fightingTower");
 	public static final Tower[] towerTypes = new Tower[200];
 	public int towerID;
 	

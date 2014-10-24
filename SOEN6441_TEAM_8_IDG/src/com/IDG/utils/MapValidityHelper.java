@@ -1,3 +1,5 @@
+package com.IDG.utils;
+
 import java.awt.Desktop;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,35 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-//no loop: path should not cross itself.
-//
-public class TestMapValidity {
+/**
+ * This class will test the validity of the map.
+ * It will be called while saving the class. 
+ * @author Arjun
+ * @version 1.0
+ */
+public class MapValidityHelper {
 
-	public static void main(String[] args) {
-		String[][] gridMap = new String[5][5];
-		for(int i=0;i<5;i++){
-			for(int j=0;j<5;j++){
-				gridMap[i][j]="*";
-			}
-		}
-		gridMap[0][1]="S";
-		gridMap[1][1]="-";
-		gridMap[2][1]="-";
-		gridMap[2][2]="-";
-		gridMap[2][3]="-";
-		gridMap[2][4]="-";
-		gridMap[3][3]="-";
-		gridMap[4][3]="E";
-		for(int x=0;x<5;x++){
-			for(int y=0;y<5;y++){
-				System.out.print(gridMap[x][y]);
-			}
-			System.out.println("");
-		}
-		testMapValidity(gridMap);
-	}
 	/**
-	 * Method check for the validity of the Game Map
+	 * This Method check for the validity of the Game Map.
 	 * @param gridMap Game map matrix 
 	 * @return boolean representing validity of the path
 	 */
@@ -48,24 +31,19 @@ public class TestMapValidity {
 			StringBuffer errorDesc =new StringBuffer();
 			System.out.println("Path Followed");
 			List<String> errorList= new ArrayList<String>();
-			String startPositionCoordinate=checkMapStartOrEndPoint(gridMap,"S",errorList);
-			if(startPositionCoordinate==null){
-				errorDesc.append(errorList.get(0)).append("\n");
+			String startPositionCoordinate=checkMapStartOrEndPoint(gridMap,"S",errorList,"Start");
+			String endPositionCoordinate=checkMapStartOrEndPoint(gridMap,"E",errorList,"End");
+			if(endPositionCoordinate==null||startPositionCoordinate==null){
+				for(int i=0;i<errorList.size();i++){
+					errorDesc.append(errorList.get(i)).append(System.getProperty("line.separator"));
+				}
 				errorOutput.write(errorDesc.toString());
 				errorOutput.close();
 				Desktop desktop = Desktop.getDesktop();
 				desktop.open(file);
 				return false;
 			}
-			checkMapStartOrEndPoint(gridMap,"E",errorList);
-			if(startPositionCoordinate==null){
-				errorDesc.append(errorList.get(0)).append("\n");
-				errorOutput.write(errorDesc.toString());
-				errorOutput.close();
-				Desktop desktop = Desktop.getDesktop();
-				desktop.open(file);
-				return false;
-			}
+
 			int xCoordinate=0;
 			int yCoordinate=0;
 			if(startPositionCoordinate!=null){
@@ -87,21 +65,24 @@ public class TestMapValidity {
 				if(xCoordinate!=0 && gridMap[xCoordinate-1][yCoordinate]!="*" && gridMap[xCoordinate-1][yCoordinate]!="?"){
 					isPathFound=true;
 					tempXCoordinate=xCoordinate-1;
+					tempYCoordinate=yCoordinate;
 				}
-				if(yCoordinate<=4 && gridMap[xCoordinate][yCoordinate+1]!="*" && gridMap[xCoordinate][yCoordinate+1]!="?"){
+				if(yCoordinate<(gridMap[0].length-1) && gridMap[xCoordinate][yCoordinate+1]!="*" && gridMap[xCoordinate][yCoordinate+1]!="?"){
 					if(isPathFound){
 						errorList.add("Branching of Path found at Row "+xCoordinate+" and Column "+yCoordinate);
 						break;
 					}
 					isPathFound=true;
 					tempYCoordinate=yCoordinate+1;
+					tempXCoordinate=xCoordinate;
 				}
-				if(xCoordinate<=4 && gridMap[xCoordinate+1][yCoordinate]!="*" && gridMap[xCoordinate+1][yCoordinate]!="?"){
+				if(xCoordinate<(gridMap.length-1) && gridMap[xCoordinate+1][yCoordinate]!="*" && gridMap[xCoordinate+1][yCoordinate]!="?"){
 					if(isPathFound){
 						errorList.add("Branching of Path found at Row "+xCoordinate+" and Column "+yCoordinate);
 						break;
 					}
 					isPathFound=true;
+					tempYCoordinate=yCoordinate;
 					tempXCoordinate=xCoordinate+1;
 				}
 				if(yCoordinate!=0 && gridMap[xCoordinate][yCoordinate-1]!="*" && gridMap[xCoordinate][yCoordinate-1]!="?"){
@@ -111,10 +92,11 @@ public class TestMapValidity {
 					}
 					isPathFound=true;
 					tempYCoordinate=yCoordinate-1;
+					tempXCoordinate=xCoordinate;
 				}
 				if(!isPathFound){
 					isValidPath=false;
-					errorList.add("Dead End found at Row "+xCoordinate+" and Column "+yCoordinate);
+					errorList.add("Dead End found at Row "+(xCoordinate+1)+" and Column "+(yCoordinate+1));
 					break;
 				}
 				xCoordinate=tempXCoordinate;
@@ -127,6 +109,7 @@ public class TestMapValidity {
 					isValidPath=true;
 				}
 			}
+
 			checkMapForIslandPath(gridMap,errorList);
 			if(errorList.size()>0){
 				for(int i=0;i<errorList.size();i++){
@@ -150,19 +133,30 @@ public class TestMapValidity {
 		return false;
 	}
 
+	/**
+	 * This method check for the validation of Island Paths
+	 * @param gridMap Game Map Matrix
+	 * @param errorList List to be updated with errors
+	 */
 	private static void checkMapForIslandPath(String [][] gridMap,List<String> errorList){
-		outerLoop:
-			for(int i=0;i<gridMap.length;i++){
-				for(int j=0;j<gridMap[0].length;j++){
-					if(gridMap[i][j].equals("-")){
-						errorList.add("Island Path found at Row "+i+" and Column "+j+"\n");
-						break outerLoop;
-					}
+		for(int i=0;i<gridMap.length;i++){
+			for(int j=0;j<gridMap[0].length;j++){
+				if(gridMap[i][j].equals("-")){
+					errorList.add("Island Path found at Row "+(i+1)+" and Column "+(j+1)+"\n");
 				}
 			}
+		}
 	}
 
-	private static String checkMapStartOrEndPoint(String [][] gridMap,String position,List<String> errorList){
+	/**
+	 * This method check for the validation on Start Point and End Point
+	 * @param gridMap Game Map Matrix
+	 * @param position Start or End
+	 * @param errorList List to be updated with errors
+	 * @param positionName Name for the start or end
+	 * @return Co oridinates for start or end
+	 */
+	private static String checkMapStartOrEndPoint(String [][] gridMap,String position,List<String> errorList,String positionName){
 		int positionCount=0;
 		int positionXCoordinate=0;
 		int positionYCoordinate=0;
@@ -172,8 +166,7 @@ public class TestMapValidity {
 					positionCount++;
 					//check for more than one occurance of either Starting Point or End Point
 					if (positionCount > 1){
-						errorList.add("More than one "+position+" is not allowed");
-						return null;
+						errorList.add("More than one "+positionName+" is not allowed");
 					}
 					positionXCoordinate=i;
 					positionYCoordinate=j;
@@ -182,10 +175,20 @@ public class TestMapValidity {
 		}
 		// check for no End Point or Start Point
 		if(positionCount == 0){
-			errorList.add("Atleast one "+position+" should be there in the map");
+			errorList.add("Atleast one "+positionName+" should be there in the map");
+		}
+		//check if start or end are at boundry positions
+		if(!(((positionXCoordinate>=0)&&(positionYCoordinate==0))||((positionYCoordinate>=0)&&(positionXCoordinate==0))||((positionXCoordinate>=0)&&(positionYCoordinate==(gridMap[0].length-1)))||((positionYCoordinate>=0)&&(positionXCoordinate==(gridMap.length-1))))){
+			errorList.add(positionName+" should be at the boundry positions");
+		}
+		//Check if there is a wall gap between end and start
+		if(position=="S"&&((positionXCoordinate>0&&gridMap[positionXCoordinate-1][positionYCoordinate]=="E")||((positionXCoordinate<(gridMap.length-1))&&gridMap[positionXCoordinate+1][positionYCoordinate]=="E")||((positionXCoordinate<(gridMap[0].length-1))&&gridMap[positionXCoordinate][positionYCoordinate+1]=="E")||((positionYCoordinate>0)&&gridMap[positionXCoordinate][positionYCoordinate-1]=="E"))){
+			errorList.add("Atleast a wall gap should be there between Start and End");
+		}
+		if(errorList.size()>0){
 			return null;
 		}
-		// return the Start Point Co-ordinates
+		// return the start and end Point Co-ordinates
 		return new Integer(positionXCoordinate).toString()+","+new Integer(positionYCoordinate).toString();
 	}
 }
