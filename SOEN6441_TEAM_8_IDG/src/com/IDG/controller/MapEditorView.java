@@ -106,6 +106,7 @@ public class MapEditorView extends JPanel {
 
 			gridRow = Integer.parseInt(rowField.getText());
 			gridColumn = Integer.parseInt(colField.getText());
+			
 			System.out.println(actionEvent.getActionCommand());
 			System.out.println("rowField row value: " + gridRow);
 			System.out.println("colField col value: " + gridColumn);
