@@ -15,7 +15,8 @@ public class ListenToLoad extends Component implements ActionListener  {
 
 	public void actionPerformed(ActionEvent evt) {
 		new Load();
-
+		
+		
 	}
 
 }
