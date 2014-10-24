@@ -15,6 +15,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -41,6 +42,7 @@ public class MapEditorView extends JPanel {
 
 	private Action createGridAction = new NewNodeAction("Create");
 	private JButton createButton = new JButton(createGridAction);
+	private JOptionPane messageWindow= new JOptionPane();
 
 	int gridRow = 0;
 	int gridColumn = 0;
@@ -97,7 +99,7 @@ public class MapEditorView extends JPanel {
 		 * Effectively inserts a new Node
 		 * 
 		 * @param actionEvent
-		 *            The action that trigger this Action
+		 *  The action that trigger this Action
 		 */
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {

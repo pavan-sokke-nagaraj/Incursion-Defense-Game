@@ -17,7 +17,7 @@ import com.IDG.controller.World.WorldMode;
 
 /**
  * This view renders the main panel viewer for the application including the
- * header menu system.
+ * header menu system and the windows of display
  * 
  * @author p_sokke
  *

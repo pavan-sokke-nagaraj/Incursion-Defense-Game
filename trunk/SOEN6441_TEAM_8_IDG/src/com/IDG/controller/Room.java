@@ -35,7 +35,7 @@ public class Room implements Serializable {
 	}
 
 	private void define() {
-		// create a matrix of rectangles with no of rows & cols given by user
+		// create a matrix of rectangles with the number of rows & cols given by user
 		block = new Block[mapHeight][mapWidth];
 
 		for (int y = 0; y < block.length; y++) {
