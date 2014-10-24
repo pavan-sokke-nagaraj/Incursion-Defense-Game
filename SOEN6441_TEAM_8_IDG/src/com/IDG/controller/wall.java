@@ -4,27 +4,32 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class wall extends JButton implements ActionListener{
-	public ImageIcon upDirectionImg,downDirectionImg,rightDirectionImg,leftDirectionImg;
+	public ImageIcon path,brick,start,end;
+
+
+
 	int id=0;
 	boolean isStart;
 	boolean isEnd;
 	boolean isPath;
 	boolean isWall;
 	byte value=0;
-	char direction;
+	
 	
 	public wall()
 	{
-		leftDirectionImg=new ImageIcon("F://path3.png");
-		rightDirectionImg=new ImageIcon("F://path2.png");
-		upDirectionImg=new ImageIcon("F://path.png");
-		downDirectionImg=new ImageIcon("F://path4.png");
+		path=new ImageIcon("F://path.png");
+		brick=new ImageIcon("F://path2.png");
+		start=new ImageIcon("D://start.jpg");
+		end=new ImageIcon("D://end.png");
+		
 		
 		isStart=false;
 		isEnd=false;
 		isPath=false;
 		isWall=false;
 		this.addActionListener(this);
+		this.addMouseListener(new PopClickListener(this));
 	}
 
 
@@ -32,38 +37,25 @@ public class wall extends JButton implements ActionListener{
 	{
 
 
-			this.setPath(true);
+			if(this.isPath)
+				this.setPath(false);
 			value++;
-			value%=5;
+			value%=2;
 			System.out.println("Value"+value);
 			switch(value) {
 			case 0:
 				setIcon(null);
 				this.setPath(false);
-				this.setDirection('B');
+				this.setStart(false);
+				this.setEnd(false);
 				break;
 			case 1:
-				setIcon(rightDirectionImg);
+				setIcon(path);
 				this.setPath(true);
-				this.setDirection('R');
+				this.setStart(false);
+				this.setEnd(false);
 				break;
-			case 2:
-				setIcon(leftDirectionImg);
-				this.setPath(true);
-				this.setDirection('L');
-				break;
-			case 3:
-				setIcon(upDirectionImg);
-				this.setPath(true);
-				this.setDirection('U');
-				break;
-			case 4:
-				setIcon(downDirectionImg);
-				this.setPath(true);
-				this.setDirection('D');
-				break;
-				
-
+			
 			}
 		
 		
@@ -71,14 +63,9 @@ public class wall extends JButton implements ActionListener{
 
 	}
 
-	public char getDirection() {
-		return direction;
-	}
+	
 
-
-	public void setDirection(char direction) {
-		this.direction = direction;
-	}
+	
 
 
 	public int getId() {
@@ -141,42 +128,30 @@ public class wall extends JButton implements ActionListener{
 	}
 
 
-	public ImageIcon getUpDirectionImg() {
-		return upDirectionImg;
+	public ImageIcon getPath() {
+		return path;
 	}
 
 
-	public void setUpDirectionImg(ImageIcon upDirectionImg) {
-		this.upDirectionImg = upDirectionImg;
+	public ImageIcon getBrick() {
+		return brick;
+	}
+	public ImageIcon getStart() {
+		return start;
 	}
 
 
-	public ImageIcon getDownDirectionImg() {
-		return downDirectionImg;
+	public void setStart(ImageIcon start) {
+		this.start = start;
 	}
 
 
-	public void setDownDirectionImg(ImageIcon downDirectionImg) {
-		this.downDirectionImg = downDirectionImg;
+	public ImageIcon getEnd() {
+		return end;
 	}
 
 
-	public ImageIcon getRightDirectionImg() {
-		return rightDirectionImg;
-	}
-
-
-	public void setRightDirectionImg(ImageIcon rightDirectionImg) {
-		this.rightDirectionImg = rightDirectionImg;
-	}
-
-
-	public ImageIcon getLeftDirectionImg() {
-		return leftDirectionImg;
-	}
-
-
-	public void setLeftDirectionImg(ImageIcon leftDirectionImg) {
-		this.leftDirectionImg = leftDirectionImg;
+	public void setEnd(ImageIcon end) {
+		this.end = end;
 	}
 }
