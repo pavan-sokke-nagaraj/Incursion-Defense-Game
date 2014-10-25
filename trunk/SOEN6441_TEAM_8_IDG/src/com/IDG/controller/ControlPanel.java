@@ -16,7 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 
-/**
+/**ControlPanel class listen to the cunstomer's action
+ * and according to the user's choice draw the width and
+ * height of the map.
  * @author p_sokke
  *
  */
