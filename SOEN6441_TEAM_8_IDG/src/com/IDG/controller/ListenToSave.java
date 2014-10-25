@@ -15,7 +15,7 @@ import javax.swing.SwingUtilities;
 import com.IDG.utils.MapValidityHelper;
 
 /** ListenToSave class is a action listener, waiting for
- * users' action to save their created map. Before save
+ * users' action to save their created map. Before saving
  * map to a specific address, it will first call the 
  * MapValidityHelper class to check if this map is valid
  * to run.
@@ -30,6 +30,10 @@ public class ListenToSave implements ActionListener {
 	ArrayList<String> errorList=null;
 	JTextArea tArea1;
 
+/** Call the constructor setting initial values.
+ * @param Area1 A set of string showing why the map is invalid.
+ * @param buttons[][] Each contains the state of field where map is created.
+ */
 	public ListenToSave(wall buttons[][], JFrame p2,ArrayList<String> errorList, JTextArea tArea1){
 		try{
 			writer= new PrintWriter("F://map.txt", "UTF-8");
@@ -42,6 +46,15 @@ public class ListenToSave implements ActionListener {
 		this.p2=p2;
 
 	}
+   
+  /** Perform action to transfer map edited to the .txt file
+    * to save.
+    * @param gridMap[][] Read buttons[][] state and transfer to .txt file
+    * <p>"S" means the start of the road. </p>
+    * <p>"E" means the end of the road. </p>
+    * <p>"-" means there exsits a road. </p>
+    * <p>"*" means scenery.</p>
+    */
 	public void actionPerformed(ActionEvent e) {
 
 		System.out.println(" Printed ");
