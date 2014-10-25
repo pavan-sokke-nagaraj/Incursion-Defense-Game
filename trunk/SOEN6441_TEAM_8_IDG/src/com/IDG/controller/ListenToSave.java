@@ -14,6 +14,13 @@ import javax.swing.SwingUtilities;
 
 import com.IDG.utils.MapValidityHelper;
 
+/** ListenToSave class is a action listener, waiting for
+ * users' action to save their created map. Before save
+ * map to a specific address, it will first call the 
+ * MapValidityHelper class to check if this map is valid
+ * to run.
+ * @author Ajay
+ */
 
 public class ListenToSave implements ActionListener {
 	wall buttons[][];
