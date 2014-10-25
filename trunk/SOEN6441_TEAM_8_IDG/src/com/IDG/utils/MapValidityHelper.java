@@ -22,24 +22,16 @@ public class MapValidityHelper {
 	 * @param gridMap Game map matrix 
 	 * @return boolean representing validity of the path
 	 */
-	public static boolean testMapValidity(String[][] gridMap){
+	public static boolean testMapValidity(String[][] gridMap , ArrayList<String> errorList){
 		try{
 			boolean isValidPath=false;
-			File file = new File("MapError.txt");
-			BufferedWriter errorOutput=null;
-			errorOutput = new BufferedWriter(new FileWriter(file));
 			StringBuffer errorDesc =new StringBuffer();
-			List<String> errorList= new ArrayList<String>();
 			String startPositionCoordinate=checkMapStartOrEndPoint(gridMap,"S",errorList,"Start");
 			String endPositionCoordinate=checkMapStartOrEndPoint(gridMap,"E",errorList,"End");
 			if(endPositionCoordinate==null||startPositionCoordinate==null){
 				for(int i=0;i<errorList.size();i++){
 					errorDesc.append(errorList.get(i)).append(System.getProperty("line.separator"));
 				}
-				errorOutput.write(errorDesc.toString());
-				errorOutput.close();
-				Desktop desktop = Desktop.getDesktop();
-				desktop.open(file);
 				return false;
 			}
 
@@ -68,7 +60,7 @@ public class MapValidityHelper {
 				}
 				if(yCoordinate<(gridMap[0].length-1) && gridMap[xCoordinate][yCoordinate+1]!="*" && gridMap[xCoordinate][yCoordinate+1]!="?"){
 					if(isPathFound){
-						errorList.add("Branching of Path found at Row "+(xCoordinate+1)+" and Column "+(yCoordinate+1));
+						errorList.add("Branching found at Row "+(xCoordinate+1)+" and Column "+(yCoordinate+1));
 						break;
 					}
 					isPathFound=true;
@@ -77,7 +69,7 @@ public class MapValidityHelper {
 				}
 				if(xCoordinate<(gridMap.length-1) && gridMap[xCoordinate+1][yCoordinate]!="*" && gridMap[xCoordinate+1][yCoordinate]!="?"){
 					if(isPathFound){
-						errorList.add("Branching of Path found at Row "+(xCoordinate+1)+" and Column "+(yCoordinate+1));
+						errorList.add("Branching found at Row "+(xCoordinate+1)+" and Column "+(yCoordinate+1));
 						break;
 					}
 					isPathFound=true;
@@ -86,7 +78,7 @@ public class MapValidityHelper {
 				}
 				if(yCoordinate!=0 && gridMap[xCoordinate][yCoordinate-1]!="*" && gridMap[xCoordinate][yCoordinate-1]!="?"){
 					if(isPathFound){
-						errorList.add("Branching of Path found at Row "+(xCoordinate+1)+" and Column "+(yCoordinate+1));
+						errorList.add("Branching found at Row "+(xCoordinate+1)+" and Column "+(yCoordinate+1));
 						break;
 					}
 					isPathFound=true;
@@ -113,16 +105,8 @@ public class MapValidityHelper {
 				for(int i=0;i<errorList.size();i++){
 					errorDesc.append(errorList.get(i)).append(System.getProperty("line.separator"));
 				}
-				errorOutput.write(errorDesc.toString());
-				errorOutput.close();
-				Desktop desktop = Desktop.getDesktop();
-				desktop.open(file);
 				return false;
 			}else{
-				errorOutput.write("Validation Succesfull");
-				errorOutput.close();
-				Desktop desktop = Desktop.getDesktop();
-				desktop.open(file);
 				return true;
 			}
 		}catch(Exception e){
@@ -167,7 +151,7 @@ public class MapValidityHelper {
 			for(int j=0;j<gridMap[0].length;j++){
 				if(gridMap[i][j].equals(position)){
 					positionCount++;
-					//check for more than one occurance of either Starting Point or End Point
+					//check for more than one occurence of either Starting Point or End Point
 					if (positionCount > 1){
 						errorList.add("More than one "+positionName+" is not allowed");
 					}
