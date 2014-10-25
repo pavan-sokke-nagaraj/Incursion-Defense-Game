@@ -104,6 +104,7 @@ public class MapEditorView extends JPanel {
 		 * 
 		 * @param actionEvent
 		 *            The action that trigger this Action
+		 *            Action performed in action listener 
 		 */
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
@@ -112,7 +113,8 @@ public class MapEditorView extends JPanel {
 			gridColumn = Integer.parseInt(colField.getText());
 			
 			System.out.println(actionEvent.getActionCommand());
-			mapbuilder abc= new mapbuilder(gridColumn,gridRow);
+			mapbuilder myMapBuilder= new mapbuilder(gridColumn,gridRow);
+			
 			System.out.println("rowField row value: " + gridRow);
 			System.out.println("colField col value: " + gridColumn);
 			//repaint();
