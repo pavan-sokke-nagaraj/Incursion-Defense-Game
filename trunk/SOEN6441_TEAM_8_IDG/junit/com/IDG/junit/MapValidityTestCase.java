@@ -12,11 +12,11 @@ import com.IDG.utils.MapValidityHelper;
 
 public class MapValidityTestCase {
 	String[][] gridMap;
-	List errorList;
+	ArrayList<String> errorList;
 	@Before
 	public void setUp() throws Exception {
 		gridMap = new String[5][5];
-		errorList= new ArrayList();
+		errorList= new ArrayList<String>();
 		for(int i=0;i<5;i++){
 			for(int j=0;j<5;j++){
 				gridMap[i][j]="*";
@@ -34,7 +34,7 @@ public class MapValidityTestCase {
 		//gridMap[2][4]="-";
 		gridMap[3][3]="-";
 		gridMap[4][3]="E";
-		boolean result=MapValidityHelper.testMapValidity(gridMap);
+		boolean result=MapValidityHelper.testMapValidity(String[][] gridMap , ArrayList<String> errorList);
 		assertTrue(result);
 	}
 	@Test
