@@ -65,7 +65,8 @@ public class Load  extends JFrame  {
 	int gridColumn = 0;
 	String mapType1 = null;
 	int counter= 0;
-	
+	MapButton file=null;
+	boolean isEditEnabled;
 
 	public Load()
 	{
@@ -150,27 +151,23 @@ public class Load  extends JFrame  {
 			e.printStackTrace();
 		}
 		//Snapshot code
-		//Image scaledImage = myPicture.getScaledInstance(jPanel.getWidth(),jPanel.getHeight(),Image.SCALE_SMOOTH);
 		fileName1=fileName1.replaceAll("png", "txt");
 		fileName1=fileName1.replaceAll("ScreenShot", "Map");
 		MapButton picLabel = new MapButton(fileName1,mapType1);
-		/**if(mapType.equals("CustomMaps")){
+		if(mapType.equals("CustomMaps")){
 			picLabel.setText("User Defined Map "+(buttonList.size()+1));
 		}else{
 			picLabel.setText("Default Map "+(buttonList.size()+1));
-		}**/
-
+		}
 		ImageIcon ii = new ImageIcon(myPicture);
 		int scale = 10; // 2 times smaller
 		int width = ii.getIconWidth();
 		int newWidth = width / scale;
-		picLabel.setIcon(new ImageIcon(ii.getImage().getScaledInstance(newWidth, -1,
-				java.awt.Image.SCALE_SMOOTH)));
-		//picLabel.setIcon(new ImageIcon(myPicture));
+		picLabel.setIcon(new ImageIcon(ii.getImage().getScaledInstance(newWidth, -1,java.awt.Image.SCALE_SMOOTH)));
 		picLabel.setMaximumSize(new Dimension(10,10));
 		picLabel.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				MapButton file = (MapButton)e.getSource();
+				file = (MapButton)e.getSource();
 				setGameMatrixOnPanel(new File("Resource/"+file.mapType+"/GameMatrix/"+file.fileName));
 			}
 		});
@@ -181,17 +178,12 @@ public class Load  extends JFrame  {
 		System.out.println(mapFile.getName());
 		mapGrid.removeAll();
 		mapGrid.revalidate();
-
-		//mapGrid.setVisible(false);
-
-		//p2.dispose();
 		List<String> lines=new ArrayList();
 		Scanner sc=null;
 		String line1=null;
 		try {
 			sc = new Scanner(mapFile);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		while(sc.hasNextLine()) {
@@ -276,14 +268,16 @@ public class Load  extends JFrame  {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			for ( int i=0;i<temp.length;i++){
-				for ( int j=0;j<temp[0].length;j++){
-					temp[i][j].setEnabled(true);
+				for ( int i=0;i<temp.length;i++){
+					for ( int j=0;j<temp[0].length;j++){
+						temp[i][j].setEnabled(true);
+					}
 				}
+				temp1=temp;
+				save.setEnabled(true);
+				isEditEnabled=true;
 			}
-			save.setEnabled(true);
-		}
-	});
+		});
 
 	create.addActionListener(new ActionListener() {
 
@@ -332,11 +326,14 @@ public class Load  extends JFrame  {
 
 	save.addActionListener(new ActionListener() {
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-			new ListenToSave(temp1,errorList,tArea1,mapGrid,gridRow,gridColumn);
-			System.out.println("SAve clicked");
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ListenToSave(temp1,errorList,tArea1,mapGrid,gridRow,gridColumn,isEditEnabled,file);
+				System.out.println("SAve clicked");
+				udMapGrid.removeAll();
+				udMapGrid.revalidate();
+				udMapGrid.repaint();
+				setgridLayoutForMaps("CustomMaps",udMapGrid);
 		
 		}	
 		

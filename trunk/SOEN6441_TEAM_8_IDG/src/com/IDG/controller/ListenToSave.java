@@ -41,8 +41,10 @@ public class ListenToSave  {
 	JPanel gameMatrixPanel=null;
 	StringBuffer fileContent=new StringBuffer();
 	int row=0,column=0;
+	MapButton tempFile=null;
+	boolean isEditEnabled;
 
-	public ListenToSave(wall buttons[][],ArrayList<String> errorList, JTextArea tArea1,JPanel p,int row,int column)
+	public ListenToSave(wall buttons[][],ArrayList<String> errorList, JTextArea tArea1,JPanel p,int row,int column,boolean isEditEnabled,MapButton tempFile)
 	{
 		this.row=row;
 		this.column=column;
@@ -50,7 +52,8 @@ public class ListenToSave  {
 		this.errorList=errorList;
 		this.buttons=buttons;
 		gameMatrixPanel=p;
-
+		this.tempFile=tempFile;
+		this.isEditEnabled=isEditEnabled;
 		String [][] gridMap=new String[buttons.length][buttons[0].length];
 		for (int i=0;i<buttons.length;i++){
 			for (int j=0;j<buttons[0].length;j++){
@@ -93,46 +96,69 @@ public class ListenToSave  {
 
 		}else{
 			try{
-				//Genrating Random File Name
-				tArea1.setText(" ");
-				Random rn = new Random();
-				int range = 1000 - 0 + 1;
-				int fileName =  rn.nextInt(range) + 0;
+				
+				if(!isEditEnabled){
+					//Genrating Random File Name
+					tArea1.setText(" ");
+					Random rn = new Random();
+					int range = 1000 - 0 + 1;
+					int fileName =  rn.nextInt(range) + 0;
+					/***************************************************START MAP SAVE CODE***************************************************/
+					//Code to save file name to a header file
+					try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("Resource/CustomMaps/GameMatrix/GameMatrixHeader.txt", true)))) {
+						out.println("Map"+fileName+".txt");
+					}catch (IOException ed) {
+					}
+					//Creating a Map File 
+					File file =new File("Resource/CustomMaps/GameMatrix/"+"Map"+fileName+".txt");
+					if(!file.exists()){
+						file.createNewFile();
+					}else{
+						PrintWriter writer = new PrintWriter(file);
+						writer.print("");
+						writer.close();
+					}
+					try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)))) {
+						out.println(fileContent.toString());
+					}catch (IOException ed) {
+					}
+					fileContent=new StringBuffer();
+					/***************************************************END MAP SAVE CODE***************************************************/
 
-				/***************************************************START MAP SAVE CODE***************************************************/
-				//Code to save file name to a header file
-				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("Resource/CustomMaps/GameMatrix/GameMatrixHeader.txt", true)))) {
-					out.println("Map"+fileName+".txt");
-				}catch (IOException ed) {
-				}
-				//Creating a Map File 
-				File file =new File("Resource/CustomMaps/GameMatrix/"+"Map"+fileName+".txt");
-				if(!file.exists()){
-					file.createNewFile();
+					/***************************************************START SCREENSHOT CODE***************************************************/
+					//Code to save file name to a header file
+					try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("Resource/CustomMaps/ScreenShots/ScreenShotsHeader.txt", true)))) {
+						out.println("ScreenShot"+fileName+".png");
+					}catch (IOException ed) {
+					}
+					//Code to save screen shots
+					BufferedImage matrixImage=null;
+					matrixImage = new BufferedImage(gameMatrixPanel.getSize().width, gameMatrixPanel.getSize().height,BufferedImage.TYPE_INT_RGB);
+					gameMatrixPanel.printAll (matrixImage.getGraphics());
+					ImageIO.write(matrixImage, "png", new File("Resource/CustomMaps/ScreenShots/"+"ScreenShot"+fileName+".png"));
+					/***************************************************END SCREENSHOT CODE***************************************************/
 				}else{
-					PrintWriter writer = new PrintWriter(file);
-					writer.print("");
-					writer.close();
+					File file =new File("Resource/CustomMaps/GameMatrix/"+tempFile.fileName);
+					if(!file.exists()){
+						file.createNewFile();
+					}else{
+						PrintWriter writer = new PrintWriter(file);
+						writer.print("");
+						writer.close();
+					}
+					try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)))) {
+						out.println(fileContent.toString());
+					}catch (IOException ed) {
+					}
+					fileContent=new StringBuffer();
+					String tempFileName=tempFile.fileName.replaceAll("txt", "png");
+					tempFileName=tempFileName.replaceAll("Map", "ScreenShot");
+					BufferedImage matrixImage=null;
+					matrixImage = new BufferedImage(gameMatrixPanel.getSize().width, gameMatrixPanel.getSize().height,BufferedImage.TYPE_INT_RGB);
+					gameMatrixPanel.printAll (matrixImage.getGraphics());
+					file =new File("Resource/CustomMaps/ScreenShots/"+tempFileName);
+					ImageIO.write(matrixImage, "png", file);
 				}
-				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)))) {
-					out.println(fileContent.toString());
-				}catch (IOException ed) {
-				}
-				fileContent=new StringBuffer();
-				/***************************************************END MAP SAVE CODE***************************************************/
-
-				/***************************************************START SCREENSHOT CODE***************************************************/
-				//Code to save file name to a header file
-				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("Resource/CustomMaps/ScreenShots/ScreenShotsHeader.txt", true)))) {
-					out.println("ScreenShot"+fileName+".png");
-				}catch (IOException ed) {
-				}
-				//Code to save screen shots
-				BufferedImage matrixImage=null;
-				matrixImage = new BufferedImage(gameMatrixPanel.getSize().width, gameMatrixPanel.getSize().height,BufferedImage.TYPE_INT_RGB);
-				gameMatrixPanel.printAll (matrixImage.getGraphics());
-				ImageIO.write(matrixImage, "png", new File("Resource/CustomMaps/ScreenShots/"+"ScreenShot"+fileName+".png"));
-				/***************************************************END SCREENSHOT CODE***************************************************/
 			} catch (Exception ef) {
 				ef.printStackTrace();
 			}
