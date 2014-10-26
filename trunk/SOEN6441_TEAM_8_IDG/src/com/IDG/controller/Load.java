@@ -174,6 +174,7 @@ public class Load  extends JFrame  {
 				
 			}
 		}
+		mapGrid.setLayout(new GridLayout(loadbuttons.length,loadbuttons[0].length));
 		p2.setVisible(true);
 		//p2.setLayout(new GridLayout(loadbuttons.length,loadbuttons[0].length));
 		
