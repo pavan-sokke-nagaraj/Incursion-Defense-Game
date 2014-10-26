@@ -1,17 +1,14 @@
-package com.IDG.controller;
 
 /**
  * 
  */
-
+package com.IDG.controller;
 
 /**
  * @author Kariappa
  *
  */
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,12 +25,10 @@ public class Load  extends JFrame  {
 
 	public Load()
 	{
-		
 		super("MAPBuilder V 2.0");
-		setSize(800,600);
-		setLocationRelativeTo(null);
+		setSize(600,600);
 		setResizable(false);
-		//p2.setLayout(new GridBagLayout());
+		p2.setLayout(new GridLayout(20,20));
 		
 		//JFrame frame = new JFrame();
         
@@ -45,7 +40,7 @@ public class Load  extends JFrame  {
 		
 		
 		
-		p2.setLayout(new GridLayout(10,10));
+		//p2.setLayout(new GridLayout(10,10));
 		JFileChooser choice = new JFileChooser();
 		int option = choice.showOpenDialog(this);
 		File mapFile=null;
@@ -77,48 +72,67 @@ public class Load  extends JFrame  {
 		wall wl=null;
 		int count=0;
 		wall loadbuttons[][]=new wall[rows][cols];
-		setPreferredSize(new Dimension(40, 40));
+		Component [] abc=p2.getComponents();
+		System.out.println("Ajayqwerty"+abc.length);
 		for(String line : lines) {            // for each line, add the 1s
 			char[] chars = line.toCharArray();
-			
+			System.out.println("J Iteration"+chars.length);
 			for(j = 0 ; j < chars.length ; ++j) {
 				wl=new wall();
-				//wl.setDirection(chars[j]);
+				wl.setDirection(chars[j]);
 
 				switch(chars[j]) {
-				case '*':
+				case 'B':
 					wl.setIcon(null);
 					wl.setPath(false);
+
 					break;
-				case '-':
-					wl.setIcon(wl.getPath());
+				case 'U':
+					wl.setIcon(wl.getUpDirectionImg());
 					wl.setPath(true);
+					wl.setDirection('U');
+
 					break;
-				case 'S':
-					wl.setIcon(wl.getStart());
-					wl.setStart(true);
+				case 'R':
+					wl.setIcon(wl.getRightDirectionImg());
+					wl.setPath(true);
+					wl.setDirection('R');
 					break;
-				case 'E':
-					wl.setIcon(wl.getEnd());
-					wl.setEnd(true);
+				case 'D':
+					wl.setIcon(wl.getDownDirectionImg());
+					wl.setPath(true);
+					wl.setDirection('D');
 					break;
-				
+				case 'L':
+					wl.setIcon(wl.getLeftDirectionImg());
+					wl.setPath(true);
+					wl.setDirection('L');
+					break;
+
+
 				}
 				count++;
 				loadbuttons[i][j]=wl;
 			}
+
+			System.out.println("J Iteration Executed"+j);
+			
 			i++;
 
 		}
+		System.out.println("The times loadbutton is loaded::"+count);
 		
+		System.out.println("The Size of loaded Frame::"+(loadbuttons.length*loadbuttons[0].length));
 		for( i=0;i<loadbuttons.length;i++){
 			for(j=0;j<loadbuttons[0].length;j++){
-				loadbuttons[i][j].setPreferredSize(new Dimension(40,40));
-				p2.add(loadbuttons[i][j]);
+				System.out.println("Check for each button direction::"+loadbuttons[i][j].getDirection());
+					
+		p2.add(loadbuttons[i][j]);
 			}}
+		Component [] XYZ=p2.getComponents();
+		System.out.println("After"+XYZ.length);
 		add(p2);
 		setVisible(true);
-		p2.setLayout(new GridLayout(loadbuttons.length,loadbuttons[0].length));
 		//frame.pack();
 		//frame.setVisible(true);
 		/*p2.repaint();
