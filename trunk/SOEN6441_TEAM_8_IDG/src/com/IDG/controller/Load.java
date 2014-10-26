@@ -79,6 +79,7 @@ public class Load  extends JFrame  {
 		p2.add(gameButtons,BorderLayout.SOUTH);
 		Component[] components = p2.getComponents();
 		System.out.println("Number of Comp="+components.length);
+		setGameMatrixOnPanel(new File("Resource/DefaultMaps/GameMatrix/Map129.txt"));
 		p2.setVisible(true);
 	}
 	
