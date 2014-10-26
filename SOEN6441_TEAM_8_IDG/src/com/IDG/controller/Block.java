@@ -36,16 +36,30 @@ public class Block extends Rectangle {
 	public int groundId; // id to set the tower/block value during the game
 	
 	public int airId; // id to set the movement of the creatures during the game
+/**
+ * Sets the bounding Rectangle of this Rectangle to match the specified
+ * Rectangle
+ * @param x - the new X coordinate for the upper-left corner of this Rectangle
+ * @param y the new Y coordinate for the upper-left corner of this Rectangle
+ * @param width the new width for this Rectangle
+ * @param height  the new height for this Rectangle
+ * @param createId  id to sets the value of block/path to save/load/edit the map
+ * @param airId  id to set the movement of the critter during the game
+ *
+ */
 
-	// Sets the bounding Rectangle of this Rectangle to match the specified
-	// Rectangle.
 	public Block(int x, int y, int width, int height, int createId, int airId) {
 		setBounds(x, y, width, height);
 		this.createId = createId;
 		this.groundId = createId;
 		this.airId = airId;
 	}
-
+/**
+ *@param Graphics : Sets this graphics context's current color to the specified color.
+ * All subsequent graphics operations using this graphics context use this specified color.
+ * Draws the outline of the specified rectangle. The left and right edges of the rectangle are at x and x + width.
+ *The top and bottom edges are at y and y + height. The rectangle is drawn using the graphics context's current color.
+ */
 	// draw tower spreadsheet
 	// draw ground spreadsheet
 	public void draw(Graphics gp) {
