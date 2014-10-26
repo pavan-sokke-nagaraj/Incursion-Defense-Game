@@ -28,12 +28,12 @@ public class Arena extends JPanel {
 //		 repaint();
 	}
 
-	private int gridRow; //
-	private int gridColumn;
-	private boolean isMapCreated = false;
+	private int gridRow; //the number of rows in the grid
+	private int gridColumn;//the number of columns in the grid
+	private boolean isMapCreated = false;// checks weather the map has been created
 //	private Thread thread = new Thread(this);
-	private BattleField createBattleField;
-	private GameFileManager gameFileManager;
+	private BattleField createBattleField;//an instance of class BatteleField
+	private GameFileManager gameFileManager;// an instance of the class GameFile manager
 	// Image array to import and set it to rectangles
 	private Image[] tileset_grass = new Image[100];
 	// Image array to import and set it to rectangles

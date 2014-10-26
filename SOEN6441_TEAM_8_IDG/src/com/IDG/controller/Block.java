@@ -14,23 +14,27 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 /**
+ * the class Blocks saves the maps created by the users, if the user specifies a tile as a block it saves a value of 0 in that block
+ * and a value of 1 if the users specifies a value as a path.
+ * the values of the tiles are saved in an arrayList that helps when the user want to save or load a map the values of the tiles determins 
+ * the map display 
  * @author p@!
  *
  */
 public class Block extends Rectangle {
 
-	private static List<Block> blocks = new ArrayList<Block>();
+	private static List<Block> blocks = new ArrayList<Block>(); //arrayList saving the values of the tiles in the created map
 
-	private Point nodeCoordinates;
+	private Point nodeCoordinates; // the position of the tiles
 
 	// used during creation of the map ONLY!!!!
 	// holds if the id is a block or the path
 	// value block = 0
 	// value path = 1
-	public int createId; // id to sest the value of block/path to save/load/edit
-							// the map
+	public int createId; // id to sets the value of block/path to save/load/edit the map
 
 	public int groundId; // id to set the tower/block value during the game
+	
 	public int airId; // id to set the movement of the creatures during the game
 
 	// Sets the bounding Rectangle of this Rectangle to match the specified
