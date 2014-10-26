@@ -80,6 +80,7 @@ public class ListenToSave implements ActionListener {
 		StringBuffer erroCode=new StringBuffer();
 		if(!isValid)
 		{
+			fileContent=new StringBuffer();
 			if (errorList.size()>0)
 			{
 				for(int i=0;i<errorList.size();i++)

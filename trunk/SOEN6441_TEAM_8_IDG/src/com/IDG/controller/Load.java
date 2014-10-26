@@ -114,21 +114,18 @@ public class Load  extends JFrame  {
 		mapType1=mapType;
 		try {
 			myPicture = ImageIO.read(new File("Resource/"+mapType+"/ScreenShots/"+fileName));
-			//myPicture = ImageIO.read(new File("D://end.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//Snapshot code
-		//Image scaledImage = myPicture.getScaledInstance(jPanel.getWidth(),jPanel.getHeight(),Image.SCALE_SMOOTH);
 		fileName1=fileName1.replaceAll("png", "txt");
 		fileName1=fileName1.replaceAll("ScreenShot", "Map");
 		MapButton picLabel = new MapButton(fileName1,mapType1);
-		/**if(mapType.equals("CustomMaps")){
+		if(mapType.equals("CustomMaps")){
 			picLabel.setText("User Defined Map "+(buttonList.size()+1));
 		}else{
 			picLabel.setText("Default Map "+(buttonList.size()+1));
-		}**/
+		}
 		
 		ImageIcon ii = new ImageIcon(myPicture);
 		int scale = 10; // 2 times smaller
@@ -136,7 +133,6 @@ public class Load  extends JFrame  {
 		int newWidth = width / scale;
 		picLabel.setIcon(new ImageIcon(ii.getImage().getScaledInstance(newWidth, -1,
 		            java.awt.Image.SCALE_SMOOTH)));
-		//picLabel.setIcon(new ImageIcon(myPicture));
 		picLabel.setMaximumSize(new Dimension(10,10));
 		picLabel.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -161,7 +157,6 @@ public class Load  extends JFrame  {
 		try {
 			sc = new Scanner(mapFile);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		while(sc.hasNextLine()) {
