@@ -12,10 +12,14 @@ import javax.swing.JPanel;
 
 /**
  * @author p_sokke
- *
+ * The class Arena is the display ground of the game, this is a view of the game where all components required to 
+ * display an initial grid where the user can create his map.
+ * 
  */
 public class Arena extends JPanel {
-
+/**
+ * The constructor of the class Arena with no parameter where the background color is set
+ * */
 	public Arena() {
 		setBackground(Color.YELLOW);
 		System.out.println("A" + this.gridRow);
@@ -24,7 +28,7 @@ public class Arena extends JPanel {
 //		 repaint();
 	}
 
-	private int gridRow;
+	private int gridRow; //
 	private int gridColumn;
 	private boolean isMapCreated = false;
 //	private Thread thread = new Thread(this);
@@ -34,7 +38,9 @@ public class Arena extends JPanel {
 	private Image[] tileset_grass = new Image[100];
 	// Image array to import and set it to rectangles
 	private Image[] tileset_attack = new Image[100];
-
+/**
+ * the setters and getters on the private data members of the class Arena 
+ * */
 	public int getGridRow() {
 		return gridRow;
 	}
@@ -98,7 +104,11 @@ public class Arena extends JPanel {
 	public void setTileset_attack(Image[] tileset_attack) {
 		this.tileset_attack = tileset_attack;
 	}
-
+/**
+ * defining the size of the tiles on the initial screen view 
+ *  @param Graphics draw the rectangle with the given specified size
+ * 
+ * */
 	public void paintComponent(Graphics graphics) {
 		 System.out.println("paintComponent x:\t"+this.gridRow);
 		 System.out.println("paintComponent y:\t"+gridColumn);
