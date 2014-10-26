@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
  * the values of the tiles are saved in an arrayList that helps when the user want to save or load a map the values of the tiles determins 
  * the map display 
  * @author p@!
+ * @author reem
  *
  */
 public class Block extends Rectangle {

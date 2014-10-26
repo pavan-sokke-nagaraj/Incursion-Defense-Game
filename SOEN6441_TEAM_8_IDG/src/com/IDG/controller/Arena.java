@@ -14,7 +14,7 @@ import javax.swing.JPanel;
  * @author p_sokke
  * The class Arena is the display ground of the game, this is a view of the game where all components required to 
  * display an initial grid where the user can create his map.
- * 
+ * @author reem
  */
 public class Arena extends JPanel {
 /**
