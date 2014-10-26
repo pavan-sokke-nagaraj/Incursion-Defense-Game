@@ -1,6 +1,7 @@
 package com.IDG.controller;
 
 import javax.swing.*;
+
 import java.awt.event.*;
 
 public class wall extends JButton implements ActionListener{
@@ -18,10 +19,10 @@ public class wall extends JButton implements ActionListener{
 	
 	public wall()
 	{
-		path=new ImageIcon("F://path.png");
-		brick=new ImageIcon("F://path2.png");
-		start=new ImageIcon("D://start.jpg");
-		end=new ImageIcon("D://end.png");
+		path=new ImageIcon("Resource/GameImages/green.jpg");
+		brick=new ImageIcon("D://path2.png");
+		start=new ImageIcon("Resource/GameImages/start.jpg");
+		end=new ImageIcon("Resource/GameImages/end.png");
 		
 		
 		isStart=false;
