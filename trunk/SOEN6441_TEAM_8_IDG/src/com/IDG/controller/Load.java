@@ -40,6 +40,7 @@ public class Load  extends JFrame  {
 	ArrayList<String> errorList = null;
 	wall temp[][]=null;
 	wall temp1[][]=null;
+	wall loadbuttons[][];
 	JPanel dMapGrid=new JPanel();
 	JPanel udMapGrid=new JPanel();
 	JPanel gameButtons=new JPanel();
@@ -64,6 +65,7 @@ public class Load  extends JFrame  {
 	int gridColumn = 0;
 	String mapType1 = null;
 	int counter= 0;
+	
 
 	public Load()
 	{
@@ -83,6 +85,7 @@ public class Load  extends JFrame  {
 		//Read ScreenShotHeaderFile
 		setgridLayoutForMaps("CustomMaps",udMapGrid);
 		setgridLayoutForMaps("DefaultMaps",dMapGrid);
+		gameactionbuttons ();
 		align.setLayout(new BorderLayout());
 		align.add(udMapGrid,BorderLayout.EAST);
 		align.add(dMapGrid,BorderLayout.CENTER);
@@ -240,17 +243,20 @@ public class Load  extends JFrame  {
 
 		}
 
-		for( i=0;i<loadbuttons.length;i++){
-			for(j=0;j<loadbuttons[0].length;j++){
+		for( i=0;i<loadbuttons.length;i++)
+		{
+			for(j=0;j<loadbuttons[0].length;j++)
+			{
 				loadbuttons[i][j].setPreferredSize(new Dimension(40,40));
 				mapGrid.add(loadbuttons[i][j]);
-			}}
-		for ( i=0;i<loadbuttons.length;i++){
-			for ( j=0;j<loadbuttons[0].length;j++){
+			}
+		}
+		for ( i=0;i<loadbuttons.length;i++)
+		{
+			for ( j=0;j<loadbuttons[0].length;j++)
+			{
 				if(!loadbuttons[i][j].isPath)
 					loadbuttons[i][j].setEnabled(false);
-
-
 			}
 		}
 		mapGrid.setVisible(true);
@@ -258,80 +264,83 @@ public class Load  extends JFrame  {
 		System.out.println("Number="+mapGrid.getComponentCount());
 		p2.add(mapGrid,BorderLayout.CENTER);
 		p2.setVisible(true);
-		temp=loadbuttons;
-
-		edit.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				for ( int i=0;i<temp.length;i++){
-					for ( int j=0;j<temp[0].length;j++){
-						temp[i][j].setEnabled(true);
-					}
-				}
-				save.setEnabled(true);
-			}
-		});
-
-		create.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JPanel rowColPanel = new JPanel();
-				JTextField rowField = new JTextField(2);
-				JTextField colField = new JTextField(2);
-				
-				rowColPanel.setLayout(new BoxLayout(rowColPanel, BoxLayout.Y_AXIS));
-				rowColPanel.add(new JLabel("Number of Rows",
-						SwingConstants.CENTER));
-				rowColPanel.add(rowField);
-
-				rowColPanel.add(Box.createVerticalStrut(10)); // a spacer
-				rowColPanel.add(new JLabel("Number of Columns"));
-				rowColPanel.add(colField);
-				int result = JOptionPane.showConfirmDialog(null, rowColPanel,
-						"Please Enter Nuber of rows and columns",
-						JOptionPane.OK_CANCEL_OPTION);
-				if (result == JOptionPane.OK_OPTION) {
-					System.out.println("rowField row value: " + rowField.getText());
-					System.out.println("colField col value: " + colField.getText());
-					gridRow = Integer.parseInt(rowField.getText());
-					gridColumn = Integer.parseInt(colField.getText());
-				}
-
-				temp1=new wall[gridRow][gridColumn];
-				mapGrid.removeAll();
-				mapGrid.revalidate();
-				//mapGrid.setVisible(false);
-				for(int i=0;i<gridRow;i++){
-					for(int j=0;j<gridColumn;j++){
-						temp1[i][j]=new wall();
-						temp1[i][j].setPreferredSize(new Dimension(40, 40));
-						mapGrid.add(temp1[i][j]);	
-					}
-				}
-				mapGrid.setLayout(new GridLayout(gridRow, gridColumn));
-				mapGrid.setVisible(true);
-				errorList = new ArrayList<String>();
-
-			}
-
-		});
-
-		save.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				new ListenToSave(temp1,errorList,tArea1,mapGrid,gridRow,gridColumn);
-				System.out.println("SAve clicked");
-			
-			}	
-			
-		});
-
+		
 	}
 
+	void gameactionbuttons ()
+	{
+	temp=loadbuttons;
 
+	edit.addActionListener(new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			for ( int i=0;i<temp.length;i++){
+				for ( int j=0;j<temp[0].length;j++){
+					temp[i][j].setEnabled(true);
+				}
+			}
+			save.setEnabled(true);
+		}
+	});
+
+	create.addActionListener(new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JPanel rowColPanel = new JPanel();
+			JTextField rowField = new JTextField(2);
+			JTextField colField = new JTextField(2);
+			
+			rowColPanel.setLayout(new BoxLayout(rowColPanel, BoxLayout.Y_AXIS));
+			rowColPanel.add(new JLabel("Number of Rows",
+					SwingConstants.CENTER));
+			rowColPanel.add(rowField);
+
+			rowColPanel.add(Box.createVerticalStrut(10)); // a spacer
+			rowColPanel.add(new JLabel("Number of Columns"));
+			rowColPanel.add(colField);
+			int result = JOptionPane.showConfirmDialog(null, rowColPanel,
+					"Please Enter Nuber of rows and columns",
+					JOptionPane.OK_CANCEL_OPTION);
+			if (result == JOptionPane.OK_OPTION) {
+				System.out.println("rowField row value: " + rowField.getText());
+				System.out.println("colField col value: " + colField.getText());
+				gridRow = Integer.parseInt(rowField.getText());
+				gridColumn = Integer.parseInt(colField.getText());
+			}
+
+			temp1=new wall[gridRow][gridColumn];
+			mapGrid.removeAll();
+			mapGrid.revalidate();
+			//mapGrid.setVisible(false);
+			for(int i=0;i<gridRow;i++){
+				for(int j=0;j<gridColumn;j++){
+					temp1[i][j]=new wall();
+					temp1[i][j].setPreferredSize(new Dimension(40, 40));
+					mapGrid.add(temp1[i][j]);	
+				}
+			}
+			mapGrid.setLayout(new GridLayout(gridRow, gridColumn));
+			mapGrid.setVisible(true);
+			errorList = new ArrayList<String>();
+
+		}
+
+	});
+
+	save.addActionListener(new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			new ListenToSave(temp1,errorList,tArea1,mapGrid,gridRow,gridColumn);
+			System.out.println("SAve clicked");
+		
+		}	
+		
+	});
+
+	}
 }
