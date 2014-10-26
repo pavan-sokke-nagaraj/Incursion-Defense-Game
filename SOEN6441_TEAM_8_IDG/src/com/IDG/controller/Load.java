@@ -113,8 +113,8 @@ public class Load  extends JFrame  {
 		fileName1=fileName;
 		mapType1=mapType;
 		try {
-		//	myPicture = ImageIO.read(new File("Resource/CustomMaps/ScreenShots/"+fileName));
-			myPicture = ImageIO.read(new File("D://end.png"));
+			myPicture = ImageIO.read(new File("Resource/"+mapType+"/ScreenShots/"+fileName));
+			//myPicture = ImageIO.read(new File("D://end.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,18 +123,25 @@ public class Load  extends JFrame  {
 		//Image scaledImage = myPicture.getScaledInstance(jPanel.getWidth(),jPanel.getHeight(),Image.SCALE_SMOOTH);
 		fileName1=fileName1.replaceAll("png", "txt");
 		fileName1=fileName1.replaceAll("ScreenShot", "Map");
-		MapButton picLabel = new MapButton(fileName1);
-		if(mapType.equals("CustomMaps")){
+		MapButton picLabel = new MapButton(fileName1,mapType1);
+		/**if(mapType.equals("CustomMaps")){
 			picLabel.setText("User Defined Map "+(buttonList.size()+1));
 		}else{
 			picLabel.setText("Default Map "+(buttonList.size()+1));
-		}
+		}**/
+		
+		ImageIcon ii = new ImageIcon(myPicture);
+		int scale = 10; // 2 times smaller
+		int width = ii.getIconWidth();
+		int newWidth = width / scale;
+		picLabel.setIcon(new ImageIcon(ii.getImage().getScaledInstance(newWidth, -1,
+		            java.awt.Image.SCALE_SMOOTH)));
 		//picLabel.setIcon(new ImageIcon(myPicture));
-		//picLabel.setMaximumSize(new Dimension(10,10));
+		picLabel.setMaximumSize(new Dimension(10,10));
 		picLabel.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				MapButton file = (MapButton)e.getSource();
-				setGameMatrixOnPanel(new File("Resource/"+mapType1+"/GameMatrix/"+file.fileName));
+				setGameMatrixOnPanel(new File("Resource/"+file.mapType+"/GameMatrix/"+file.fileName));
 			}
 		});
 		buttonList.add(picLabel);

@@ -129,7 +129,6 @@ public class ListenToSave implements ActionListener {
 				//Code to save screen shots
 				BufferedImage matrixImage=null;
 				matrixImage = new BufferedImage(gameMatrixPanel.getSize().width, gameMatrixPanel.getSize().height,BufferedImage.TYPE_INT_RGB);
-				//matrixImage=resize(matrixImage,100,100);
 				gameMatrixPanel.printAll (matrixImage.getGraphics());
 				ImageIO.write(matrixImage, "png", new File("Resource/CustomMaps/ScreenShots/"+"ScreenShot"+fileName+".png"));
 				/***************************************************END SCREENSHOT CODE***************************************************/
@@ -142,15 +141,4 @@ public class ListenToSave implements ActionListener {
 		}
 
 	}
-	public static BufferedImage resize(BufferedImage img, int newW, int newH) { 
-	    Image tmp = img.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-	    BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
-
-	    Graphics2D g2d = dimg.createGraphics();
-	    g2d.drawImage(tmp, 0, 0, null);
-	    g2d.dispose();
-
-	    return dimg;
-	} 
-
 }
