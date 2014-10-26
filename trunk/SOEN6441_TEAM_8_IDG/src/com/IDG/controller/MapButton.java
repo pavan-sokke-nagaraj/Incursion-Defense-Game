@@ -6,7 +6,9 @@ import javax.swing.JButton;
 
 public class MapButton extends JButton{
 	String fileName;
-	MapButton(String fileName){
+	String mapType;
+	MapButton(String fileName,String mapType){
 		this.fileName=fileName;
+		this.mapType=mapType;
 	}
 }
