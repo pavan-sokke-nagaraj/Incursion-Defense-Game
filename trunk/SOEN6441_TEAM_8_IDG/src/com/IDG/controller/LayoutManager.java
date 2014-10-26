@@ -99,6 +99,7 @@ public class LayoutManager {
 			 */
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
+			new Load();
 			}
 		});
 		fileMenu.add(fileLoad);
