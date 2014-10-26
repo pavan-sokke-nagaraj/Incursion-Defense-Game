@@ -5,7 +5,9 @@ package com.IDG.controller;
 
 
 /**
+ * the controller sets the view and manipulates the model objects
  * @author p_sokke
+ * @author reem
  *
  */
 public class Controller {

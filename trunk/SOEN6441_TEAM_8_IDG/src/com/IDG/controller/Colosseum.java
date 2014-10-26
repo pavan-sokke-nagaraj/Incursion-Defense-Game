@@ -21,7 +21,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 /**
+ *the implementation of the action Listener on the frame and layout and menu
  * @author p_sokke
+ * @author reem
  *
  */
 public class Colosseum extends JFrame /*implements ActionListener*/ {
