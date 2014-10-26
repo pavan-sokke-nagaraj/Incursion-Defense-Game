@@ -13,12 +13,19 @@ import java.util.Scanner;
 import javax.swing.JFileChooser;
 
 /**
+ * this class manages the saving and loading pf the maps created by users 
+ * the directory is specified as a string 
  * @author p_sokke
  *
  */
 public class GameFileManager {
 	static String directory = "GameSave";
-
+/**
+ * loading a saved game on the directory 
+ * @param loadFileName takes the path to the game to be 
+ * @author reem
+ * 
+ */
 	public void loadSavedGame(String loadFileName) {
 
 		String loadFilePath = directory + "/" + loadFileName;
@@ -49,7 +56,11 @@ public class GameFileManager {
 		}
 
 	}
-
+/**
+ * saving a game to a file it takes a 2 dimensional array of bits so the maps is saved as a series of digits 
+ * @param block the maps to ba saves represented as a 2 D array
+ * 
+ * */
 	public static void saveGameFile(Block[][] block) {
 
 		JFileChooser fileChooser = new JFileChooser();
