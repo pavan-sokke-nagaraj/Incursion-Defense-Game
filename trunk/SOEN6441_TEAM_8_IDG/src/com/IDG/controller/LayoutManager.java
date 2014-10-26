@@ -13,6 +13,12 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.IDG.controller.Block;
+import com.IDG.controller.GameFileManager;
+import com.IDG.controller.Load;
+import com.IDG.controller.MapEditorView;
+import com.IDG.controller.MapSimulatorView;
+import com.IDG.controller.World;
 import com.IDG.controller.World.WorldMode;
 
 /**
