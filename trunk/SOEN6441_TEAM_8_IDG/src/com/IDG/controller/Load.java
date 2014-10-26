@@ -40,6 +40,7 @@ public class Load  extends JFrame  {
 	JPanel align =new JPanel();
 	JFrame p2= new JFrame();
 	String fileName1=null;
+	String mapType1 = null;
 	JButton save = new JButton("Save");
 	JButton edit = new JButton("Edit");
 	JButton game = new JButton("Start Game");
@@ -64,40 +65,8 @@ public class Load  extends JFrame  {
 		
 		/*************************************************************MY CODE*********************************************************************/
 		//Read ScreenShotHeaderFile
-		Scanner sc=null;
-		String line1=null;
-		try {
-			sc = new Scanner(new File("Resource/CustomMaps/ScreenShots/ScreenShotsHeader.txt"));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		ArrayList <MapButton>buttonList= new ArrayList <MapButton> ();
-		while(sc.hasNextLine()) {
-			line1=sc.nextLine().toString();
-			if(line1!=null&&line1!=""){
-				setLabelsForScreenShots(line1,buttonList);
-			}
-			
-		}if(buttonList.size()==0)
-			udMapGrid.setLayout(new GridLayout(1,1));
-			else
-		udMapGrid.setLayout(new GridLayout(buttonList.size(),buttonList.size()));
-		for (int i=0;i<buttonList.size();i++)
-		{
-			udMapGrid.add(buttonList.get(i));
-		}
-		
-		dMapGrid.setLayout(new GridLayout(4,4));
-		/*************************************************************MY CODE*********************************************************************/
-		
-		/*udMapGrid.add(udMap1);
-		udMapGrid.add(udMap2);
-		udMapGrid.add(udMap3);
-		udMapGrid.add(udMap4);*/
-		dMapGrid.add(dMap1);
-		dMapGrid.add(dMap2);
-		dMapGrid.add(dMap3);
-		dMapGrid.add(dMap4);
+		setgridLayoutForMaps("CustomMaps",udMapGrid);
+		setgridLayoutForMaps("DefaultMaps",dMapGrid);
 		align.setLayout(new BorderLayout());
 		align.add(udMapGrid,BorderLayout.EAST);
 		align.add(dMapGrid,BorderLayout.WEST);
@@ -105,33 +74,44 @@ public class Load  extends JFrame  {
 		gameButtons.add(save);
 		gameButtons.add(edit);
 		gameButtons.add(game);
-		
-		
-		
-				p2.setLayout(new BorderLayout());
-		
-		
-		//p2.add(udMapGrid,BorderLayout.EAST);
-		//p2.add(dMapGrid,BorderLayout.EAST);
+		p2.setLayout(new BorderLayout());
 		p2.add(align,BorderLayout.EAST);
 		p2.add(gameButtons,BorderLayout.SOUTH);
 		Component[] components = p2.getComponents();
 		System.out.println("Number of Comp="+components.length);
-		//add(p2);
-		
 		p2.setVisible(true);
-		
-		//p2.setLayout(new GridLayout(loadbuttons.length,loadbuttons[0].length));
-		
-		//frame.pack();
-		//frame.setVisible(true);
-		/*p2.repaint();
-		p2.setLayout(new GridLayout(10,10));
-		p2.setVisible(true);*/
 	}
-	public void setLabelsForScreenShots(String fileName,ArrayList <MapButton>buttonList ){
+	
+	public void setgridLayoutForMaps(String mapType,JPanel grid){
+		Scanner sc=null;
+		String line=null;
+		try {
+			sc = new Scanner(new File("Resource/"+mapType+"/ScreenShots/ScreenShotsHeader.txt"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		ArrayList <MapButton>udButtonList= new ArrayList <MapButton> ();
+		while(sc.hasNextLine()) {
+			line=sc.nextLine().toString();
+			if(line!=null&&line!=""){
+				setLabelsForScreenShots(line,udButtonList,mapType);
+			}
+		}
+		if(udButtonList.size()==0) {
+			grid.setLayout(new GridLayout(1,1));
+		} else{
+			grid.setLayout(new GridLayout(udButtonList.size(),udButtonList.size()));
+		}
+		for (int i=0;i<udButtonList.size();i++)
+		{
+			grid.add(udButtonList.get(i));
+		}
+	}
+	
+	public void setLabelsForScreenShots(String fileName,ArrayList <MapButton>buttonList,String mapType ){
 		BufferedImage myPicture=null;
 		fileName1=fileName;
+		mapType1=mapType;
 		try {
 		//	myPicture = ImageIO.read(new File("Resource/CustomMaps/ScreenShots/"+fileName));
 			myPicture = ImageIO.read(new File("D://end.png"));
@@ -143,14 +123,18 @@ public class Load  extends JFrame  {
 		//Image scaledImage = myPicture.getScaledInstance(jPanel.getWidth(),jPanel.getHeight(),Image.SCALE_SMOOTH);
 		fileName1=fileName1.replaceAll("png", "txt");
 		fileName1=fileName1.replaceAll("ScreenShot", "Map");
-		System.out.println(fileName1);
 		MapButton picLabel = new MapButton(fileName1);
+		if(mapType.equals("CustomMaps")){
+			picLabel.setText("User Defined Map "+(buttonList.size()+1));
+		}else{
+			picLabel.setText("Default Map "+(buttonList.size()+1));
+		}
 		//picLabel.setIcon(new ImageIcon(myPicture));
 		//picLabel.setMaximumSize(new Dimension(10,10));
 		picLabel.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				MapButton file = (MapButton)e.getSource();
-				setGameMatrixOnPanel(new File("Resource/CustomMaps/GameMatrix/"+file.fileName));
+				setGameMatrixOnPanel(new File("Resource/"+mapType1+"/GameMatrix/"+file.fileName));
 			}
 		});
 		buttonList.add(picLabel);
@@ -187,6 +171,7 @@ public class Load  extends JFrame  {
 			cols = Math.max(cols, line.length());
 		}
 		int i = 0,j=0;
+		
 		wall wl=null;
 		int count=0;
 		wall loadbuttons[][]=new wall[rows][cols];
@@ -196,8 +181,6 @@ public class Load  extends JFrame  {
 			
 			for(j = 0 ; j < chars.length ; ++j) {
 				wl=new wall();
-				//wl.setDirection(chars[j]);
-
 				switch(chars[j]) {
 				case '*':
 					wl.setIcon(null);
@@ -242,8 +225,5 @@ public class Load  extends JFrame  {
 		System.out.println("Number="+mapGrid.getComponentCount());
 		p2.add(mapGrid,BorderLayout.CENTER);
 		p2.setVisible(true);
-		
-
 	}
-
 }
