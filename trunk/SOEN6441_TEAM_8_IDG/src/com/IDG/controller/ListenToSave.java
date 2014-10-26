@@ -32,7 +32,7 @@ import com.IDG.utils.MapValidityHelper;
  * @author Ajay
  */
 
-public class ListenToSave implements ActionListener {
+public class ListenToSave  {
 	wall buttons[][];
 	JFrame frame=new JFrame();
 	JFrame p2;
@@ -40,18 +40,17 @@ public class ListenToSave implements ActionListener {
 	JTextArea tArea1;
 	JPanel gameMatrixPanel=null;
 	StringBuffer fileContent=new StringBuffer();
+	int row=0,column=0;
 
-	public ListenToSave(wall buttons[][], JFrame p2,ArrayList<String> errorList, JTextArea tArea1,JPanel p){
+	public ListenToSave(wall buttons[][],ArrayList<String> errorList, JTextArea tArea1,JPanel p,int row,int column)
+	{
+		this.row=row;
+		this.column=column;
 		this.tArea1=tArea1;
 		this.errorList=errorList;
 		this.buttons=buttons;
-		this.p2=p2;
 		gameMatrixPanel=p;
 
-	}
-	public void actionPerformed(ActionEvent e) {
-
-		System.out.println(" Printed ");
 		String [][] gridMap=new String[buttons.length][buttons[0].length];
 		for (int i=0;i<buttons.length;i++){
 			for (int j=0;j<buttons[0].length;j++){
@@ -95,10 +94,11 @@ public class ListenToSave implements ActionListener {
 		}else{
 			try{
 				//Genrating Random File Name
+				tArea1.setText(" ");
 				Random rn = new Random();
 				int range = 1000 - 0 + 1;
 				int fileName =  rn.nextInt(range) + 0;
-				
+
 				/***************************************************START MAP SAVE CODE***************************************************/
 				//Code to save file name to a header file
 				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("Resource/CustomMaps/GameMatrix/GameMatrixHeader.txt", true)))) {
@@ -108,19 +108,19 @@ public class ListenToSave implements ActionListener {
 				//Creating a Map File 
 				File file =new File("Resource/CustomMaps/GameMatrix/"+"Map"+fileName+".txt");
 				if(!file.exists()){
-	    			file.createNewFile();
-	    		}else{
-	    			PrintWriter writer = new PrintWriter(file);
-	    			writer.print("");
-	    			writer.close();
-	    		}
+					file.createNewFile();
+				}else{
+					PrintWriter writer = new PrintWriter(file);
+					writer.print("");
+					writer.close();
+				}
 				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)))) {
-				    out.println(fileContent.toString());
+					out.println(fileContent.toString());
 				}catch (IOException ed) {
 				}
 				fileContent=new StringBuffer();
 				/***************************************************END MAP SAVE CODE***************************************************/
-				
+
 				/***************************************************START SCREENSHOT CODE***************************************************/
 				//Code to save file name to a header file
 				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("Resource/CustomMaps/ScreenShots/ScreenShotsHeader.txt", true)))) {
@@ -136,9 +136,16 @@ public class ListenToSave implements ActionListener {
 			} catch (Exception ef) {
 				ef.printStackTrace();
 			}
+			
 			JOptionPane.showMessageDialog(frame,
 					"Map Saved Succesfully.");
-			p2.dispose();
+			for (int i=0;i<row;i++){
+				for(int j=0;j<column;j++)
+				{
+					buttons[i][j].setEnabled(false);
+				}
+			}
+			//p2.dispose();
 		}
 
 	}
