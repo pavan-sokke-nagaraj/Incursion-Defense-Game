@@ -1,14 +1,18 @@
+package com.IDG.controller;
 
 /**
  * 
  */
-package com.IDG.controller;
+
 
 /**
  * @author Kariappa
  *
  */
+import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,14 +25,35 @@ import javax.swing.*;
 
 public class Load  extends JFrame  {
 
-	JPanel p2=new JPanel();
+	JPanel mapGrid=new JPanel();
+	JPanel dMapGrid=new JPanel();
+	JPanel udMapGrid=new JPanel();
+	JPanel gameButtons=new JPanel();
+	JPanel align =new JPanel();
+	JFrame p2= new JFrame();
+	
+	JButton save = new JButton("Save");
+	JButton edit = new JButton("Edit");
+	JButton game = new JButton("Start Game");
+	JButton dMap4 = new JButton("Level4");
+	JButton udMap4 = new JButton("Level4");
+	JButton dMap1 = new JButton("Level1");
+	JButton udMap1 = new JButton("Level1");
+	JButton dMap2 = new JButton("Level2");
+	JButton udMap2 = new JButton("Level2");
+	JButton dMap3 = new JButton("Level3");
+	JButton udMap3 = new JButton("Level3");
 
 	public Load()
 	{
+		
 		super("MAPBuilder V 2.0");
-		setSize(600,600);
-		setResizable(false);
-		p2.setLayout(new GridLayout(20,20));
+		p2.setSize(850,700);
+		p2.setLocationRelativeTo(null);
+		//p2.setResizable(false);
+		
+		
+		//p2.setLayout(new GridBagLayout());
 		
 		//JFrame frame = new JFrame();
         
@@ -37,10 +62,31 @@ public class Load  extends JFrame  {
         //frame.setLocationRelativeTo(null);
         
       
+		dMap1.setPreferredSize(new Dimension(60, 60));
+		udMap1.setPreferredSize(new Dimension(60, 60));
+		
+		
+		mapGrid.setLayout(new GridLayout(20,20));
+		udMapGrid.setLayout(new GridLayout(4,4));
+		udMapGrid.add(udMap1);
+		udMapGrid.add(udMap2);
+		udMapGrid.add(udMap3);
+		udMapGrid.add(udMap4);
+		dMapGrid.setLayout(new GridLayout(4,4));
+		dMapGrid.add(dMap1);
+		dMapGrid.add(dMap2);
+		dMapGrid.add(dMap3);
+		dMapGrid.add(dMap4);
+		align.setLayout(new BorderLayout());
+		align.add(udMapGrid,BorderLayout.EAST);
+		align.add(dMapGrid,BorderLayout.WEST);
+		gameButtons.setLayout(new GridLayout(1,3));
+		gameButtons.add(save);
+		gameButtons.add(edit);
+		gameButtons.add(game);
 		
 		
 		
-		//p2.setLayout(new GridLayout(10,10));
 		JFileChooser choice = new JFileChooser();
 		int option = choice.showOpenDialog(this);
 		File mapFile=null;
@@ -72,67 +118,65 @@ public class Load  extends JFrame  {
 		wall wl=null;
 		int count=0;
 		wall loadbuttons[][]=new wall[rows][cols];
-		Component [] abc=p2.getComponents();
-		System.out.println("Ajayqwerty"+abc.length);
+		setPreferredSize(new Dimension(40, 40));
 		for(String line : lines) {            // for each line, add the 1s
 			char[] chars = line.toCharArray();
-			System.out.println("J Iteration"+chars.length);
+			
 			for(j = 0 ; j < chars.length ; ++j) {
 				wl=new wall();
-				wl.setDirection(chars[j]);
+				//wl.setDirection(chars[j]);
 
 				switch(chars[j]) {
-				case 'B':
+				case '*':
 					wl.setIcon(null);
 					wl.setPath(false);
-
 					break;
-				case 'U':
-					wl.setIcon(wl.getUpDirectionImg());
+				case '-':
+					wl.setIcon(wl.getPath());
 					wl.setPath(true);
-					wl.setDirection('U');
-
 					break;
-				case 'R':
-					wl.setIcon(wl.getRightDirectionImg());
-					wl.setPath(true);
-					wl.setDirection('R');
+				case 'S':
+					wl.setIcon(wl.getStart());
+					wl.setStart(true);
 					break;
-				case 'D':
-					wl.setIcon(wl.getDownDirectionImg());
-					wl.setPath(true);
-					wl.setDirection('D');
+				case 'E':
+					wl.setIcon(wl.getEnd());
+					wl.setEnd(true);
 					break;
-				case 'L':
-					wl.setIcon(wl.getLeftDirectionImg());
-					wl.setPath(true);
-					wl.setDirection('L');
-					break;
-
-
+				
 				}
 				count++;
 				loadbuttons[i][j]=wl;
 			}
-
-			System.out.println("J Iteration Executed"+j);
-			
 			i++;
 
 		}
-		System.out.println("The times loadbutton is loaded::"+count);
 		
-		System.out.println("The Size of loaded Frame::"+(loadbuttons.length*loadbuttons[0].length));
 		for( i=0;i<loadbuttons.length;i++){
 			for(j=0;j<loadbuttons[0].length;j++){
-				System.out.println("Check for each button direction::"+loadbuttons[i][j].getDirection());
-					
-		p2.add(loadbuttons[i][j]);
+				loadbuttons[i][j].setPreferredSize(new Dimension(40,40));
+				mapGrid.add(loadbuttons[i][j]);
 			}}
-		Component [] XYZ=p2.getComponents();
-		System.out.println("After"+XYZ.length);
-		add(p2);
-		setVisible(true);
+		p2.setLayout(new BorderLayout());
+		p2.add(mapGrid,BorderLayout.CENTER);
+		
+		//p2.add(udMapGrid,BorderLayout.EAST);
+		//p2.add(dMapGrid,BorderLayout.EAST);
+		p2.add(align,BorderLayout.EAST);
+		p2.add(gameButtons,BorderLayout.SOUTH);
+		Component[] components = p2.getComponents();
+		System.out.println("Number of Comp="+components.length);
+		//add(p2);
+		for ( i=0;i<loadbuttons.length;i++){
+			for ( j=0;j<loadbuttons[0].length;j++){
+				if(!loadbuttons[i][j].isPath)
+				loadbuttons[i][j].setEnabled(false);
+				
+			}
+		}
+		p2.setVisible(true);
+		//p2.setLayout(new GridLayout(loadbuttons.length,loadbuttons[0].length));
+		
 		//frame.pack();
 		//frame.setVisible(true);
 		/*p2.repaint();
