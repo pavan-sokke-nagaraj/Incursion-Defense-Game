@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package com.IDG.controller;
 
 import java.awt.event.ActionEvent;
