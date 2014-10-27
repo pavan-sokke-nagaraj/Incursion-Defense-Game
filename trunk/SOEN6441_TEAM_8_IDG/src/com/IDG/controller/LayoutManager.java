@@ -16,9 +16,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.IDG.mapBuilder.Load;
+
 import com.IDG.mapBuilder.MapEditorView;
-import com.IDG.mapSimulator.Arsenal;
 import com.IDG.mapSimulator.Block;
 import com.IDG.mapSimulator.MapSimulatorView;
 
@@ -62,7 +61,7 @@ public class LayoutManager {
 	JMenuItem fileLoad = new JMenuItem(new AbstractAction("Create/Load") {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
-			new Load();
+			new MapBuilderController();
 		}
 	});
 			
