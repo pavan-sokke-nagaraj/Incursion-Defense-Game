@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation">
+  <notation:Diagram xmi:id="_Esw3UF3YEeSco564ISXOog" type="Ecore" name="uml.ecore_diagram" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_euA9QF3ZEeSco564ISXOog" type="2002" fontName="Segoe UI">
+      <children xmi:type="notation:DecorationNode" xmi:id="_euCLYF3ZEeSco564ISXOog" type="5002"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_euCycF3ZEeSco564ISXOog" type="7004">
+        <children xmi:type="notation:Node" xmi:id="_n9RiIF3ZEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.IDG.utils/MapValidityHelper"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_n9RiIV3ZEeSco564ISXOog"/>
+        </children>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_euCycV3ZEeSco564ISXOog"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_euCycl3ZEeSco564ISXOog"/>
+        <layoutConstraint xmi:type="notation:Ratio" xmi:id="_nRtcoF3ZEeSco564ISXOog" value="0.15789473684210525"/>
+      </children>
+      <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_euBkUF3ZEeSco564ISXOog"/>
+      <element xmi:type="ecore:EPackage" href="uml.ecore#//com.IDG.utils"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_euBkUV3ZEeSco564ISXOog" x="216" y="72"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_uCUNwF3ZEeSco564ISXOog" type="2002" fontName="Segoe UI">
+      <children xmi:type="notation:DecorationNode" xmi:id="_uCVb4F3ZEeSco564ISXOog" type="5002"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_uCVb4V3ZEeSco564ISXOog" type="7004">
+        <children xmi:type="notation:Node" xmi:id="_2uabMF3ZEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.IDG.controller/Colosseum"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_2uabMV3ZEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_LU1soF3aEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.IDG.controller/Game"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_LU1soV3aEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_MtloQF3aEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.IDG.controller/GameController"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_MtloQV3aEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_RFy-oF3aEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.IDG.controller/GameFileManager"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_RFy-oV3aEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_ShNzwF3aEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.IDG.controller/LayoutManager"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_ShNzwV3aEeSco564ISXOog"/>
+        </children>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_uCVb4l3ZEeSco564ISXOog"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_uCWC8F3ZEeSco564ISXOog"/>
+      </children>
+      <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_uCUNwV3ZEeSco564ISXOog"/>
+      <element xmi:type="ecore:EPackage" href="uml.ecore#//com.IDG.controller"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_uCUNwl3ZEeSco564ISXOog" x="492" y="60" height="111"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_6fiRgF3bEeSco564ISXOog" type="2002" fontName="Segoe UI">
+      <children xmi:type="notation:DecorationNode" xmi:id="_6fjfoF3bEeSco564ISXOog" type="5002"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_6fjfoV3bEeSco564ISXOog" type="7004">
+        <children xmi:type="notation:Node" xmi:id="_3lfs0F3cEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.IDG.mapBuilder/ListenToLoad"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_3lfs0V3cEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_56Io8F3cEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.IDG.mapBuilder/ListenToSave"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_56Io8V3cEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_73qFkF3cEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.IDG.mapBuilder/Laod"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_73qFkV3cEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_8krjoF3cEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.IDG.mapBuilder/mapbuilder"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_8krjoV3cEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_9sdrEF3cEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.IDG.mapBuilder/MapButton"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_9sdrEV3cEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_--i-AF3cEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.IDG.mapBuilder/MapEditorView"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_--i-AV3cEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_Be0iYF3dEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.IDG.mapBuilder/PopClickListener"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_Be0iYV3dEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_D30aEF3dEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.IDG.mapBuilder/PopUpDemo"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_D30aEV3dEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_E8IWwF3dEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.IDG.mapBuilder/Wall"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_E8IWwV3dEeSco564ISXOog"/>
+        </children>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_6fjfol3bEeSco564ISXOog"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_6fjfo13bEeSco564ISXOog"/>
+      </children>
+      <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_6fiRgV3bEeSco564ISXOog"/>
+      <element xmi:type="ecore:EPackage" href="uml.ecore#//com.IDG.mapBuilder"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6fiRgl3bEeSco564ISXOog" x="48" y="48"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_NHkHIF3dEeSco564ISXOog" type="2002" fontName="Segoe UI">
+      <children xmi:type="notation:DecorationNode" xmi:id="_NHkuMF3dEeSco564ISXOog" type="5002"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_NHkuMV3dEeSco564ISXOog" type="7004">
+        <children xmi:type="notation:Node" xmi:id="_IFaJ8F3fEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.MapSimulator/Arsenal"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_IFaJ8V3fEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_JM_dEF3fEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.MapSimulator/Block"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_JM_dEV3fEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_Jp-7EF3fEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.MapSimulator/KeyHandel"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_Jp-7EV3fEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_LGk04F3fEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.MapSimulator/MapSimulatorView"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_LGlb8F3fEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_MjTRkF3fEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.MapSimulator/Room"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_MjTRkV3fEeSco564ISXOog"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_NG9_UF3fEeSco564ISXOog" type="3004">
+          <element xmi:type="ecore:EClass" href="uml.ecore#//com.MapSimulator/Tower"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_NG9_UV3fEeSco564ISXOog"/>
+        </children>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_NHlVQF3dEeSco564ISXOog"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_NHlVQV3dEeSco564ISXOog"/>
+      </children>
+      <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_NHkHIV3dEeSco564ISXOog"/>
+      <element xmi:type="ecore:EPackage" href="uml.ecore#//com.MapSimulator"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NHkHIl3dEeSco564ISXOog" x="659" y="30"/>
+    </children>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_EsxeYF3YEeSco564ISXOog"/>
+    <element xmi:type="ecore:EPackage" href="uml.ecore#/"/>
+  </notation:Diagram>
+  <notation:Diagram xmi:id="_5WS44F3YEeSco564ISXOog" type="Ecore" measurementUnit="Pixel">
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_5WS44V3YEeSco564ISXOog"/>
+  </notation:Diagram>
+</xmi:XMI>
