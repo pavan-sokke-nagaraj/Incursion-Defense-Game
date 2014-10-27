@@ -40,7 +40,7 @@ public class MapBuilderController    {
 	JPanel udMapGrid=new JPanel();
 	JPanel gameButtons=new JPanel();
 	JPanel align =new JPanel();
-	JFrame p2= new JFrame();
+	JFrame panel= new JFrame();
 	String fileName1=null;
 	JLabel headerLabel;
 	JButton save = new JButton("Save");
@@ -70,8 +70,8 @@ public class MapBuilderController    {
 		JScrollPane scroller1 = new JScrollPane();
 		scroller1.setViewportView(tArea1);
 		headerLabel = new JLabel("<html>Welcome to the MAP Editor <br>Click the buttons to build a path</html>");
-		p2.setSize(1100,600);
-		p2.setLocationRelativeTo(null);
+		panel.setSize(1100,600);
+		panel.setLocationRelativeTo(null);
 		dMap1.setPreferredSize(new Dimension(60, 60));
 		udMap1.setPreferredSize(new Dimension(60, 60));
 		//Read ScreenShotHeaderFile
@@ -88,12 +88,12 @@ public class MapBuilderController    {
 		gameButtons.add(edit);
 		gameButtons.add(game);
 		gameButtons.add(create);
-		p2.setLayout(new BorderLayout());
-		p2.add(align,BorderLayout.EAST);
-		p2.add(gameButtons,BorderLayout.SOUTH);
-		Component[] components = p2.getComponents();
+		panel.setLayout(new BorderLayout());
+		panel.add(align,BorderLayout.EAST);
+		panel.add(gameButtons,BorderLayout.SOUTH);
+		Component[] components = panel.getComponents();
 		setGameMatrixOnPanel(new File("Resource/DefaultMaps/GameMatrix/Map129.txt"));
-		p2.setVisible(true);
+		panel.setVisible(true);
 	}
 
 	public void setgridLayoutForMaps(String mapType,JPanel grid){
@@ -233,8 +233,8 @@ public class MapBuilderController    {
 		}
 		mapGrid.setVisible(true);
 		mapGrid.setLayout(new GridLayout(tempLoadbuttons.length,tempLoadbuttons[0].length));
-		p2.add(mapGrid,BorderLayout.CENTER);
-		p2.setVisible(true);
+		panel.add(mapGrid,BorderLayout.CENTER);
+		panel.setVisible(true);
 		temp=tempLoadbuttons;
 		edit.addActionListener(new ActionListener() {
 
@@ -328,7 +328,7 @@ public class MapBuilderController    {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				p2.dispose();
+				panel.dispose();
 				LayoutManager abc=new LayoutManager();
 				File file1=new File("Resource/CustomMaps/ScreenShots/Metadata.txt");
 				try {
