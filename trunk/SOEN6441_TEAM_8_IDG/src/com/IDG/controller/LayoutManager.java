@@ -37,7 +37,6 @@ public class LayoutManager {
 	private JMenuBar menu = new JMenuBar();
 	private JMenu fileMenu = new JMenu("Game");
 	private JTabbedPane tab = new JTabbedPane();
-	private MapEditorView mapEditorView = new MapEditorView();
 	private MapSimulatorView mapSimulatorView = new MapSimulatorView();
 	public LayoutManager() {
 		// populates the file selector and add to menu tab
