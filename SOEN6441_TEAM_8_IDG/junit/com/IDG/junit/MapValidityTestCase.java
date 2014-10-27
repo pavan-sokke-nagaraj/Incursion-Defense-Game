@@ -34,7 +34,7 @@ public class MapValidityTestCase {
 		//gridMap[2][4]="-";
 		gridMap[3][3]="-";
 		gridMap[4][3]="E";
-		boolean result=MapValidityHelper.testMapValidity(String[][] gridMap , ArrayList<String> errorList);
+		boolean result=MapValidityHelper.testMapValidity(gridMap,errorList);
 		assertTrue(result);
 	}
 	@Test
