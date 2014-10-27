@@ -67,6 +67,7 @@ public class Load  extends JFrame  {
 	int counter= 0;
 	MapButton file=null;
 	boolean isEditEnabled;
+	wall tempLoadbuttons[][];
 
 	public Load()
 	{
@@ -202,7 +203,7 @@ public class Load  extends JFrame  {
 		int i = 0,j=0;
 		wall wl=null;
 		int count=0;
-		wall loadbuttons[][]=new wall[rows][cols];
+		tempLoadbuttons=new wall[rows][cols];
 		setPreferredSize(new Dimension(40, 40));
 		for(String line : lines) {            // for each line, add the 1s
 			char[] chars = line.toCharArray();
@@ -229,33 +230,49 @@ public class Load  extends JFrame  {
 
 				}
 				count++;
-				loadbuttons[i][j]=wl;
+				tempLoadbuttons[i][j]=wl;
 			}
 			i++;
 
 		}
 
-		for( i=0;i<loadbuttons.length;i++)
+		for( i=0;i<tempLoadbuttons.length;i++)
 		{
-			for(j=0;j<loadbuttons[0].length;j++)
+			for(j=0;j<tempLoadbuttons[0].length;j++)
 			{
-				loadbuttons[i][j].setPreferredSize(new Dimension(40,40));
-				mapGrid.add(loadbuttons[i][j]);
+				tempLoadbuttons[i][j].setPreferredSize(new Dimension(40,40));
+				mapGrid.add(tempLoadbuttons[i][j]);
 			}
 		}
-		for ( i=0;i<loadbuttons.length;i++)
+		for ( i=0;i<tempLoadbuttons.length;i++)
 		{
-			for ( j=0;j<loadbuttons[0].length;j++)
+			for ( j=0;j<tempLoadbuttons[0].length;j++)
 			{
-				if(!loadbuttons[i][j].isPath)
-					loadbuttons[i][j].setEnabled(false);
+				if(!tempLoadbuttons[i][j].isPath)
+					tempLoadbuttons[i][j].setEnabled(false);
 			}
 		}
 		mapGrid.setVisible(true);
-		mapGrid.setLayout(new GridLayout(loadbuttons.length,loadbuttons[0].length));
+		mapGrid.setLayout(new GridLayout(tempLoadbuttons.length,tempLoadbuttons[0].length));
 		System.out.println("Number="+mapGrid.getComponentCount());
 		p2.add(mapGrid,BorderLayout.CENTER);
 		p2.setVisible(true);
+		temp=tempLoadbuttons;
+		edit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+					for ( int i=0;i<temp.length;i++){
+						for ( int j=0;j<temp[0].length;j++){
+							temp[i][j].setEnabled(true);
+						}
+					}
+					temp1=temp;
+					save.setEnabled(true);
+					isEditEnabled=true;
+				}
+			});
 		
 	}
 
@@ -263,21 +280,7 @@ public class Load  extends JFrame  {
 	{
 	temp=loadbuttons;
 
-	edit.addActionListener(new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-				for ( int i=0;i<temp.length;i++){
-					for ( int j=0;j<temp[0].length;j++){
-						temp[i][j].setEnabled(true);
-					}
-				}
-				temp1=temp;
-				save.setEnabled(true);
-				isEditEnabled=true;
-			}
-		});
+	
 
 	create.addActionListener(new ActionListener() {
 
@@ -334,10 +337,17 @@ public class Load  extends JFrame  {
 				udMapGrid.revalidate();
 				udMapGrid.repaint();
 				setgridLayoutForMaps("CustomMaps",udMapGrid);
+				if(tArea1.getText().toString().length()>17&&file!=null){
+					isEditEnabled=true;
+				}else{
+					isEditEnabled=false;
+				}
+				
 		
 		}	
 		
 	});
 
+	
 	}
 }
