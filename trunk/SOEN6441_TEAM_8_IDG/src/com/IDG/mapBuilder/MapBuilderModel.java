@@ -6,12 +6,12 @@ import javax.swing.*;
 import com.IDG.utils.PopClickListener;
 
 import java.awt.event.*;
-
+/**
+ * Model for the MapBuilder where each element is a JBtutton
+ * @author Arjun
+ */
 public class MapBuilderModel extends JButton implements ActionListener{
 	public ImageIcon path,brick,start,end;
-
-
-
 	int id=0;
 	public boolean isStart;
 	public boolean isEnd;
@@ -21,15 +21,14 @@ public class MapBuilderModel extends JButton implements ActionListener{
 	public String fileName;
 	public String mapType;
 	public String fileType;
-	
+	/**
+	 * This constructor will initialize the the members of the class.
+	 */
 	public MapBuilderModel()
 	{
 		path=new ImageIcon("Resource/GameImages/green.jpg");
-		brick=new ImageIcon("D://path2.png");
 		start=new ImageIcon("Resource/GameImages/start.jpg");
 		end=new ImageIcon("Resource/GameImages/end.png");
-		
-		
 		isStart=false;
 		isEnd=false;
 		isPath=false;
@@ -37,49 +36,40 @@ public class MapBuilderModel extends JButton implements ActionListener{
 		this.addActionListener(this);
 		this.addMouseListener(new PopClickListener(this));
 	}
-	
+
 	public MapBuilderModel(String fileName,String mapType,String fileType){
 		this.fileName=fileName;
 		this.mapType=mapType;
 		this.fileType=fileType;
 	}
 
-
+	/**
+	 * This method will be called when a user click on any of the button on Map Builder Screen
+	 */
 	public void actionPerformed (ActionEvent e) 
 	{
+		if(this.isPath)
+			this.setPath(false);
+		value++;
+		value%=2;
+		switch(value) {
+		case 0:
+			//Indicate wall
+			setIcon(null);
+			this.setPath(false);
+			this.setStart(false);
+			this.setEnd(false);
+			break;
+		case 1:
+			//Indicate Path
+			setIcon(path);
+			this.setPath(true);
+			this.setStart(false);
+			this.setEnd(false);
+			break;
 
-
-			if(this.isPath)
-				this.setPath(false);
-			value++;
-			value%=2;
-			System.out.println("Value"+value);
-			switch(value) {
-			case 0:
-				setIcon(null);
-				this.setPath(false);
-				this.setStart(false);
-				this.setEnd(false);
-				break;
-			case 1:
-				setIcon(path);
-				this.setPath(true);
-				this.setStart(false);
-				this.setEnd(false);
-				break;
-			
-			}
-		
-		
-		System.out.println("Button Pressed"+id+this.isPath());
-
+		}
 	}
-
-	
-
-	
-
-
 	public int getId() {
 		return id;
 	}
