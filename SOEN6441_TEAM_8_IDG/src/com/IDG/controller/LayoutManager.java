@@ -1,4 +1,6 @@
-
+/**
+ * 
+ */
 package com.IDG.controller;
 
 import java.awt.event.ActionEvent;
@@ -11,19 +13,13 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.IDG.controller.Block;
-import com.IDG.controller.GameFileManager;
-import com.IDG.controller.Load;
-import com.IDG.controller.MapEditorView;
-import com.IDG.controller.MapSimulatorView;
-import com.IDG.controller.World;
-import com.IDG.controller.World.WorldMode;
-
 /**
  * This view renders the main panel viewer for the application including the
  * header menu system and the windows of display
  * 
- * @author p_sokke
+ * @author Pavan Sokke Nagaraj <pavansn8@gmail.com>
+ * @version Build 1
+ * @since Build 1
  *
  */
 public class LayoutManager {
@@ -44,56 +40,57 @@ public class LayoutManager {
 	 */
 	private JTabbedPane tab = new JTabbedPane();
 
-
 	/**
-	 * The panel that houses the Map Editor
+	 * The panel that keeps the Map Editor
 	 */
 	private MapEditorView mapEditorView = new MapEditorView();
 
 	/**
-	 * The panel that houses the Simulator
+	 * The panel that simulates the game
 	 */
 	private MapSimulatorView mapSimulatorView = new MapSimulatorView();
 
+	/**
+	 * The constructor initializes the layout properties and generates the
+	 * actions that can be performed
+	 */
 	public LayoutManager() {
-
-		// Builds the menu
-		BuildMenu();
+		// populates the file selector and add to menu tab
+		populateFileHeader();
+		menu.add(fileMenu);
+		// populate the tabs
+		populateTabs();
 	}
 
+	/**
+	 * Gets the menu headers
+	 * 
+	 * @return Menu header
+	 */
 	public JMenuBar getMenuBar() {
 		return menu;
 	}
 
+	/**
+	 * Gets the tab sets
+	 * 
+	 * @return A set of Tabs
+	 */
 	public JTabbedPane getTabs() {
 		return tab;
 	}
 
-	private void BuildMenu() {
-
-		// populates the file selector
-		populateFileHeader();
-		menu.add(fileMenu);
-
-		// populate the tabs
-		populateTabs();
-
-		if (WorldMode.Editor == World.Mode) {
-			renderMapEditor();
-		} else if (WorldMode.Simulator == World.Mode) {
-			// renderSimulator();
-		}
-	}
-
+	/**
+	 * The function which populates the file menu entries
+	 */
 	private void populateFileHeader() {
 
 		// Create the File -> Load entry in the menu and associate an
-		// actionEvent
-		// such that when clicked it will fire an event
+		// actionEvent, such that when clicked it will call a event
 		JMenuItem fileLoad = new JMenuItem(new AbstractAction("Load") {
 
-			// We override the default action and redirect it to
-			// the controller responsible
+			// Override the default action and redirect it to the controller
+			// responsible
 
 			/**
 			 * The action that is performed when we click the load option
@@ -103,7 +100,15 @@ public class LayoutManager {
 			 */
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-			new Load();
+
+				if (Game.Mode == Game.GameMode.Simulator) {
+					GameFileManager gameFileMananger = new GameFileManager();
+					char[][] gameValue = gameFileMananger.loadSavedGame("");
+					MapSimulatorView.gameValue = gameValue;
+					MapSimulatorView.gridRow = gameValue.length;
+					MapSimulatorView.gridColumn = gameValue[0].length;
+					MapSimulatorView.room.block = new Block[gameValue.length][gameValue[0].length];
+				}
 			}
 		});
 		fileMenu.add(fileLoad);
@@ -121,15 +126,8 @@ public class LayoutManager {
 			public void actionPerformed(ActionEvent actionEvent) {
 				System.out.println("Save Click");
 				int mapHeight = mapEditorView.gridRow;
-				int mapWidth  = mapEditorView.gridColumn;
-				Block block [][] = mapEditorView.room.block;
-//				for (int i = 0; i < mapHeight; i++) {
-//					for (int j = 0; j < mapWidth; j++) {
-//						System.out.print(block[i][j].createId);
-//					}
-//					System.out.println();
-//				}
-				
+				int mapWidth = mapEditorView.gridColumn;
+				Block block[][] = mapEditorView.room.block;
 				GameFileManager.saveGameFile(block);
 			}
 		});
@@ -151,6 +149,9 @@ public class LayoutManager {
 		fileMenu.add(fileExit);
 	}
 
+	/**
+	 * The function to populate Editor tab and simulator tab
+	 */
 	private void populateTabs() {
 		// Add our tab elements to them
 		tab.addTab("Editor", mapEditorView);
@@ -167,25 +168,24 @@ public class LayoutManager {
 			 */
 			@Override
 			public void stateChanged(ChangeEvent event) {
+
+				int tabSelectedIndex = ((JTabbedPane) event.getSource())
+						.getSelectedIndex();
+				System.out.println("tabSelectedIndex: \t" + tabSelectedIndex);
+				if (tabSelectedIndex == 0) {
+					Game.Mode = Game.GameMode.Editor;
+				} else if (tabSelectedIndex == 1) {
+					Game.Mode = Game.GameMode.Simulator;
+				}
+				// rebuildLayout();
 			}
+
 		});
 	}
-
-	private void renderMapEditor() {
-		System.out.println("In renderMapEditor");
-		System.out.println(mapEditorView.getHeight());
-		System.out.println(mapEditorView.getWidth());
-
-		// Our control panel
-//		mapEditorView.add(World.getInstance().controlPanel);
-//		mapEditorView.add(World.getInstance()); 
-//		mapEditorView.repaint();
-		// Our graph panel editor
-//		mapEditorView.add(World); 
-		
-//		World.getInstance().registerEditableMouseHandlers();
-	
-
-	}
-
+	// private void rebuildLayout() {
+	// if (World.Mode == WorldMode.Simulator)
+	// mapEditorView.removeAll();
+	// else if (World.Mode == WorldMode.Editor)
+	// mapSimulatorView.removeAll();
+	// }
 }

@@ -1,76 +1,106 @@
 package com.IDG.controller;
 
-
 import java.awt.Color;
-
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.image.CropImageFilter;
-import java.awt.image.FilteredImageSource;
-import java.util.ArrayList;
-import java.util.List;
+
 import javax.swing.ImageIcon;
 
 /**
- * the class Blocks saves the maps created by the users, if the user specifies a tile as a block it saves a value of 0 in that block
- * and a value of 1 if the users specifies a value as a path.
- * the values of the tiles are saved in an arrayList that helps when the user want to save or load a map the values of the tiles determins 
- * the map display 
- * @author p@!
- * @author reem
- *
+ * class Block extends Rectangle, holds the coordinates of each tile in the
+ * block and other details
+ * 
+ * @author Pavan Sokke Nagaraj <pavansn8@gmail.com>
+ * @author Reem
+ * @version Build1
+ * @since Build1
  */
 public class Block extends Rectangle {
 
-	private static List<Block> blocks = new ArrayList<Block>(); //arrayList saving the values of the tiles in the created map
+	/**
+	 * Holds the tile type, if createId is *, then tile is a ground. if createId
+	 * is S, then tile is a start point. if createId is E, then tile is a end
+	 * point. if createId is -, then tile is a path.
+	 */
+	public static char createId;
 
-	private Point nodeCoordinates; // the position of the tiles
+	/**
+	 * Constructor for Block class
+	 */
+	public Block() {
+	}
 
-	// used during creation of the map ONLY!!!!
-	// holds if the id is a block or the path
-	// value block = 0
-	// value path = 1
-	public int createId; // id to sets the value of block/path to save/load/edit the map
-
-	public int groundId; // id to set the tower/block value during the game
-	
-	public int airId; // id to set the movement of the creatures during the game
-/**
- * Sets the bounding Rectangle of this Rectangle to match the specified
- * Rectangle
- * @param x - the new X coordinate for the upper-left corner of this Rectangle
- * @param y the new Y coordinate for the upper-left corner of this Rectangle
- * @param width the new width for this Rectangle
- * @param height  the new height for this Rectangle
- * @param createId  id to sets the value of block/path to save/load/edit the map
- * @param airId  id to set the movement of the critter during the game
- *
- */
-
-	public Block(int x, int y, int width, int height, int createId, int airId) {
+	/**
+	 * Sets the bounding Rectangle of this Rectangle to match the specified
+	 * Rectangle.
+	 * 
+	 * @param x
+	 *            starting x position of rectangle block
+	 * @param y
+	 *            starting y position of rectangle block
+	 * @param width
+	 *            width of the rectangle block
+	 * @param height
+	 *            height of the rectangle block
+	 * @param createId
+	 *            type of the tile(ground or start or path or end or tower )
+	 */
+	public Block(int x, int y, int width, int height, char createId) {
 		setBounds(x, y, width, height);
 		this.createId = createId;
-		this.groundId = createId;
-		this.airId = airId;
-	}
-/**
- *@param Graphics : Sets this graphics context's current color to the specified color.
- * All subsequent graphics operations using this graphics context use this specified color.
- * Draws the outline of the specified rectangle. The left and right edges of the rectangle are at x and x + width.
- *The top and bottom edges are at y and y + height. The rectangle is drawn using the graphics context's current color.
- */
-	// draw tower spreadsheet
-	// draw ground spreadsheet
-	public void draw(Graphics gp) {
-		gp.setColor(Color.RED);
-		gp.drawRect(x, y, width, height);
 
-		if (createId == 1) {
-			// gp.drawImage(PanelPractice.tileset_attack[createId], x, y, width,
-			// height, null);
+	}
+
+	/**
+	 * function to draw the tiles
+	 * 
+	 * @param graphic
+	 *            Graphic variable to draw the Components
+	 */
+	public void draw(Graphics graphic) {
+		graphic.setColor(Color.BLACK);
+		Image image = new ImageIcon("ImageSource/Ground.png").getImage();
+		graphic.drawImage(image, x, y, width, height, null);
+		if (createId == 'S') {
+			graphic.setColor(Color.WHITE);
+			graphic.fillRect(x, y, width, height);
+			image = new ImageIcon("ImageSource/skull.JPG").getImage();
+			graphic.drawImage(image, x, y, width, height, null);
+		} else if (createId == '-') {
+			graphic.setColor(Color.GREEN);
+			graphic.fillRect(x, y, width, height);
+			image = new ImageIcon("ImageSource/GRASS1.JPG").getImage();
+			graphic.drawImage(image, x, y, width, height, null);
+		} else if (createId == 'E') {
+			graphic.setColor(Color.RED);
+			graphic.fillRect(x, y, width, height);
+			image = new ImageIcon("ImageSource/Castle.JPG").getImage();
+			graphic.drawImage(image, x, y, width, height, null);
+		} else if (createId == 'G') {
+			graphic.setColor(Color.RED);
+			graphic.fillRect(x, y, width, height);
+			image = new ImageIcon("ImageSource/Tower.png").getImage();
+			graphic.drawImage(image, x, y, width, height, null);
+		} else if (createId == 'R') {
+			image = new ImageIcon("ImageSource/Tower2.png").getImage();
+			graphic.drawImage(image, x, y, width, height, null);
+		}else if (createId == 'B') {
+			image = new ImageIcon("ImageSource/Tower3.png").getImage();
+			graphic.drawImage(image, x, y, width, height, null);
 		}
+
+	}
+
+	/**
+	 * function to draw a transperent rectangle over the tiles
+	 * 
+	 * @param graphic
+	 *            Graphic variable to draw the Components
+	 */
+	public void drawBlockRect(Graphics graphic) {
+		graphic.setColor(new Color(255, 255, 255, 150));
+		graphic.fillRect(x, y, width, height);
 	}
 
 }

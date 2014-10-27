@@ -7,63 +7,86 @@ import java.awt.Graphics;
 import java.io.Serializable;
 
 /**
- * @author p@!
- *
+ * Room Class is a clas which holds the map data and it's edited contents
+ * 
+ * @author Pavan Sokke Nagaraj <pavansn8@gmail.com>
+ * @version Build1
+ * @since Build1
  */
 public class Room implements Serializable {
 
-	public Block[][] block;
+	/**
+	 * a 2 dimensoinal array of Blocks to hold the map tiles
+	 */
+	public static Block[][] block;
 
-	public static int mapWidth;// = 10;
-	public static int mapHeight;// = 8;
+	/**
+	 * Static variable to hold number of rows in the map grid
+	 */
+	public static int mapRow;
+
+	/**
+	 * Static variable to hold number of columns in the map grid
+	 */
+	public static int mapColumn;
+
+	/**
+	 * variable to hold the size of each map tile
+	 */
 	public int blockSize = 40;
 
-
+	/**
+	 * Room class constructer to set the number of rows and columns to matrix
+	 */
 	public Room() {
-		define();
+		// create a matrix of rectangles with the number of rows & column read
+		// from the saved map
+		block = new Block[mapRow][mapColumn];
 	}
 
-	public Room(int x, int y) {
-		mapWidth = x;
-		mapHeight = y;
-		block = new Block[mapHeight][mapWidth];
-		for (int i = 0; y < block.length; y++) {
-			for (int j = 0; x < block[0].length; x++) {
-				block[i][j].createId = 1;
-			}
-		}
+	/**
+	 * Room class constructer to set the number of rows and columns to matrix
+	 * 
+	 * @param x
+	 *            number of tiles in x axis of map
+	 * @param y
+	 *            number of tiles in y axis of map
+	 * @param gameValue
+	 *            the game value which it holds
+	 */
+	public Room(int x, int y, char[][] gameValue) {
+		mapColumn = x;
+		mapRow = y;
+		block = new Block[mapRow][mapColumn];
 	}
 
-	private void define() {
-		// create a matrix of rectangles with the number of rows & cols given by user
-		block = new Block[mapHeight][mapWidth];
-
-		for (int y = 0; y < block.length; y++) {
-			for (int x = 0; x < block[0].length; x++) {
-			}
-		}
-	}
-
-	public static void setDimensions(int x, int y) {
-		mapWidth = x;
-		mapHeight = y;
-	}
-
-	public void drawArena(Graphics graphic) {
-
-		int xStart = 100;
-		int yStart = 100;
-		int size = 40;
-
-		for (int i = 0; i < mapWidth; i++) {
-			for (int j = 0; j < mapHeight; j++) {
-				block[j][i] = new Block((xStart + (i * size)),
-						(yStart + (j * size)), (blockSize), (blockSize), 0, 0);
+	/**
+	 * function to draw the map tiles
+	 * 
+	 * @param graphic
+	 *            Graphic variable to draw the Components
+	 * @param gameValue
+	 *            A 2 dimensional array which holds the values for path, start,
+	 *            end and tiles
+	 */
+	public void drawGameArena(Graphics graphic, char[][] gameValue) {
+		// set the starting position(x,y) to the center of the rectangle to be
+		// drawn
+		int xStart = 335 - ((mapColumn * blockSize) / 2);
+		int yStart = 390 - ((mapRow * blockSize) / 2);
+		// Draw each tile 
+		for (int i = 0; i < mapColumn; i++) {
+			for (int j = 0; j < mapRow; j++) {
+				block[j][i] = new Block((xStart + (i * blockSize)),
+						(yStart + (j * blockSize)), (blockSize), (blockSize),
+						gameValue[j][i]);
 				block[j][i].draw(graphic);
+				if (block[j][i].contains(MapSimulatorView.mse)
+						&& gameValue[j][i] == '*') {
+					block[j][i].drawBlockRect(graphic);
+				}
 			}
 		}
-		
-		
 	}
 
 }
