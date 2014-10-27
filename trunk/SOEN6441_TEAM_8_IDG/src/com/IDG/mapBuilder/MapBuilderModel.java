@@ -8,8 +8,10 @@ import com.IDG.utils.PopClickListener;
 import java.awt.event.*;
 /**
  * Model for the MapBuilder where each element is a JBtutton
- * @author Arjun
- */
+ * @author Arjun Kariappa
+ * this class implements the actionListener of the map built, depends on where the button was pressed certain actions are invoked
+ * 
+ * */
 public class MapBuilderModel extends JButton implements ActionListener{
 	public ImageIcon path,brick,start,end;
 	int id=0;
@@ -44,8 +46,11 @@ public class MapBuilderModel extends JButton implements ActionListener{
 	}
 
 	/**
-	 * This method will be called when a user click on any of the button on Map Builder Screen
-	 */
+	 * Invoked when an action occurs, if the byte value on the map is 0(where the button is pressed), the icon is set to null and the path is set to false
+	 * the start point  and end point is set to false
+	 * if the byte value is 1 then the icon is set show the path image ans the path is set to true,
+	 * the start and end points are set to false
+	 * */
 	public void actionPerformed (ActionEvent e) 
 	{
 		if(this.isPath)
@@ -70,6 +75,10 @@ public class MapBuilderModel extends JButton implements ActionListener{
 
 		}
 	}
+	
+	/**
+	 * Setters and Getters of the data members
+	 **/
 	public int getId() {
 		return id;
 	}
