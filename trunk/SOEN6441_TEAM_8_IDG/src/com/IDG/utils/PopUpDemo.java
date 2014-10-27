@@ -7,7 +7,11 @@ import javax.swing.JPopupMenu;
 
 import com.IDG.mapBuilder.MapBuilderModel;
 
-
+/**
+ * This file handles the event that happen when user click on the submenu
+ * @author Arjun
+ *
+ */
 public class PopUpDemo extends JPopupMenu {
     JMenuItem wall;
     JMenuItem startPoint;
