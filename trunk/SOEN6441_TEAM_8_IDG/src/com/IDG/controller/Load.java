@@ -154,7 +154,7 @@ public class Load  extends JFrame  {
 		//Snapshot code
 		fileName1=fileName1.replaceAll("png", "txt");
 		fileName1=fileName1.replaceAll("ScreenShot", "Map");
-		MapButton picLabel = new MapButton(fileName1,mapType1);
+		MapButton picLabel = new MapButton(fileName1,mapType1,mapType);
 		if(mapType.equals("CustomMaps")){
 			picLabel.setText("User Defined Map "+(buttonList.size()+1));
 		}else{
@@ -262,15 +262,16 @@ public class Load  extends JFrame  {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				for ( int i=0;i<temp.length;i++){
-					for ( int j=0;j<temp[0].length;j++){
-						temp[i][j].setEnabled(true);
+				if(!file.fileType.equals("DefaultMaps")){
+					for ( int i=0;i<temp.length;i++){
+						for ( int j=0;j<temp[0].length;j++){
+							temp[i][j].setEnabled(true);
+						}
 					}
+					temp1=temp;
+					save.setEnabled(true);
+					isEditEnabled=true;
 				}
-				temp1=temp;
-				save.setEnabled(true);
-				isEditEnabled=true;
 			}
 		});
 
