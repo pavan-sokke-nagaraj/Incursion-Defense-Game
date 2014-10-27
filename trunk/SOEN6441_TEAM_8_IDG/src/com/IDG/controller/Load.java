@@ -1,14 +1,6 @@
 package com.IDG.controller;
 
-/**
- * 
- */
 
-
-/**
- * @author Kariappa @author Arjun
- *
- */
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -33,7 +25,12 @@ import javax.swing.*;
 import com.IDG.controller.MapButton;
 import com.IDG.controller.wall;
 
-
+/**
+ * load class is a action listener, waiting for
+ * users' action to load their chosen map
+ *  @author Kariappa @author Arjun
+ *  @author reem
+ */
 public class Load  extends JFrame  {
 
 	JPanel mapGrid=new JPanel();
