@@ -171,7 +171,6 @@ public class ListenToSave  {
 					buttons[i][j].setEnabled(false);
 				}
 			}
-			//p2.dispose();
 		}
 
 	}
