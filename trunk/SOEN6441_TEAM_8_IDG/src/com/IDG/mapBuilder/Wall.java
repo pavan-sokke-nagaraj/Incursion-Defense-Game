@@ -2,18 +2,21 @@ package com.IDG.mapBuilder;
 
 import javax.swing.*;
 import java.awt.event.*;
-
+/**
+ * this class implements the actionListener of the map built, depends on where the button was pressed certain actions are invoked
+ * 
+ * */
 public class Wall extends JButton implements ActionListener{
 	public ImageIcon path,brick,start,end;
 
 
 
 	int id=0;
-	boolean isStart;
-	boolean isEnd;
-	boolean isPath;
-	boolean isWall;
-	byte value=0;
+    boolean isStart;// isStart of the path
+    boolean isEnd;// is end of the path
+    boolean isPath;// is it on the path
+    boolean isWall;// is it a wall not a path
+    byte value=0;// the value of the tile
 	
 	
 	public Wall()
@@ -31,7 +34,12 @@ public class Wall extends JButton implements ActionListener{
 		this.addActionListener(this);
 		this.addMouseListener(new PopClickListener(this));
 	}
-
+	/**
+	 * Invoked when an action occurs, if the byte value on the map is 0(where the button is pressed), the icon is set to null and the path is set to false
+	 * the start point  and end point is set to false
+	 * if the byte value is 1 then the icon is set show the path image ans the path is set to true,
+	 * the start and end points are set to false
+	 * */
 
 	public void actionPerformed (ActionEvent e) 
 	{
@@ -65,7 +73,12 @@ public class Wall extends JButton implements ActionListener{
 
 	
 
-	
+    
+/**
+* setters and getters on the class data members 
+* */
+    
+
 
 
 	public int getId() {
