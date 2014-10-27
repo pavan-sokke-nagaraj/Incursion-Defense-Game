@@ -26,7 +26,8 @@ import com.IDG.mapBuilder.MapBuilderModel;
 
 /**
  * This file wil handle all events coming from the Map Builder Screen and perfrom operation on Model Data  
- * @author Arjun
+ * @author Arjun 
+ * @author Kariappa
  *
  */
 public class MapBuilderController    {
@@ -40,7 +41,7 @@ public class MapBuilderController    {
 	JPanel udMapGrid=new JPanel();
 	JPanel gameButtons=new JPanel();
 	JPanel align =new JPanel();
-	JFrame panel= new JFrame();
+	JFrame panel= new JFrame("MAPBuilder v1.0");
 	String fileName1=null;
 	JLabel headerLabel;
 	JButton save = new JButton("Save");
@@ -268,12 +269,12 @@ public class MapBuilderController    {
 				JTextField colField = new JTextField(2);
 
 				rowColPanel.setLayout(new BoxLayout(rowColPanel, BoxLayout.Y_AXIS));
-				rowColPanel.add(new JLabel("Number of Rows",
+				rowColPanel.add(new JLabel("Number of Rows (MAX 15)",
 						SwingConstants.CENTER));
 				rowColPanel.add(rowField);
 
 				rowColPanel.add(Box.createVerticalStrut(10)); // a spacer
-				rowColPanel.add(new JLabel("Number of Columns"));
+				rowColPanel.add(new JLabel("Number of Columns (MAX 15)"));
 				rowColPanel.add(colField);
 				int result = JOptionPane.showConfirmDialog(null, rowColPanel,
 						"Please Enter Nuber of rows and columns",
@@ -282,7 +283,19 @@ public class MapBuilderController    {
 					gridRow = Integer.parseInt(rowField.getText());
 					gridColumn = Integer.parseInt(colField.getText());
 				}
-
+				 if(gridColumn>15 || gridRow>15 )
+                 {
+                         JFrame error= new JFrame();
+                         error.setTitle("");
+                         JOptionPane.showMessageDialog(error,
+                                         "<html>Map creation failed!<br>Row and Column size limited to 15.<br>Please retry!</html> ");
+                         //error.add(new JLabel("Row and Column size limited to 15"),SwingConstants.CENTER);
+                         //JOptionPane.showConfirmDialog(null, rowColPanel,"Row and Column size limited to 15",
+                                         //JOptionPane.OK_CANCEL_OPTION);
+                         
+                 }
+				else
+				{
 				temp1=new MapBuilderModel[gridRow][gridColumn];
 				mapGrid.removeAll();
 				mapGrid.revalidate();
@@ -297,7 +310,7 @@ public class MapBuilderController    {
 				mapGrid.setLayout(new GridLayout(gridRow, gridColumn));
 				mapGrid.setVisible(true);
 				errorList = new ArrayList<String>();
-
+				}
 			}
 
 		});
