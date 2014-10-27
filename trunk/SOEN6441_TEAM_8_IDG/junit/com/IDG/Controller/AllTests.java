@@ -1,17 +1,34 @@
-package junit.com.IDG.Controller;
+package com.IDG.controller;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public class AllTests extends TestCase {
+/**
+ * The class <code>TestAll</code> builds a suite that can be used to run all
+ * of the tests within its package as well as within any subpackages of its
+ * package.
+ *
+ *
+ * @version Revision: 1.0
+ */
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+	LayoutManagerTest.class,
+	GameFileManagerTest.class,
+	GameControllerTest.class,
+})
+public class TestAll {
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		//$JUnit-BEGIN$
-
-		//$JUnit-END$
-		return suite;
+	/**
+	 * Launch the test.
+	 *
+	 * @param args the command line arguments
+	 *
+	 *
+	 */
+	public static void main(String[] args) {
+		JUnitCore.runClasses(new Class[] { TestAll.class });
 	}
-
 }
+
