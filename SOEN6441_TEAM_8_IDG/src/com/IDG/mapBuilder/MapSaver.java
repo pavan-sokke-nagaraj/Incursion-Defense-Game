@@ -24,7 +24,7 @@ import javax.swing.SwingUtilities;
 import com.IDG.mapBuilder.MapBuilderModel;
 import com.IDG.utils.MapValidityHelper;
 
-/** ListenToSave class is a action listener, waiting for
+/** ListenToSave class, waiting for
  * users' action to save their created map. Before saving
  * map to a specific address, it will first call the 
  * MapValidityHelper class to check if this map is valid
@@ -35,7 +35,6 @@ import com.IDG.utils.MapValidityHelper;
 public class MapSaver  {
 	MapBuilderModel buttons[][];
 	JFrame frame=new JFrame();
-	JFrame p2;
 	ArrayList<String> errorList=null;
 	JTextArea tArea1;
 	JPanel gameMatrixPanel=null;
@@ -44,14 +43,17 @@ public class MapSaver  {
 	MapBuilderModel tempFile=null;
 	boolean isEditEnabled;
 
-	public MapSaver(MapBuilderModel buttons[][],ArrayList<String> errorList, JTextArea tArea1,JPanel p,int row,int column,boolean isEditEnabled,MapBuilderModel tempFile)
+	/**
+	 * This Method will save both the screen shots and matrix file in resource folder so as to exist it at run time.
+	 */
+	public MapSaver(MapBuilderModel buttons[][],ArrayList<String> errorList, JTextArea tArea1,JPanel panel,int row,int column,boolean isEditEnabled,MapBuilderModel tempFile)
 	{
 		this.row=row;
 		this.column=column;
 		this.tArea1=tArea1;
 		this.errorList=errorList;
 		this.buttons=buttons;
-		gameMatrixPanel=p;
+		gameMatrixPanel=panel;
 		this.tempFile=tempFile;
 		this.isEditEnabled=isEditEnabled;
 		String [][] gridMap=new String[buttons.length][buttons[0].length];
@@ -78,6 +80,7 @@ public class MapSaver  {
 			fileContent.append(System.getProperty("line.separator"));
 		}
 		errorList=new ArrayList();
+		//Check for Validity of Map
 		boolean isValid=MapValidityHelper.testMapValidity(gridMap,errorList);
 		StringBuffer erroCode=new StringBuffer();
 		if(!isValid)

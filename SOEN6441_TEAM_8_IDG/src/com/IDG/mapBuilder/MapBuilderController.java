@@ -1,14 +1,4 @@
 package com.IDG.mapBuilder;
-
-/**
- * 
- */
-
-
-/**
- * @author Kariappa @author Arjun
- *
- */
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -29,14 +19,16 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import com.IDG.controller.LayoutManager;
 import com.IDG.mapBuilder.MapBuilderModel;
 
-
+/**
+ * This file wil handle all events coming from the Map Builder Screen and perfrom operation on Model Data  
+ * @author Arjun
+ *
+ */
 public class MapBuilderController    {
 
 	JPanel mapGrid=new JPanel();
@@ -72,8 +64,7 @@ public class MapBuilderController    {
 	boolean isEditEnabled;
 	MapBuilderModel tempLoadbuttons[][];
 	public static File rfile;
-	public MapBuilderController()
-	{	//this.rfile=rfile;
+	public MapBuilderController(){	
 		tArea1.setLineWrap(true);
 		tArea1.setText("Validation Status");
 		JScrollPane scroller1 = new JScrollPane();
@@ -83,9 +74,6 @@ public class MapBuilderController    {
 		p2.setLocationRelativeTo(null);
 		dMap1.setPreferredSize(new Dimension(60, 60));
 		udMap1.setPreferredSize(new Dimension(60, 60));
-
-
-		/*************************************************************MY CODE*********************************************************************/
 		//Read ScreenShotHeaderFile
 		setgridLayoutForMaps("CustomMaps",udMapGrid);
 		setgridLayoutForMaps("DefaultMaps",dMapGrid);
@@ -100,23 +88,15 @@ public class MapBuilderController    {
 		gameButtons.add(edit);
 		gameButtons.add(game);
 		gameButtons.add(create);
-		//save.setEnabled(false);
 		p2.setLayout(new BorderLayout());
 		p2.add(align,BorderLayout.EAST);
 		p2.add(gameButtons,BorderLayout.SOUTH);
 		Component[] components = p2.getComponents();
-		System.out.println("Number of Comp="+components.length);
 		setGameMatrixOnPanel(new File("Resource/DefaultMaps/GameMatrix/Map129.txt"));
 		p2.setVisible(true);
-
-
 	}
 
 	public void setgridLayoutForMaps(String mapType,JPanel grid){
-
-
-
-
 		Scanner sc=null;
 		String line=null;
 		try {
@@ -148,9 +128,7 @@ public class MapBuilderController    {
 		mapType1=mapType;
 		try {
 			myPicture = ImageIO.read(new File("Resource/"+mapType+"/ScreenShots/"+fileName));
-			//myPicture = ImageIO.read(new File("D://end.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//Snapshot code
@@ -178,7 +156,6 @@ public class MapBuilderController    {
 	}
 
 	public void setGameMatrixOnPanel(File mapFile){
-		System.out.println(mapFile.getName());
 		mapGrid.removeAll();
 		mapGrid.revalidate();
 		List<String> lines=new ArrayList();
@@ -206,7 +183,7 @@ public class MapBuilderController    {
 		MapBuilderModel wl=null;
 		int count=0;
 		tempLoadbuttons=new MapBuilderModel[rows][cols];
-		
+
 		for(String line : lines) {            // for each line, add the 1s
 			char[] chars = line.toCharArray();
 
@@ -256,7 +233,6 @@ public class MapBuilderController    {
 		}
 		mapGrid.setVisible(true);
 		mapGrid.setLayout(new GridLayout(tempLoadbuttons.length,tempLoadbuttons[0].length));
-		System.out.println("Number="+mapGrid.getComponentCount());
 		p2.add(mapGrid,BorderLayout.CENTER);
 		p2.setVisible(true);
 		temp=tempLoadbuttons;
@@ -282,9 +258,7 @@ public class MapBuilderController    {
 	void gameactionbuttons ()
 	{
 		temp=loadbuttons;
-
-
-
+		//When user click on Create Map button on Map Builder Screen
 		create.addActionListener(new ActionListener() {
 
 			@Override
@@ -305,8 +279,6 @@ public class MapBuilderController    {
 						"Please Enter Nuber of rows and columns",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
-					System.out.println("rowField row value: " + rowField.getText());
-					System.out.println("colField col value: " + colField.getText());
 					gridRow = Integer.parseInt(rowField.getText());
 					gridColumn = Integer.parseInt(colField.getText());
 				}
@@ -330,12 +302,12 @@ public class MapBuilderController    {
 
 		});
 
+		//When user click on Save Game button on Map Builder Screen
 		save.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new MapSaver(temp1,errorList,tArea1,mapGrid,gridRow,gridColumn,isEditEnabled,file);
-				System.out.println("SAve clicked");
 				udMapGrid.removeAll();
 				udMapGrid.revalidate();
 				udMapGrid.repaint();
@@ -351,6 +323,7 @@ public class MapBuilderController    {
 
 		});
 		
+		//When user click on Start Game button on Map Builder Screen
 		game.addActionListener(new ActionListener() {
 
 			@Override
@@ -358,47 +331,21 @@ public class MapBuilderController    {
 				p2.dispose();
 				LayoutManager abc=new LayoutManager();
 				File file1=new File("Resource/CustomMaps/ScreenShots/Metadata.txt");
-			/**	if(!file1.exists()){
-					try {
-						file1.createNewFile();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}else{
-					PrintWriter writer=null;
-					try {
-						writer = new PrintWriter(file1);
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					writer.print("");
-					writer.close();
-				}**/
 				try {
 					PrintWriter writer=null;
 					try {
 						writer = new PrintWriter(file1);
 					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					writer.print(file.fileName+","+file.fileType);
 					writer.close();
-					System.out.println(file.fileName+","+file.fileType);
 					abc.populateFileHeader();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				//tAre21.setText(file.fileName);
-				
-				//rfile=new File("Resource/"+file.fileType+"/GameMatrix/"+file.fileName);
-}	
+			}	
 
 		});
-
-System.out.println("AJAY"+rfile);
 	}
 }
