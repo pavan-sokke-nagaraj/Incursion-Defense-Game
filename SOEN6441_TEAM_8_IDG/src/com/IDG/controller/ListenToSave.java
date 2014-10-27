@@ -96,7 +96,7 @@ public class ListenToSave  {
 
 		}else{
 			try{
-				
+
 				if(!isEditEnabled){
 					//Genrating Random File Name
 					tArea1.setText(" ");
@@ -162,7 +162,7 @@ public class ListenToSave  {
 			} catch (Exception ef) {
 				ef.printStackTrace();
 			}
-			
+
 			JOptionPane.showMessageDialog(frame,
 					"Map Saved Succesfully.");
 			for (int i=0;i<row;i++){

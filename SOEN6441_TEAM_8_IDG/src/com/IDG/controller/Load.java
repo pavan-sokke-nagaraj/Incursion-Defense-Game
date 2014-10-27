@@ -106,16 +106,16 @@ public class Load  extends JFrame  {
 		System.out.println("Number of Comp="+components.length);
 		setGameMatrixOnPanel(new File("Resource/DefaultMaps/GameMatrix/Map129.txt"));
 		p2.setVisible(true);
-		
-		
-		}
-	
+
+
+	}
+
 	public void setgridLayoutForMaps(String mapType,JPanel grid){
-		
-		
-		
-		
-			Scanner sc=null;
+
+
+
+
+		Scanner sc=null;
 		String line=null;
 		try {
 			sc = new Scanner(new File("Resource/"+mapType+"/ScreenShots/ScreenShotsHeader.txt"));
@@ -259,75 +259,75 @@ public class Load  extends JFrame  {
 		p2.setVisible(true);
 		temp=tempLoadbuttons;
 		edit.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-					for ( int i=0;i<temp.length;i++){
-						for ( int j=0;j<temp[0].length;j++){
-							temp[i][j].setEnabled(true);
-						}
+				for ( int i=0;i<temp.length;i++){
+					for ( int j=0;j<temp[0].length;j++){
+						temp[i][j].setEnabled(true);
 					}
-					temp1=temp;
-					save.setEnabled(true);
-					isEditEnabled=true;
 				}
-			});
-		
+				temp1=temp;
+				save.setEnabled(true);
+				isEditEnabled=true;
+			}
+		});
+
 	}
 
 	void gameactionbuttons ()
 	{
-	temp=loadbuttons;
+		temp=loadbuttons;
 
-	
 
-	create.addActionListener(new ActionListener() {
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			JPanel rowColPanel = new JPanel();
-			JTextField rowField = new JTextField(2);
-			JTextField colField = new JTextField(2);
-			
-			rowColPanel.setLayout(new BoxLayout(rowColPanel, BoxLayout.Y_AXIS));
-			rowColPanel.add(new JLabel("Number of Rows",
-					SwingConstants.CENTER));
-			rowColPanel.add(rowField);
+		create.addActionListener(new ActionListener() {
 
-			rowColPanel.add(Box.createVerticalStrut(10)); // a spacer
-			rowColPanel.add(new JLabel("Number of Columns"));
-			rowColPanel.add(colField);
-			int result = JOptionPane.showConfirmDialog(null, rowColPanel,
-					"Please Enter Nuber of rows and columns",
-					JOptionPane.OK_CANCEL_OPTION);
-			if (result == JOptionPane.OK_OPTION) {
-				System.out.println("rowField row value: " + rowField.getText());
-				System.out.println("colField col value: " + colField.getText());
-				gridRow = Integer.parseInt(rowField.getText());
-				gridColumn = Integer.parseInt(colField.getText());
-			}
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JPanel rowColPanel = new JPanel();
+				JTextField rowField = new JTextField(2);
+				JTextField colField = new JTextField(2);
 
-			temp1=new wall[gridRow][gridColumn];
-			mapGrid.removeAll();
-			mapGrid.revalidate();
-			//mapGrid.setVisible(false);
-			for(int i=0;i<gridRow;i++){
-				for(int j=0;j<gridColumn;j++){
-					temp1[i][j]=new wall();
-					temp1[i][j].setPreferredSize(new Dimension(40, 40));
-					mapGrid.add(temp1[i][j]);	
+				rowColPanel.setLayout(new BoxLayout(rowColPanel, BoxLayout.Y_AXIS));
+				rowColPanel.add(new JLabel("Number of Rows",
+						SwingConstants.CENTER));
+				rowColPanel.add(rowField);
+
+				rowColPanel.add(Box.createVerticalStrut(10)); // a spacer
+				rowColPanel.add(new JLabel("Number of Columns"));
+				rowColPanel.add(colField);
+				int result = JOptionPane.showConfirmDialog(null, rowColPanel,
+						"Please Enter Nuber of rows and columns",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (result == JOptionPane.OK_OPTION) {
+					System.out.println("rowField row value: " + rowField.getText());
+					System.out.println("colField col value: " + colField.getText());
+					gridRow = Integer.parseInt(rowField.getText());
+					gridColumn = Integer.parseInt(colField.getText());
 				}
+
+				temp1=new wall[gridRow][gridColumn];
+				mapGrid.removeAll();
+				mapGrid.revalidate();
+				//mapGrid.setVisible(false);
+				for(int i=0;i<gridRow;i++){
+					for(int j=0;j<gridColumn;j++){
+						temp1[i][j]=new wall();
+						temp1[i][j].setPreferredSize(new Dimension(40, 40));
+						mapGrid.add(temp1[i][j]);	
+					}
+				}
+				mapGrid.setLayout(new GridLayout(gridRow, gridColumn));
+				mapGrid.setVisible(true);
+				errorList = new ArrayList<String>();
+
 			}
-			mapGrid.setLayout(new GridLayout(gridRow, gridColumn));
-			mapGrid.setVisible(true);
-			errorList = new ArrayList<String>();
 
-		}
+		});
 
-	});
-
-	save.addActionListener(new ActionListener() {
+		save.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -342,12 +342,12 @@ public class Load  extends JFrame  {
 				}else{
 					isEditEnabled=false;
 				}
-				
-		
-		}	
-		
-	});
 
-	
+
+			}	
+
+		});
+
+
 	}
 }
