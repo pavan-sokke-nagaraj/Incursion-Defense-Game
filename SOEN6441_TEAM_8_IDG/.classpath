@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path=""/>
+	<classpathentry kind="src" path="mapBuilder"/>
+	<classpathentry kind="src" path="mapSimulator"/>
+	<classpathentry kind="src" path="MapSimulator"/>
+	<classpathentry kind="src" path="MapSimulatortest"/>
+	<classpathentry kind="src" path="Simulatormap"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
