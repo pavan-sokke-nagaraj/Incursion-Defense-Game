@@ -1,21 +1,19 @@
 package com.IDG.test;
-
-import java.awt.Graphics;
-import java.awt.Rectangle;
-
-import javax.swing.DebugGraphics;
-
-import org.junit.*;
-
-import com.IDG.mapSimulator.Arsenal;
-
 import static org.junit.Assert.*;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.IDG.mapSimulator.Arsenal;
+import com.IDG.test.ArsenalTest;
+
 /**
- * The class <code>ArsenalTest</code> contains tests for the class <code>{@link Arsenal}</code>.
+ * The class <code>ArsenalTest</code> contains tests for the class
+ * <code>{@link Arsenal}</code>.
  *
  *
- * @author Raman
+ * @author Kanwal
  * @version $Revision: 1.0 $
  */
 public class ArsenalTest {
@@ -27,8 +25,7 @@ public class ArsenalTest {
 	 *
 	 */
 	@Test
-	public void testArsenal_1()
-		throws Exception {
+	public void testArsenal_1() throws Exception {
 
 		Arsenal result = new Arsenal();
 
@@ -44,8 +41,7 @@ public class ArsenalTest {
 	 *
 	 */
 	@Test
-	public void testArsenal_2()
-		throws Exception {
+	public void testArsenal_2() throws Exception {
 
 		Arsenal result = new Arsenal();
 
@@ -60,9 +56,8 @@ public class ArsenalTest {
 	 *
 	 *
 	 */
-@Before
-	public void setUp()
-		throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		// add additional set up code here
 	}
 
@@ -70,20 +65,20 @@ public class ArsenalTest {
 	 * Perform post-test clean-up.
 	 *
 	 * @throws Exception
-	 *         if the clean-up fails for some reason
+	 *             if the clean-up fails for some reason
 	 *
 	 *
 	 */
 	@After
-	public void tearDown()
-		throws Exception {
+	public void tearDown() throws Exception {
 		// Add additional tear down code here
 	}
 
 	/**
 	 * Launch the test.
 	 *
-	 * @param args the command line arguments
+	 * @param args
+	 *            the command line arguments
 	 *
 	 *
 	 */

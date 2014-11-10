@@ -1,13 +1,16 @@
 package com.IDG.test;
-
-import org.junit.*;
-
-import com.IDG.controller.GameController;
-
 import static org.junit.Assert.*;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.IDG.controller.GameController;
+import com.IDG.test.GameControllerTest;
+
 /**
- * The class <code>GameControllerTest</code> contains tests for the class <code>{@link GameController}</code>.
+ * The class <code>GameControllerTest</code> contains tests for the class
+ * <code>{@link GameController}</code>.
  *
  */
 public class GameControllerTest {
@@ -16,11 +19,10 @@ public class GameControllerTest {
 	 *
 	 * @throws Exception
 	 *
-	*
+	 *
 	 */
 	@Test
-	public void testMain_1()
-		throws Exception {
+	public void testMain_1() throws Exception {
 		String[] args = new String[] {};
 
 		GameController.main(args);
@@ -36,8 +38,7 @@ public class GameControllerTest {
 	 * @generatedBy CodePro at 27/10/14 10:36 AM
 	 */
 	@Test
-	public void testMain_2()
-		throws Exception {
+	public void testMain_2() throws Exception {
 		String[] args = new String[] {};
 
 		GameController.main(args);
@@ -49,13 +50,12 @@ public class GameControllerTest {
 	 * Perform pre-test initialization.
 	 *
 	 * @throws Exception
-	 *         if the initialization fails for some reason
+	 *             if the initialization fails for some reason
 	 *
-	*
+	 *
 	 */
 	@Before
-	public void setUp()
-		throws Exception {
+	public void setUp() throws Exception {
 		// add additional set up code here
 	}
 
@@ -63,22 +63,22 @@ public class GameControllerTest {
 	 * Perform post-test clean-up.
 	 *
 	 * @throws Exception
-	 *         if the clean-up fails for some reason
+	 *             if the clean-up fails for some reason
 	 *
-	*
+	 *
 	 */
 	@After
-	public void tearDown()
-		throws Exception {
+	public void tearDown() throws Exception {
 		// Add additional tear down code here
 	}
 
 	/**
 	 * Launch the test.
 	 *
-	 * @param args the command line arguments
+	 * @param args
+	 *            the command line arguments
 	 *
-	*
+	 *
 	 */
 	public static void main(String[] args) {
 		new org.junit.runner.JUnitCore().run(GameControllerTest.class);
