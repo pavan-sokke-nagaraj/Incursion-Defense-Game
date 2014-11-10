@@ -1,4 +1,4 @@
-package com.IDG.junit;
+package com.IDG.test;
 
 import static org.junit.Assert.*;
 
@@ -39,7 +39,8 @@ public class MapValidityTestCase {
 	}
 	@Test
 	public void testCheckMapForIslandPath() {
-		gridMap[1][4]="-";
+		//gridMap[1][4]="-";
+		gridMap[1][4]="?";
 		gridMap[0][1]="?";
 		gridMap[1][1]="?";
 		gridMap[2][1]="?";
@@ -52,14 +53,18 @@ public class MapValidityTestCase {
 		assertTrue(result);
 	}
 	@Test 
-	public void testcheckMapStartOrEndPoint(){
+	public void testcheckMapStart(){
 		gridMap[1][4]="S";
-		gridMap[0][1]="S";
+		//gridMap[0][1]="S";
 		//Two Start
 		assertNotNull(MapValidityHelper.checkMapStartOrEndPoint(gridMap, "S", errorList, "Start"));
-		gridMap[1][4]="*";
-		gridMap[0][1]="*";
+	}
+	@Test
+	public void testCheckMapEnd(){
+		gridMap[1][4]="E";
+		//gridMap[0][1]="*";
 		//No Start
-		assertNotNull(MapValidityHelper.checkMapStartOrEndPoint(gridMap, "S", errorList, "Start"));
+		assertNotNull(MapValidityHelper.checkMapStartOrEndPoint(gridMap, "E", errorList, "Start"));
+		
 	}
 }
