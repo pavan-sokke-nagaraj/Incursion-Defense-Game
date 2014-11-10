@@ -1,19 +1,18 @@
 package com.IDG.test;
-
-import java.awt.Graphics;
-
-import javax.swing.DebugGraphics;
-
-import org.junit.*;
-
-import com.IDG.mapSimulator.Tower;
-
 import static org.junit.Assert.*;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.IDG.mapSimulator.Tower;
+import com.IDG.test.TowerTest;
+
 /**
- * The class <code>TowerTest</code> contains tests for the class <code>{@link Tower}</code>.
+ * The class <code>TowerTest</code> contains tests for the class
+ * <code>{@link Tower}</code>.
  *
-*
+ *
  * @author Raman
  * @version Revision: 1.0
  */
@@ -23,11 +22,10 @@ public class TowerTest {
 	 *
 	 * @throws Exception
 	 *
-	*
+	 *
 	 */
 	@Test
-	public void testTower_1()
-		throws Exception {
+	public void testTower_1() throws Exception {
 
 		Tower result = new Tower();
 
@@ -40,11 +38,10 @@ public class TowerTest {
 	 *
 	 * @throws Exception
 	 *
-	*
+	 *
 	 */
 	@Test
-	public void testTower_2()
-		throws Exception {
+	public void testTower_2() throws Exception {
 		char towerId = 'G';
 		int costToBuy = 1;
 		int level = 1;
@@ -54,7 +51,8 @@ public class TowerTest {
 		int costToSell = 1;
 		int costToUpgrade = 1;
 
-		Tower result = new Tower(towerId, costToBuy, level, range, power, attackType, costToSell, costToUpgrade);
+		Tower result = new Tower(towerId, costToBuy, level, range, power,
+				attackType, costToSell, costToUpgrade);
 
 		// add additional test code here
 		assertNotNull(result);
@@ -65,12 +63,11 @@ public class TowerTest {
 	 *
 	 * @throws Exception
 	 *
-	*
+	 *
 	 */
 
 	@Before
-	public void setUp()
-		throws Exception {
+	public void setUp() throws Exception {
 		// add additional set up code here
 	}
 
@@ -78,22 +75,22 @@ public class TowerTest {
 	 * Perform post-test clean-up.
 	 *
 	 * @throws Exception
-	 *         if the clean-up fails for some reason
+	 *             if the clean-up fails for some reason
 	 *
-	*
+	 *
 	 */
 	@After
-	public void tearDown()
-		throws Exception {
+	public void tearDown() throws Exception {
 		// Add additional tear down code here
 	}
 
 	/**
 	 * Launch the test.
 	 *
-	 * @param args the command line arguments
+	 * @param args
+	 *            the command line arguments
 	 *
-	*
+	 *
 	 */
 	public static void main(String[] args) {
 		new org.junit.runner.JUnitCore().run(TowerTest.class);

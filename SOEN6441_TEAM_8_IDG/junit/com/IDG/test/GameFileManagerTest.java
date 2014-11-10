@@ -1,18 +1,21 @@
 package com.IDG.test;
+import static org.junit.Assert.*;
 
 import java.io.File;
 
-import org.junit.*;
-
-import static org.junit.Assert.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.IDG.controller.GameFileManager;
 import com.IDG.mapSimulator.Block;
 import com.IDG.mapSimulator.Tower;
+import com.IDG.test.GameFileManagerTest;
 
 /**
- * The class <code>GameFileManagerTest</code> contains tests for the class <code>{@link GameFileManager}</code>.
-
+ * The class <code>GameFileManagerTest</code> contains tests for the class
+ * <code>{@link GameFileManager}</code>.
+ * 
  * @version Revision: 1.0
  */
 public class GameFileManagerTest {
@@ -22,8 +25,7 @@ public class GameFileManagerTest {
 	 *
 	 */
 	@Test
-	public void testGameFileManager_1()
-		throws Exception {
+	public void testGameFileManager_1() throws Exception {
 		GameFileManager result = new GameFileManager();
 		assertNotNull(result);
 		// add additional test code here
@@ -37,8 +39,7 @@ public class GameFileManagerTest {
 	 *
 	 */
 	@Test
-	public void testDeleteTowerObject_1()
-		throws Exception {
+	public void testDeleteTowerObject_1() throws Exception {
 		Tower tower = new Tower();
 		int x = 1;
 		int y = 1;
@@ -55,8 +56,7 @@ public class GameFileManagerTest {
 	 *
 	 */
 	@Test
-	public void testGetTowerObject_1()
-		throws Exception {
+	public void testGetTowerObject_1() throws Exception {
 		int x = 1;
 		int y = 1;
 
@@ -74,8 +74,7 @@ public class GameFileManagerTest {
 	 *
 	 */
 	@Test
-	public void testGetTowerObject_2()
-		throws Exception {
+	public void testGetTowerObject_2() throws Exception {
 		int x = 1;
 		int y = 1;
 
@@ -92,7 +91,6 @@ public class GameFileManagerTest {
 	 *
 	 *
 	 */
-	
 
 	/**
 	 * Run the char[][] loadSavedGame(File) method test.
@@ -102,15 +100,14 @@ public class GameFileManagerTest {
 	 *
 	 */
 	@Test
-	public void testLoadSavedGame_1()
-		throws Exception {
-		File file = new File("GameSave07");
+	public void testLoadSavedGame_1() throws Exception {
+		File file = new File("Resource/DefaultMaps/GameMatrix/Map129.txt");
 
 		char[][] result = GameFileManager.loadSavedGame(file);
 
 		// add additional test code here
 		assertNotNull(result);
-		assertEquals(0, result.length);
+		assertNotEquals(0, result.length);
 	}
 
 	/**
@@ -121,15 +118,14 @@ public class GameFileManagerTest {
 	 *
 	 */
 	@Test
-	public void testLoadSavedGame_2()
-		throws Exception {
-		File file = new File("GameSave08");
+	public void testLoadSavedGame_2() throws Exception {
+		File file = new File("Resource/DefaultMaps/GameMatrix/Map129.txt");
 
 		char[][] result = GameFileManager.loadSavedGame(file);
 
 		// add additional test code here
 		assertNotNull(result);
-		assertEquals(0, result.length);
+		assertNotEquals(0, result.length);
 	}
 
 	/**
@@ -140,41 +136,17 @@ public class GameFileManagerTest {
 	 *
 	 */
 	@Test
-	public void testLoadSavedGame_3()
-		throws Exception {
-		File file = new File("GameSave26");
+	public void testLoadSavedGame_3() throws Exception {
+		File file = new File("Resource/DefaultMaps/GameMatrix/Map129.txt");
 
 		char[][] result = GameFileManager.loadSavedGame(file);
 
 		// add additional test code here
 		assertNotNull(result);
-		assertEquals(0, result.length);
+		assertNotEquals(0, result.length);
 	}
 
-
-
-	/**
-	 * Run the char[][] loadSavedGame(File) method test.
-	 *
-	 * @throws Exception
-	 *
-	 *
-	 */
-	
-	
-	@Test
-	public void testSaveGameFile_1()
-		throws Exception {
-		Block[][] block = new Block[][] {};
-
-		GameFileManager.saveGameFile(block);
-
-		// add additional test code here
-		// An unexpected exception was thrown in user code while executing this test:
-		//    java.lang.IllegalArgumentException: argument type mismatch
-	}
-
-	/**
+		/**
 	 * Run the void saveGameFile(Block[][]) method test.
 	 *
 	 * @throws Exception
@@ -182,28 +154,7 @@ public class GameFileManagerTest {
 	 *
 	 */
 	@Test
-	public void testSaveGameFile_2()
-		throws Exception {
-		Block[][] block = new Block[][] {};
-
-		GameFileManager.saveGameFile(block);
-
-		// add additional test code here
-		// An unexpected exception was thrown in user code while executing this test:
-		//    java.lang.IllegalArgumentException: argument type mismatch
-	}
-
-	/**
-	 * Run the void saveGameFile(Block[][]) method test.
-	 *
-	 * @throws Exception
-	 *
-	 *
-	 */
-
-	@Test
-	public void testSaveTowerObject_1()
-		throws Exception {
+	public void testSaveTowerObject_1() throws Exception {
 		Tower towerBlocks = new Tower();
 		int x = 1;
 		int y = 1;
@@ -221,8 +172,7 @@ public class GameFileManagerTest {
 	 *
 	 */
 	@Test
-	public void testSaveTowerObject_2()
-		throws Exception {
+	public void testSaveTowerObject_2() throws Exception {
 		Tower towerBlocks = new Tower();
 		int x = 1;
 		int y = 1;
@@ -241,8 +191,7 @@ public class GameFileManagerTest {
 	 */
 
 	@Before
-	public void setUp()
-		throws Exception {
+	public void setUp() throws Exception {
 		// add additional set up code here
 	}
 
@@ -250,20 +199,20 @@ public class GameFileManagerTest {
 	 * Perform post-test clean-up.
 	 *
 	 * @throws Exception
-	 *         if the clean-up fails for some reason
+	 *             if the clean-up fails for some reason
 	 *
 	 *
 	 */
 	@After
-	public void tearDown()
-		throws Exception {
+	public void tearDown() throws Exception {
 		// Add additional tear down code here
 	}
 
 	/**
 	 * Launch the test.
 	 *
-	 * @param args the command line arguments
+	 * @param args
+	 *            the command line arguments
 	 *
 	 *
 	 */

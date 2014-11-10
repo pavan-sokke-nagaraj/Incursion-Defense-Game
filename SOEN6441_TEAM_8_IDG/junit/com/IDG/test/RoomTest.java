@@ -1,17 +1,16 @@
 package com.IDG.test;
-
-import java.awt.Graphics;
-
-import javax.swing.DebugGraphics;
-
-import org.junit.*;
-
-import com.IDG.mapSimulator.Room;
-
 import static org.junit.Assert.*;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.IDG.mapSimulator.Room;
+import com.IDG.test.RoomTest;
+
 /**
- * The class <code>RoomTest</code> contains tests for the class <code>{@link Room}</code>.
+ * The class <code>RoomTest</code> contains tests for the class
+ * <code>{@link Room}</code>.
  *
  *
  * @author Raman
@@ -26,8 +25,7 @@ public class RoomTest {
 	 *
 	 */
 	@Test
-	public void testRoom_1()
-		throws Exception {
+	public void testRoom_1() throws Exception {
 
 		Room result = new Room();
 
@@ -43,8 +41,7 @@ public class RoomTest {
 	 *
 	 */
 	@Test
-	public void testRoom_2()
-		throws Exception {
+	public void testRoom_2() throws Exception {
 		int x = 1;
 		int y = 1;
 		char[][] gameValue = new char[][] {};
@@ -52,8 +49,9 @@ public class RoomTest {
 		Room result = new Room(x, y, gameValue);
 
 		// add additional test code here
-		// An unexpected exception was thrown in user code while executing this test:
-		//    java.lang.IllegalArgumentException: argument type mismatch
+		// An unexpected exception was thrown in user code while executing this
+		// test:
+		// java.lang.IllegalArgumentException: argument type mismatch
 		assertNotNull(result);
 	}
 
@@ -64,21 +62,17 @@ public class RoomTest {
 	 *
 	 *
 	 */
-	/** @Test
-	public void testDrawGameArena_1()
-		throws Exception {
-		Room fixture = new Room();
-		fixture.blockSize = 1;
-		Graphics graphic = new DebugGraphics();
-		char[][] gameValue = new char[][] {};
-
-		fixture.drawGameArena(graphic, gameValue);
-
-		// add additional test code here
-		// An unexpected exception was thrown in user code while executing this test:
-		//    java.lang.IllegalArgumentException: argument type mismatch
-	}
-*/
+	/**
+	 * @Test public void testDrawGameArena_1() throws Exception { Room fixture =
+	 *       new Room(); fixture.blockSize = 1; Graphics graphic = new
+	 *       DebugGraphics(); char[][] gameValue = new char[][] {};
+	 * 
+	 *       fixture.drawGameArena(graphic, gameValue);
+	 * 
+	 *       // add additional test code here // An unexpected exception was
+	 *       thrown in user code while executing this test: //
+	 *       java.lang.IllegalArgumentException: argument type mismatch }
+	 */
 	/**
 	 * Run the void drawGameArena(Graphics,char[][]) method test.
 	 *
@@ -87,20 +81,20 @@ public class RoomTest {
 	 *
 	 */
 	@Test
-//	public void testDrawGameArena_2()
-//		throws Exception {
-//		Room fixture = new Room();
-//		fixture.blockSize = 1;
-//		Graphics graphic = new DebugGraphics();
-//		char[][] gameValue = new char[][] {};
-//
-//		fixture.drawGameArena(graphic, gameValue);
-//
-//		// add additional test code here
-//		// An unexpected exception was thrown in user code while executing this test:
-//		//    java.lang.IllegalArgumentException: argument type mismatch
-//	}
-
+	// public void testDrawGameArena_2()
+	// throws Exception {
+	// Room fixture = new Room();
+	// fixture.blockSize = 1;
+	// Graphics graphic = new DebugGraphics();
+	// char[][] gameValue = new char[][] {};
+	//
+	// fixture.drawGameArena(graphic, gameValue);
+	//
+	// // add additional test code here
+	// // An unexpected exception was thrown in user code while executing this
+	// test:
+	// // java.lang.IllegalArgumentException: argument type mismatch
+	// }
 	/**
 	 * Run the void drawGameArena(Graphics,char[][]) method test.
 	 *
@@ -108,10 +102,8 @@ public class RoomTest {
 	 *
 	 *
 	 */
-	
 	@Before
-	public void setUp()
-		throws Exception {
+	public void setUp() throws Exception {
 		// add additional set up code here
 	}
 
@@ -119,20 +111,20 @@ public class RoomTest {
 	 * Perform post-test clean-up.
 	 *
 	 * @throws Exception
-	 *         if the clean-up fails for some reason
+	 *             if the clean-up fails for some reason
 	 *
 	 *
 	 */
 	@After
-	public void tearDown()
-		throws Exception {
+	public void tearDown() throws Exception {
 		// Add additional tear down code here
 	}
 
 	/**
 	 * Launch the test.
 	 *
-	 * @param args the command line arguments
+	 * @param args
+	 *            the command line arguments
 	 *
 	 *
 	 */
