@@ -64,6 +64,7 @@ public class MapBuilderController    {
 	MapBuilderModel file=null;
 	boolean isEditEnabled;
 	MapBuilderModel tempLoadbuttons[][];
+	public static boolean enemyCanBeCreated = false;
 	public static File rfile;
 	public MapBuilderController(){	
 		tArea1.setLineWrap(true);
@@ -342,6 +343,7 @@ public class MapBuilderController    {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				panel.dispose();
+				enemyCanBeCreated  = true;
 				LayoutManager abc=new LayoutManager();
 				File file1=new File("Resource/CustomMaps/ScreenShots/Metadata.txt");
 				try {

@@ -5,11 +5,21 @@ package com.IDG.mapSimulator;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 
+
+import java.awt.Rectangle;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.IDG.controller.Game;
+import com.IDG.enemyFactory.Enemy;
+import com.IDG.enemyFactory.EnemyType;
+import com.IDG.enemyFactory.bossEnemy;
+import com.IDG.enemyFactory.smallEnemies;
 
 /**
  * 
@@ -26,6 +36,8 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 * A simple thread intialized to repaint
 	 */
 	public Thread paintThread = new Thread(this);
+	
+	
 
 	/**
 	 * Static variable to hold number of rows in the map grid
@@ -53,6 +65,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 */
 	public static char[][] gameValue;
 
+	
 	/**
 	 * class Room initialized to hold the grid
 	 */
@@ -69,6 +82,9 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 */
 	public static Arsenal arsenal;
 
+	public static Image[] enemyImage = new Image[100];
+	
+	public static Enemy[] enemies = new Enemy[5];
 	/**
 	 * Constructs a new object of our map simulator and start the paintThread
 	 */
@@ -77,6 +93,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 		paintThread.start();
 	}
 
+	
 	/**
 	 * run's the painThread, initialize the arsenal class and repaint
 	 */
@@ -117,7 +134,11 @@ public class MapSimulatorView extends JPanel implements Runnable {
 		// draw a yellow background for game grid
 		graphic.setColor(Color.ORANGE);
 		graphic.fillRect(20, 35, 650, 750);
-
+		
+		//draw a red button for game start
+		//graphic.setColor(Color.RED);
+		//graphic.fillRect(335, 45, 50, 20);
+		 
 		graphic.setColor(Color.LIGHT_GRAY);
 		graphic.fillRect(700, 35, 500, 250);
 
@@ -135,7 +156,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 			arsenal.draw(graphic);
 
 		}
+		
 
 	}
-
 }
