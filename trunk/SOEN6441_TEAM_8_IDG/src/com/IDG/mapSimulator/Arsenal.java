@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Button;
 
 import javax.swing.ImageIcon;
 
@@ -75,7 +76,10 @@ public class Arsenal {
 	 * Rectangle to hold the dimensions of sell button
 	 */
 	public Rectangle sellButton;
-
+	/**
+	 * Rectangle to hold the dimensions of start button
+	 */
+	public Rectangle startGame;
 	/**
 	 * tower create value
 	 */
