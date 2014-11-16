@@ -138,14 +138,14 @@ public class Arsenal {
 			towers[i] = new Rectangle(box1Xpos + (gap * i) + (towerWidth * i),
 					box1Ypos, towerWidth, towerWidth);
 			if (i == 0) {
-				towerBlocks[i] = new Tower('G', 5, 1, 1, 10, "Single", 5, 5, 1,
-						5, 50, 3);// freezing
+				towerBlocks[i] = new Tower('G', 5, 1, 1, 10, "Single", 5, 5, 2,
+						5, 50, 3);// freezing//attack delay=50//Random
 			} else if (i == 1) {
 				towerBlocks[i] = new Tower('R', 10, 1, 2, 20, "Single", 5, 15,
-						1, 10, 1, 2);// burning
+						3, 10, 70, 1);// Splashing//attack delay=70//Min Health
 			} else if (i == 2) {
-				towerBlocks[i] = new Tower('B', 15, 1, 4, 20, "Multiple", 10,
-						20, 4, 5, 1, 2);// Splashing
+				towerBlocks[i] = new Tower('B', 15, 1, 3, 20, "Multiple", 10,
+						20, 4, 5, 80, 2);// Burning//attack Delay = Max Health
 			} else if (i == 3) {
 				towerBlocks[i] = new Tower('D', 0, 0, 0, 0, "", 0, 0, 1, 10, 2,
 						2);
@@ -445,17 +445,17 @@ public class Arsenal {
 
 						for (int i = 0; i < (MapSimulatorView.level * 10) / 2; i++) {
 							MapSimulatorView.enemiesOnMap
-									.add(MapSimulatorView.enemyFactory
-											.getEnemyfromFactory(
-													MapSimulatorView.enemyType,
-													i,
-													MapSimulatorView.enemyPath,
-													i * 20,
-													MapSimulatorView.level * 100,
-													MapSimulatorView.level * 100,
-													MapSimulatorView.level * 5,
-													((MapSimulatorView.level * 5)),
-													((MapSimulatorView.level * 5))));
+							.add(MapSimulatorView.enemyFactory
+									.getEnemyfromFactory(
+											MapSimulatorView.enemyType,
+											i,
+											MapSimulatorView.enemyPath,
+											i * 20,
+											MapSimulatorView.level * 100,
+											MapSimulatorView.level * 100,
+											MapSimulatorView.level * 5,
+											((MapSimulatorView.level * 5)),
+											((MapSimulatorView.level * 5))));
 						}
 					}
 				} else {
@@ -520,7 +520,7 @@ public class Arsenal {
 				strongTargetStratergy.y + 20);
 		graphic.drawString(" NEAR TARGET", nearTargetStratergy.x,
 				nearTargetStratergy.y + 20);
-		graphic.drawString(" FAR TARGET", randomTargetStratergy.x,
+		graphic.drawString(" RANDOM TARGET", randomTargetStratergy.x,
 				randomTargetStratergy.y + 20);
 
 	}
