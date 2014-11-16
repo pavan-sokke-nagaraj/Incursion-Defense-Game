@@ -1,24 +1,36 @@
 package com.IDG.enemyFactory;
-import java.awt.Graphics;
 
+import java.awt.Graphics;
+import java.awt.Point;
+import java.util.LinkedList;
 
 public interface EnemyType {
+	
+	public void move(Graphics graphics);
+	
+	public void update(Graphics g);
+	
+	public LinkedList<Point> cloneEnemyPath(LinkedList<Point> enemyPath);
+	
+	public void draw(Graphics g);
+	
+	public void drawHealthBar(Graphics g);
+	
+	public int Xvalue();
 
-	public void spawnEnemy(int EnemyID);
+	public int Yvalue();
 	
-	public void checkDeath();
+	public int getActualHealth();
 	
-	public void physics();
+	public int getCurrentHealth();
 	
-	public  boolean isDead();
+	public void setActualHealth(int actualHealth); 
 	
-	public  void deleteEnemy();
+	public void setCurrentHealth(int currentHealth);
 	
-	public  void loseHealth(int amo);
-	
-	public  void draw(Graphics g);
+	public int getEnemyId();
 
-	public  void setEnemyID(int enemyID);
 
-	public  int getEnemyID();
+	public void setEnemyId(int enemyId);
+	
 }
