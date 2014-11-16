@@ -70,13 +70,13 @@ public class Tower implements Serializable {
 
 	public EnemyType targetEnemy;
 
-	int ATTACK_FIRST_NEAR_TOWER_ENEMY=1;//Attack enemy nearest to tower
+	public static final int ATTACK_FIRST_NEAR_TOWER_ENEMY=1;//Attack enemy nearest to tower
 
-	int ATTACK_RANDOM_ENEMY=2;//Attack random enemy
+	public static final int ATTACK_RANDOM_ENEMY=2;//Attack random enemy
 
-	int ATTACK_MIN_HEALTH_ENEMY=3;
+	public static final int ATTACK_MIN_HEALTH_ENEMY=3;
 
-	int ATTACK_MAX_HEALTH_ENEMY=4;
+	public static final int ATTACK_MAX_HEALTH_ENEMY=4;
 
 	int attackStrategy;
 
@@ -88,11 +88,11 @@ public class Tower implements Serializable {
 
 	int towerAttackType=0;
 
-	public final  int SPLASHINHG=1;
+	public static final int SPLASHINHG=1;
 
-	public final  int BURNING=2;
+	public static final int BURNING=2;
 
-	public final  int FREEZING=3;
+	public static final int FREEZING=3;
 	
 	public boolean hasHitOnce=false;
 	

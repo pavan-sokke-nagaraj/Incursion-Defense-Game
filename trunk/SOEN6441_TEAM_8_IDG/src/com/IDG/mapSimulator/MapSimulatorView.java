@@ -208,10 +208,10 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	}
 	public void updateEnemies(Graphics graphic){
 		for (int k = 0; k < enemiesOnMap.size(); k++) {
-			if(enemiesOnMap.size()>0){
+			if(enemiesOnMap.size()>0&&enemiesOnMap.get(k)!=null){
 				enemiesOnMap.get(k).update(graphic);
 			}	
-			if(enemiesOnMap.size()>0){
+			if(enemiesOnMap.size()>0&&enemiesOnMap.get(k)!=null){
 				enemiesOnMap.get(k).draw(graphic);
 			}
 		}
