@@ -123,14 +123,10 @@ public class Arsenal {
 	public Rectangle weakTargetStratergy;
 	public Rectangle strongTargetStratergy;
 	public Rectangle nearTargetStratergy;
-	public Rectangle farTargetStratergy;
+	public Rectangle randomTargetStratergy;
 	public boolean isStrtergySelect = false;
 	public int selectedStratergy;
-	public static int weakTarget = 1;
-	public static int strongTarget = 2;
-	public static int farTarget = 3;
-	public static int nearTarget = 4;
-
+	
 	/**
 	 * class constructor to initialize tower data, health data, money data
 	 * Upgrade: Build 2-> serialize he objects and retrieve data from xml files
@@ -171,7 +167,7 @@ public class Arsenal {
 				160, 30);
 		nearTargetStratergy = new Rectangle(box2Xpos + 300, box2Ypos + 110,
 				160, 30);
-		farTargetStratergy = new Rectangle(box2Xpos + 300, box2Ypos + 150, 160,
+		randomTargetStratergy = new Rectangle(box2Xpos + 300, box2Ypos + 150, 160,
 				30);
 	}
 
@@ -427,18 +423,18 @@ public class Arsenal {
 				upgradeConfirm = false;
 			} else if (nearTargetStratergy.contains(MapSimulatorView.mse)) {
 				isStrtergySelect = true;
-				selectedStratergy = nearTarget;
-			} else if (farTargetStratergy.contains(MapSimulatorView.mse)) {
+				selectedStratergy = Tower.ATTACK_FIRST_NEAR_TOWER_ENEMY;
+			} else if (randomTargetStratergy.contains(MapSimulatorView.mse)) {
 				isStrtergySelect = true;
-				selectedStratergy = farTarget;
+				selectedStratergy = Tower.ATTACK_RANDOM_ENEMY;
 			} else if (strongTargetStratergy.contains(MapSimulatorView.mse)) {
 				isStrtergySelect = true;
-				selectedStratergy = strongTarget;
+				selectedStratergy = Tower.ATTACK_MAX_HEALTH_ENEMY;
 			} else if (weakTargetStratergy.contains(MapSimulatorView.mse)) {
 				isStrtergySelect = true;
-				selectedStratergy = weakTarget;
+				selectedStratergy = Tower.ATTACK_MIN_HEALTH_ENEMY;
 			} else if (waveButton.contains(MapSimulatorView.mse)) {
-
+				
 				if (MapSimulatorView.level < 10) {
 
 					MapSimulatorView.moveEnemy = true;
@@ -514,8 +510,8 @@ public class Arsenal {
 				strongTargetStratergy.width, strongTargetStratergy.height);
 		graphic.fillRect(nearTargetStratergy.x, nearTargetStratergy.y,
 				nearTargetStratergy.width, nearTargetStratergy.height);
-		graphic.fillRect(farTargetStratergy.x, farTargetStratergy.y,
-				farTargetStratergy.width, farTargetStratergy.height);
+		graphic.fillRect(randomTargetStratergy.x, randomTargetStratergy.y,
+				randomTargetStratergy.width, randomTargetStratergy.height);
 
 		graphic.setColor(Color.RED);
 		graphic.drawString(" WEAK TARGET", weakTargetStratergy.x,
@@ -524,8 +520,8 @@ public class Arsenal {
 				strongTargetStratergy.y + 20);
 		graphic.drawString(" NEAR TARGET", nearTargetStratergy.x,
 				nearTargetStratergy.y + 20);
-		graphic.drawString(" FAR TARGET", farTargetStratergy.x,
-				farTargetStratergy.y + 20);
+		graphic.drawString(" FAR TARGET", randomTargetStratergy.x,
+				randomTargetStratergy.y + 20);
 
 	}
 
