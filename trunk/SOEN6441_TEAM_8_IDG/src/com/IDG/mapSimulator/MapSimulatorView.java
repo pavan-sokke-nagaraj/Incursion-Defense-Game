@@ -5,21 +5,18 @@ package com.IDG.mapSimulator;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
-
-import java.awt.Rectangle;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.IDG.controller.Game;
-import com.IDG.enemyFactory.Enemy;
+import com.IDG.controller.GameFileManager;
+import com.IDG.enemyFactory.EnemyFactory;
 import com.IDG.enemyFactory.EnemyType;
-import com.IDG.enemyFactory.bossEnemy;
-import com.IDG.enemyFactory.smallEnemies;
+import com.IDG.enemyFactory.SmallEnemy;
+import com.IDG.playGame.EnemyPath;
 
 /**
  * 
@@ -36,8 +33,6 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 * A simple thread intialized to repaint
 	 */
 	public Thread paintThread = new Thread(this);
-	
-	
 
 	/**
 	 * Static variable to hold number of rows in the map grid
@@ -52,20 +47,19 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 * variable to hold the game's power.The value is set from
 	 * {@code Game.INITIAL_GAME_POWER}
 	 */
-	public static int power = Game.getInstance().INITIAL_GAME_POWER;
+	public static int power = Game.INITIAL_GAME_POWER;
 
 	/**
 	 * variable to hold the game's health.The value is set from
 	 * {@code Game.INITIAL_GAME_HEALTH}
 	 */
-	public static int health = Game.getInstance().INITIAL_GAME_HEALTH;
+	public static int health = Game.INITIAL_GAME_HEALTH;
 
 	/**
 	 * variable to hold the each grids game value
 	 */
 	public static char[][] gameValue;
 
-	
 	/**
 	 * class Room initialized to hold the grid
 	 */
@@ -82,18 +76,30 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 */
 	public static Arsenal arsenal;
 
-	public static Image[] enemyImage = new Image[100];
-	
-	public static Enemy[] enemies = new Enemy[5];
+	// build 2 end
+
+	public static LinkedList<Point> enemyPath = new LinkedList<Point>();
+	//public static Enemy[] enemies = new Enemy[100];
+	public static EnemyFactory enemyFactory = new EnemyFactory();
+	public static String enemyType="bossenemy";
+	public static ArrayList<EnemyType> enemiesOnMap=new ArrayList<EnemyType>();
+	public static boolean moveEnemy = false;
+	public static int mapXStart = 0;
+	public static int mapYStart = 0;
+	public static int level=0;
+
 	/**
 	 * Constructs a new object of our map simulator and start the paintThread
 	 */
 	public MapSimulatorView() {
 		super();
+
+		// B2 start
+		// B2 end
+
 		paintThread.start();
 	}
 
-	
 	/**
 	 * run's the painThread, initialize the arsenal class and repaint
 	 */
@@ -103,11 +109,29 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run() {
+
 		addMouseListener(new KeyHandel());
 		addMouseMotionListener(new KeyHandel());
 		arsenal = new Arsenal();
+		long beforeTime, timeDiff, sleep;
+		beforeTime = System.currentTimeMillis();
 		while (true) {
+
 			repaint();
+			timeDiff = System.currentTimeMillis() - beforeTime;
+			sleep = 30 - timeDiff;
+
+			if (sleep < 0) {
+				sleep = 10;
+			}
+
+			try {
+				Thread.sleep(sleep);
+			} catch (InterruptedException e) {
+				System.out.println("Interrupted: " + e.getMessage());
+			}
+
+			beforeTime = System.currentTimeMillis();
 		}
 
 	}
@@ -125,7 +149,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 		// draws a white background
 		graphic.setColor(Color.WHITE);
 		graphic.fillRect(0, 0, getWidth(), getHeight());
-//		System.out.println(getWidth() + "\t\t" + getHeight());
+		// System.out.println(getWidth() + "\t\t" + getHeight());
 
 		// draws a black box to enter text
 		graphic.setColor(Color.BLACK);
@@ -134,11 +158,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 		// draw a yellow background for game grid
 		graphic.setColor(Color.ORANGE);
 		graphic.fillRect(20, 35, 650, 750);
-		
-		//draw a red button for game start
-		//graphic.setColor(Color.RED);
-		//graphic.fillRect(335, 45, 50, 20);
-		 
+
 		graphic.setColor(Color.LIGHT_GRAY);
 		graphic.fillRect(700, 35, 500, 250);
 
@@ -153,10 +173,67 @@ public class MapSimulatorView extends JPanel implements Runnable {
 		if (gridRow != 0 || gridColumn != 0) {
 			room = new Room(gridColumn, gridRow, gameValue);
 			room.drawGameArena(graphic, gameValue);
+
 			arsenal.draw(graphic);
+			
+			long start = System.currentTimeMillis();
+			/*if (moveEnemy) {
+				enemyPath = EnemyPath.copyPath();
+				for (int k = 0; k < enemies.length; k++) {
+					enemies[k].update();
+					enemies[k].draw(graphic);
+					for (int i = 0; i < gridRow; i++) {
+						for (int j = 0; j < gridColumn; j++) {
+							if(gameValue[i][j] == 'G' || gameValue[i][j] == 'R'
+									|| gameValue[i][j] == 'B'){
+								Tower tower = GameFileManager
+										.getTowerObject(i, j);
+								int towerX = MapSimulatorView.room.block[i][j].x;
+								int towerY = MapSimulatorView.room.block[i][j].y;
+								tower.fire(enemies[k], towerX, towerY);
+								tower.drawFireEffect(graphic, enemies[k], towerX, towerY);
+							}
+						}
+					}
+				}
+			}*/
+			if(moveEnemy){
+				updateEnemies(graphic);
+				updateTower(graphic);
 
+			}
+			long time = System.currentTimeMillis() - start ;
 		}
-		
-
 	}
+	public void updateEnemies(Graphics graphic){
+		for (int k = 0; k < enemiesOnMap.size(); k++) {
+			enemiesOnMap.get(k).update(graphic);
+			enemiesOnMap.get(k).draw(graphic);
+		}
+	}
+	public void updateTower(Graphics graphic){
+		int temphealth;
+		for (int i = 0; i < gridRow; i++) {
+			for (int j = 0; j < gridColumn; j++) {
+				if(gameValue[i][j] == 'G' || gameValue[i][j] == 'R'
+						|| gameValue[i][j] == 'B'){
+					Tower tower = GameFileManager
+							.getTowerObject(i, j);
+					int towerX = MapSimulatorView.room.block[i][j].x;
+					int towerY = MapSimulatorView.room.block[i][j].y;
+					EnemyType currentEnemy=tower.calculateEnemy(enemiesOnMap,towerX,towerY);
+					if(currentEnemy!=null){
+						temphealth=currentEnemy.getCurrentHealth();
+						temphealth-=tower.damage;
+						currentEnemy.setCurrentHealth(temphealth);
+						System.out.println(" Enemy :: "+currentEnemy.getEnemyId()+"Hit by Tower :: "+tower.towerId);
+						System.out.println("EnemyCurrentHealth :: "+ currentEnemy.getCurrentHealth());
+						tower.drawFireEffect(graphic, currentEnemy, towerX, towerY);
+					}
+				}
+			}
+		}
+	}
+	//	public static boolean initalizeEnemy = true;
+
 }
