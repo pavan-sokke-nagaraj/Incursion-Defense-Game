@@ -15,8 +15,6 @@ import com.IDG.controller.Game;
 import com.IDG.controller.GameFileManager;
 import com.IDG.enemyFactory.EnemyFactory;
 import com.IDG.enemyFactory.EnemyType;
-import com.IDG.enemyFactory.SmallEnemy;
-import com.IDG.playGame.EnemyPath;
 
 /**
  * 
