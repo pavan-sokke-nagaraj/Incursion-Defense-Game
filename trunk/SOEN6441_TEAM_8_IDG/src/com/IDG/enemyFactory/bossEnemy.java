@@ -126,7 +126,7 @@ import com.IDG.mapSimulator.MapSimulatorView;
 
 			public void draw(Graphics g) {
 
-				Image image = new ImageIcon("ImageSource/boss.png").getImage();
+				Image image = new ImageIcon("ImageSource/monster.gif").getImage();
 
 				g.drawImage(image, x, y, enemySize, enemySize, null);
 				drawHealthBar(g);
