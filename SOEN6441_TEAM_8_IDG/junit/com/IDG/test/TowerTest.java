@@ -52,7 +52,7 @@ public class TowerTest {
 		int costToUpgrade = 1;
 
 		Tower result = new Tower(towerId, costToBuy, level, range, power,
-				attackType, costToSell, costToUpgrade);
+				attackType, costToSell, costToUpgrade, costToUpgrade, costToUpgrade, costToUpgrade, costToUpgrade);
 
 		// add additional test code here
 		assertNotNull(result);
