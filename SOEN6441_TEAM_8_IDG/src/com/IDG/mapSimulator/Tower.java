@@ -59,7 +59,7 @@ public class Tower implements Serializable {
 	/**
 	 * variable to hold the starting x position to draw tower information
 	 */
-	int box2Xpos = 750;
+	int box2Xpos = 710;
 	/**
 	 * variable to hold the starting y position to draw tower information
 	 */
