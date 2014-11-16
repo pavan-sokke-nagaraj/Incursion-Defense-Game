@@ -37,6 +37,13 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 	public int actualHealth;
 	public int currentHealth;
 
+	public int enemyActualSpeed=1;
+	
+	public int enemyCurrentSpeed=1;
+	
+	public boolean isSpeedSlow=false;
+
+	public int slowCounter=0;
 	public SmallEnemy() {
 	}
 
@@ -56,6 +63,8 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 		this.actualHealth = actualHealth;
 		this.currentHealth = currentHealth;
 		this.value=value;
+		this.enemyActualSpeed=enemyActualSpeed;
+		this.enemyCurrentSpeed=enemyCurrentSpeed;
 
 		// System.out.println("Enemy():\tx:\t"+x+"\tY:\t"+y);
 	}
@@ -68,24 +77,32 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 		int mapRow = MapSimulatorView.gridRow;
 		int mapCol = MapSimulatorView.gridRow;
 		// System.out.println("move():\tx:\t"+x+"\tY:\t"+y+"  row:  "+row+"  col:\t"+column);
-
+		
+		/*if(this.slowCounter>0){
+			this.enemyCurrentSpeed=5;
+			this.slowCounter--;
+		}else{
+			this.enemyCurrentSpeed=this.enemyActualSpeed;
+			this.slowCounter=0;
+		}*/
+//		System.out.println("Enemy ID :: "+this.enemyId+"\tCurrent Speed :: "+this.enemyCurrentSpeed+"\tActual Speed :: "+this.enemyActualSpeed);
 		if (row < mapRow && column < mapCol && nextPoint != null
 				&& currentHealth > 0) {
 			if (y < nextPoint.y) {
-				y += speedOffsetY;
+				y += this.enemyCurrentSpeed;
 			}
 
 			if (x < nextPoint.x) {
-				x += speedOffsetX;
+				x += this.enemyCurrentSpeed;
 			}
 
 			if (x > nextPoint.x) {
-				y -= speedOffsetY;
-				x -= speedOffsetX;
+//				y -= this.enemyCurrentSpeed;
+				x -= this.enemyCurrentSpeed;
 			}
 			if (y > nextPoint.y) {
-				y -= speedOffsetY;
-				x -= speedOffsetX;
+				y -= this.enemyCurrentSpeed;
+//				x -= this.enemyCurrentSpeed;
 			}
 
 			if (x == nextPoint.x && y == nextPoint.y) {
@@ -93,11 +110,20 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 			}
 		}else{
 			//graphics.drawImage(null, x, y, enemySize, enemySize, null);
+			if(currentHealth <= 0){
 			MapSimulatorView.power = MapSimulatorView.power + this.value ;
 			MapSimulatorView.enemiesOnMap.remove(this);
 			System.out.println("Died Enemy NO :: "+this.enemyId);
 			if(MapSimulatorView.enemiesOnMap.size()==0){
 				MapSimulatorView.moveEnemy=false;
+			}
+			}else{
+				MapSimulatorView.health = MapSimulatorView.health - this.value ;
+				MapSimulatorView.enemiesOnMap.remove(this);
+				System.out.println("Died Enemy NO :: "+this.enemyId);
+				if(MapSimulatorView.enemiesOnMap.size()==0){
+					MapSimulatorView.moveEnemy=false;
+				}
 			}
 		}
 		//TODO what to do when critters exit the path
