@@ -12,21 +12,20 @@ public class EnemyPath {
 	private static int width, height;
 	private static boolean wasHere[][];
 	private static LinkedList<Point> copiedPath = new LinkedList<Point>();
-	private static Block[][] map; 
+	private static Block[][] map;
 
 	public static LinkedList<Point> copyPath() {
 		width = MapSimulatorView.gridRow;
 		height = MapSimulatorView.gridColumn;
 		wasHere = new boolean[width][height];
 		map = new Block[width][height];
-		
+
 		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++)
-			{
+			for (int j = 0; j < height; j++) {
 				map[i][j] = MapSimulatorView.room.block[i][j];
 			}
 		}
-	
+
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++)
 				if (MapSimulatorView.gameValue[i][j] == 'S') {
@@ -52,8 +51,10 @@ public class EnemyPath {
 
 		if (entryX2 == exitX && entryY2 == exitY)
 			return true;
-		if (MapSimulatorView.gameValue[entryX2][entryY2] == '*'
-				|| wasHere[entryX2][entryY2])
+
+		char createId = MapSimulatorView.gameValue[entryX2][entryY2];
+		if (createId == '*' || createId == 'R' || createId == 'B'
+				|| createId == 'G' || wasHere[entryX2][entryY2])
 			return false;
 
 		wasHere[entryX2][entryY2] = true;
@@ -84,8 +85,8 @@ public class EnemyPath {
 
 		return false;
 	}
-	
-	private static Point addPoint(int x, int y){
+
+	private static Point addPoint(int x, int y) {
 		Point point;
 		point = new Point(map[x][y].x, map[x][y].y);
 		return point;
