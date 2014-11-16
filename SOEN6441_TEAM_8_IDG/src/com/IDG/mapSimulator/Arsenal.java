@@ -5,11 +5,14 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.Button;
 
 import javax.swing.ImageIcon;
 
 import com.IDG.controller.GameFileManager;
+import com.IDG.enemyFactory.EnemyType;
+import com.IDG.enemyFactory.SmallEnemy;
+import com.IDG.playGame.EnemyPath;
+import com.IDG.playGame.MoveEnemy;
 
 /**
  * class arsenal holds the information of tower, upgrade and sell tower
@@ -76,10 +79,7 @@ public class Arsenal {
 	 * Rectangle to hold the dimensions of sell button
 	 */
 	public Rectangle sellButton;
-	/**
-	 * Rectangle to hold the dimensions of start button
-	 */
-	public Rectangle startGame;
+
 	/**
 	 * tower create value
 	 */
@@ -119,6 +119,8 @@ public class Arsenal {
 	 */
 	public static boolean sellConfirm = false;
 
+	public Rectangle waveButton;
+
 	/**
 	 * class constructor to initialize tower data, health data, money data
 	 * Upgrade: Build 2-> serialize he objects and retrieve data from xml files
@@ -130,14 +132,14 @@ public class Arsenal {
 			towers[i] = new Rectangle(box1Xpos + (gap * i) + (towerWidth * i),
 					box1Ypos, towerWidth, towerWidth);
 			if (i == 0) {
-				towerBlocks[i] = new Tower('G', 5, 1, 1, 10, "Single", 5, 5);
+				towerBlocks[i] = new Tower('G', 5, 1, 1, 10, "Single", 5, 5,1,5);
 			} else if (i == 1) {
-				towerBlocks[i] = new Tower('R', 10, 1, 1, 20, "Single", 5, 15);
+				towerBlocks[i] = new Tower('R', 10, 1, 2, 20, "Single", 5, 15,1,10);
 			} else if (i == 2) {
-				towerBlocks[i] = new Tower('B', 15, 1, 2, 20, "Multiple", 10,
-						20);
+				towerBlocks[i] = new Tower('B', 15, 1, 4, 20, "Multiple", 10,
+						20,1,20);
 			} else if (i == 3) {
-				towerBlocks[i] = new Tower('D', 0, 0, 0, 0, "", 0, 0);
+				towerBlocks[i] = new Tower('D', 0, 0, 0, 0, "", 0, 0,1,10);
 			}
 		}
 
@@ -147,6 +149,7 @@ public class Arsenal {
 				towerWidth, towerWidth);
 		upgradeButton = new Rectangle(box2Xpos + 45, box2Ypos + 145, 160, 40);
 		sellButton = new Rectangle(box2Xpos + 45, box2Ypos + 125, 160, 20);
+		waveButton = new Rectangle(box2Xpos + 45, 565 + 125 - 100, 160, 60);
 	}
 
 	/**
@@ -210,6 +213,13 @@ public class Arsenal {
 		graphic.drawImage(image, box1Xpos + 110, box1Ypos + towerWidth + 45,
 				towerWidth, towerWidth, null);
 
+		//		draw waveButton
+		graphic.fillRect(waveButton.x, waveButton.y, waveButton.width, waveButton.height);
+		graphic.setColor(Color.RED);
+		graphic.setFont(new Font("Courier New", Font.BOLD, 20));
+		graphic.drawString("START WAVE", waveButton.x + 20, waveButton.y + 20 );
+
+
 		drawMoney(graphic);
 
 		if (holdsTower) {
@@ -224,6 +234,8 @@ public class Arsenal {
 			graphic.drawImage(image, MapSimulatorView.mse.x,
 					MapSimulatorView.mse.y, towerWidth, towerWidth, null);
 			towerBlocks[heldPosition].drawTowerInformation(graphic);
+			drawTowerRange(graphic, MapSimulatorView.mse.x,
+					MapSimulatorView.mse.y, towerBlocks[heldPosition].range);
 		}
 		if (selectMapTower) {
 			// System.out.println("While selectMapTower" + mapTowerXpos + "\t\t"
@@ -245,6 +257,9 @@ public class Arsenal {
 			// graphic.drawOval(circleX, circleY, radius * 2 * towerWidth,
 			// radius
 			// * 2 * towerWidth);
+			int circleX = MapSimulatorView.room.block[mapTowerXpos][mapTowerYpos].x;
+			int circleY = MapSimulatorView.room.block[mapTowerXpos][mapTowerYpos].y;
+			drawTowerRange(graphic, circleX, circleY, tower.range);
 		}
 		if (upgradeConfirm) {
 			drawUpgradeTowerInfo(graphic);
@@ -256,6 +271,8 @@ public class Arsenal {
 			graphic.setColor(Color.GRAY);
 			graphic.fillRect(box2Xpos, box2Ypos, 250, 200);
 		}
+
+		//		System.out.println("Moveenemey:\t" + MapSimulatorView.moveEnemy);
 	}
 
 	/**
@@ -297,7 +314,7 @@ public class Arsenal {
 			mapTowerYpos = -1;
 			tower.drawTowerInformation(graphic);
 			GameFileManager
-					.deleteTowerObject(tower, mapTowerXpos, mapTowerYpos);
+			.deleteTowerObject(tower, mapTowerXpos, mapTowerYpos);
 		}
 	}
 
@@ -308,8 +325,8 @@ public class Arsenal {
 	 *            Graphic variable to draw the Components
 	 */
 	private void drawUpgradeTowerInfo(Graphics graphic) {
-//		System.out.println("While drawUpgradeTowerInfo" + mapTowerXpos + "\t\t"
-//				+ mapTowerYpos);
+		//		System.out.println("While drawUpgradeTowerInfo" + mapTowerXpos + "\t\t"
+		//				+ mapTowerYpos);
 		Tower tower = GameFileManager
 				.getTowerObject(mapTowerXpos, mapTowerYpos);
 		if (MapSimulatorView.power >= tower.costToUpgrade) {
@@ -380,6 +397,21 @@ public class Arsenal {
 			} else if (sellButton.contains(MapSimulatorView.mse)) {
 				sellConfirm = true;
 				upgradeConfirm = false;
+			}else if(waveButton.contains(MapSimulatorView.mse)){
+
+				if(MapSimulatorView.level<10){
+
+					MapSimulatorView.moveEnemy = true ;
+					MapSimulatorView.level++;
+					if (MapSimulatorView.gridRow != 0 || MapSimulatorView.gridColumn != 0) {
+						MapSimulatorView.enemyPath = EnemyPath.copyPath();
+						for (int i = 0; i < (MapSimulatorView.level * 10)/2; i++) {
+							MapSimulatorView.enemiesOnMap.add(MapSimulatorView.enemyFactory.getEnemyfromFactory(MapSimulatorView.enemyType,i,MapSimulatorView.enemyPath, i * 20,MapSimulatorView.level*100,MapSimulatorView.level*100,MapSimulatorView.level*5));
+						}
+					}
+				}else{
+					//TODO  
+				}
 			} else {
 				for (int i = 0; i < MapSimulatorView.room.mapRow; i++) {
 					for (int j = 0; j < MapSimulatorView.room.mapColumn; j++) {
@@ -389,7 +421,7 @@ public class Arsenal {
 							mapTowerXpos = i;
 							mapTowerYpos = j;
 
-//							System.out.println("I click");
+							//							System.out.println("I click");
 							if (createId == 'G' || createId == 'R'
 									|| createId == 'B') {
 								selectMapTower = true;
@@ -404,6 +436,15 @@ public class Arsenal {
 			}
 		}
 
+	}
+
+	private void drawTowerRange(Graphics graphic, int circleX, int circleY,
+			int radius) {
+		radius = radius * towerWidth;
+		circleX = circleX + (towerWidth / 2) - radius;
+		circleY = circleY + (towerWidth / 2) - radius;
+		graphic.setColor(Color.RED);
+		graphic.drawOval(circleX, circleY, 2 * radius, 2 * radius);
 	}
 
 }
