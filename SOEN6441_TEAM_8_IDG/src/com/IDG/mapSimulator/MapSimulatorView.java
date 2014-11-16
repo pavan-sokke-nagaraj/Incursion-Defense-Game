@@ -82,7 +82,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	//public static Enemy[] enemies = new Enemy[100];
 	//public static ArrayList<Enemy> enemiesOnMap=new ArrayList<Enemy>();
 	public static EnemyFactory enemyFactory = new EnemyFactory();
-	public static String enemyType="normalenemy";
+	public static String enemyType="bossenemy";
 	public static ArrayList<EnemyType> enemiesOnMap=new ArrayList<EnemyType>();
 	public static boolean moveEnemy = false;
 	public static int mapXStart = 0;
@@ -226,7 +226,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 					int towerX = MapSimulatorView.room.block[i][j].x;
 					int towerY = MapSimulatorView.room.block[i][j].y;
 					if(tower.hasHitOnce||tower.attackDelay>tower.maxAttackDelay){
-						tower.hasHitOnce=true;
+						tower.hasHitOnce=false;
 						ArrayList<EnemyType> currentEnemyList=tower.calculateEnemy(enemiesOnMap,towerX,towerY);
 						if(currentEnemyList!=null){
 							for(int k=0;k<currentEnemyList.size();k++){

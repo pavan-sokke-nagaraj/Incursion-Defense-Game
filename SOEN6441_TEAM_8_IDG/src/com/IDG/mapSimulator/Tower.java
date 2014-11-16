@@ -94,7 +94,7 @@ public class Tower implements Serializable {
 
 	public static final int FREEZING=3;
 	
-	public boolean hasHitOnce=false;
+	public boolean hasHitOnce=true;
 	
 	
 
