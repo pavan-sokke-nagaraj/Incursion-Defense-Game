@@ -9,8 +9,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -19,14 +17,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 
-
-
-
-
-
-
-import com.IDG.enemyFactory.EnemyFactory;
 import com.IDG.mapBuilder.MapBuilderController;
+
 import com.IDG.mapSimulator.Arsenal;
 import com.IDG.mapSimulator.Block;
 import com.IDG.mapSimulator.MapSimulatorView;
@@ -36,7 +28,7 @@ import com.IDG.mapSimulator.MapSimulatorView;
  * header menu system and the windows of display
  * 
  * @author Pavan Sokke Nagaraj <pavansn8@gmail.com>
- * @version Build 1
+ * @version Build 
  * @since Build 1
  *
  */
@@ -45,17 +37,14 @@ public class LayoutManager {
 	
 	private JMenuBar menu = new JMenuBar();
 	private JMenu fileMenu = new JMenu("Game");
-	private JMenu gameMenu = new JMenu("Start Game");
 	private JTabbedPane tab = new JTabbedPane();
 	private MapSimulatorView mapSimulatorView = new MapSimulatorView();
 	public LayoutManager() {
 		// populates the file selector and add to menu tab
 		//populateFileHeader();
 		menu.add(fileMenu);
-		menu.add(gameMenu);
 		fileMenu.add(fileLoad);
 
-		gameMenu.add(createEnemy);
 		fileMenu.addSeparator();
 		// populate the tabs
 		populateTabs();
@@ -77,19 +66,10 @@ public class LayoutManager {
 			new MapBuilderController();
 		}
 	});
-		
-	JMenuItem createEnemy = new JMenuItem(new AbstractAction("Let's Start"){
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			new EnemyFactory();
 			
-		}
-		
-	});
 	public void populateFileHeader() {
 
-				if (Game.getInstance().Mode == Game.GameMode.Simulator) {
+				if (Game.Mode == Game.GameMode.Simulator) {
 					Scanner sc=null;
 					String line1=null;
 					try {
@@ -121,7 +101,7 @@ public class LayoutManager {
 					}
 				}
 			}
-	
+
 	/**
 	 * The function to populate Editor tab and simulator tab
 	 */
@@ -146,9 +126,9 @@ public class LayoutManager {
 				int tabSelectedIndex = ((JTabbedPane) event.getSource())
 						.getSelectedIndex();
 				if (tabSelectedIndex == 0) {
-					Game.getInstance().Mode = Game.GameMode.Editor;
+					Game.Mode = Game.GameMode.Editor;
 				} else if (tabSelectedIndex == 1) {
-					Game.getInstance().Mode = Game.GameMode.Simulator;
+					Game.Mode = Game.GameMode.Simulator;
 				}
 				// rebuildLayout();
 			}
