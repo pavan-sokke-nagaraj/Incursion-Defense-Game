@@ -26,7 +26,8 @@ import com.IDG.test.TowerTest;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ ArsenalTest.class, GameControllerTest.class,
 		GameFileManagerTest.class, MapValidityTestCase.class, RoomTest.class,
-		TowerTest.class
+		TowerTest.class, bossEnemyTest.class, SmallEnemyTest.class, EnemyFactoryTest.class,
+		EnemyPathTest.class
 
 })
 public class TestAll {
