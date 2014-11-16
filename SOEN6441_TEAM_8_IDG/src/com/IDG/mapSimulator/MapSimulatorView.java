@@ -15,7 +15,6 @@ import com.IDG.controller.Game;
 import com.IDG.controller.GameFileManager;
 import com.IDG.enemyFactory.EnemyFactory;
 import com.IDG.enemyFactory.EnemyType;
-import com.IDG.enemyFactory.SmallEnemy;
 import com.IDG.playGame.EnemyPath;
 
 /**
@@ -75,13 +74,15 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 * class Arsenal initialization which holds the towers
 	 */
 	public static Arsenal arsenal;
+	
 
 	// build 2 end
 
 	public static LinkedList<Point> enemyPath = new LinkedList<Point>();
 	//public static Enemy[] enemies = new Enemy[100];
+	//public static ArrayList<Enemy> enemiesOnMap=new ArrayList<Enemy>();
 	public static EnemyFactory enemyFactory = new EnemyFactory();
-	public static String enemyType="bossenemy";
+	public static String enemyType="normalenemy";
 	public static ArrayList<EnemyType> enemiesOnMap=new ArrayList<EnemyType>();
 	public static boolean moveEnemy = false;
 	public static int mapXStart = 0;
@@ -175,7 +176,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 			room.drawGameArena(graphic, gameValue);
 
 			arsenal.draw(graphic);
-			
+
 			long start = System.currentTimeMillis();
 			/*if (moveEnemy) {
 				enemyPath = EnemyPath.copyPath();
@@ -207,12 +208,15 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	}
 	public void updateEnemies(Graphics graphic){
 		for (int k = 0; k < enemiesOnMap.size(); k++) {
-			enemiesOnMap.get(k).update(graphic);
-			enemiesOnMap.get(k).draw(graphic);
+			if(enemiesOnMap.size()>0){
+				enemiesOnMap.get(k).update(graphic);
+			}	
+			if(enemiesOnMap.size()>0){
+				enemiesOnMap.get(k).draw(graphic);
+			}
 		}
 	}
 	public void updateTower(Graphics graphic){
-		int temphealth;
 		for (int i = 0; i < gridRow; i++) {
 			for (int j = 0; j < gridColumn; j++) {
 				if(gameValue[i][j] == 'G' || gameValue[i][j] == 'R'
@@ -221,14 +225,38 @@ public class MapSimulatorView extends JPanel implements Runnable {
 							.getTowerObject(i, j);
 					int towerX = MapSimulatorView.room.block[i][j].x;
 					int towerY = MapSimulatorView.room.block[i][j].y;
-					EnemyType currentEnemy=tower.calculateEnemy(enemiesOnMap,towerX,towerY);
-					if(currentEnemy!=null){
-						temphealth=currentEnemy.getCurrentHealth();
-						temphealth-=tower.damage;
-						currentEnemy.setCurrentHealth(temphealth);
-						System.out.println(" Enemy :: "+currentEnemy.getEnemyId()+"Hit by Tower :: "+tower.towerId);
-						System.out.println("EnemyCurrentHealth :: "+ currentEnemy.getCurrentHealth());
-						tower.drawFireEffect(graphic, currentEnemy, towerX, towerY);
+					if(tower.hasHitOnce||tower.attackDelay>tower.maxAttackDelay){
+						tower.hasHitOnce=true;
+						ArrayList<EnemyType> currentEnemyList=tower.calculateEnemy(enemiesOnMap,towerX,towerY);
+						if(currentEnemyList!=null){
+							for(int k=0;k<currentEnemyList.size();k++){
+								EnemyType currentEnemy=currentEnemyList.get(k);
+								if(currentEnemy!=null){
+									if(tower.towerAttackType==2||tower.towerAttackType==1){
+										int temphealth1;
+										temphealth1=currentEnemy.getCurrentHealth();
+										temphealth1=temphealth1-tower.damage;
+										currentEnemy.setCurrentHealth(temphealth1);
+									}else if(tower.towerAttackType==3){
+										int temphealth;
+										temphealth=currentEnemy.getCurrentHealth();
+										temphealth=temphealth-tower.damage;
+										currentEnemy.setCurrentHealth(temphealth);
+										currentEnemy.setSpeedSlow(true);
+										currentEnemy.setEnemyCurrentSpeed(5);
+									}
+									//System.out.println(" Splash Applied to :: "+(k+1)+" Current Enemy :: "+currentEnemy.enemyId+"Hit by Tower :: "+tower.towerId);
+									//System.out.println(" Enemy :: "+currentEnemy.enemyId+"Hit by Tower :: "+tower.towerId);
+									//System.out.println("EnemyCurrentHealth :: "+ currentEnemy.currentHealth);
+									tower.drawFireEffect(graphic, currentEnemy, towerX, towerY);
+									tower.attackDelay=0;
+								}
+							}
+						}
+					}else{
+						tower.attackDelay+=1;
+						GameFileManager
+						.saveTowerObject(tower,i, j);
 					}
 				}
 			}

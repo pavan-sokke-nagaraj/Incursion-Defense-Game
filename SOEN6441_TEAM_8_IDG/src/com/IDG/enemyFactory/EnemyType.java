@@ -29,6 +29,12 @@ public interface EnemyType {
 	public void setCurrentHealth(int currentHealth);
 	
 	public int getEnemyId();
+	
+	public int getEnemyCurrentSpeed();
+	public boolean isSpeedSlow();
+	
+	public void setSpeedSlow(boolean isSpeedSlow);
+	public void setEnemyCurrentSpeed(int enemyCurrentSpeed);
 
 
 	public void setEnemyId(int enemyId);

@@ -12,8 +12,6 @@ import java.util.Collections;
 import java.util.Random;
 
 import com.IDG.enemyFactory.EnemyType;
-import com.IDG.enemyFactory.SmallEnemy;
-import com.IDG.enemyFactory.bossEnemy;
 
 /**
  * @author Pavan Sokke Nagaraj <pavansn8@gmail.com>
@@ -59,6 +57,7 @@ public class Tower implements Serializable {
 	/**
 	 * variable to hold the starting x position to draw tower information
 	 */
+//	int box2Xpos = 750;
 	int box2Xpos = 710;
 	/**
 	 * variable to hold the starting y position to draw tower information
@@ -67,21 +66,37 @@ public class Tower implements Serializable {
 
 	int towerSize = 40;
 
-	public ArrayList<SmallEnemy> enemyTargets;
+	public ArrayList<EnemyType> enemyTargets;
 
-	public SmallEnemy targetEnemy;
+	public EnemyType targetEnemy;
 
-	int attackFirstNearBaseEnemy=1;//Attack enemy nearest to tower
+	int ATTACK_FIRST_NEAR_TOWER_ENEMY=1;//Attack enemy nearest to tower
 
-	int attackRandomEnemy=2;//Attack random enemy
+	int ATTACK_RANDOM_ENEMY=2;//Attack random enemy
 
-	int attackMinimumHealthEnemy=3;
+	int ATTACK_MIN_HEALTH_ENEMY=3;
 
-	int attackMaximumHealthEnemy=4;
+	int ATTACK_MAX_HEALTH_ENEMY=4;
 
 	int attackStrategy;
 
 	int damage=0;
+
+	int attackDelay=0;
+
+	int maxAttackDelay;
+
+	int towerAttackType=0;
+
+	public final  int SPLASHINHG=1;
+
+	public final  int BURNING=2;
+
+	public final  int FREEZING=3;
+	
+	public boolean hasHitOnce=false;
+	
+	
 
 	/**
 	 * class tower constructor to set the default values
@@ -96,7 +111,7 @@ public class Tower implements Serializable {
 		this.attackType = "";
 		this.costToSell = 0;
 		this.costToUpgrade = 0;
-		this.enemyTargets = new ArrayList<SmallEnemy>();
+		this.enemyTargets = new ArrayList<EnemyType>();
 		this.targetEnemy = null;
 		this.attackStrategy=2;
 		this.damage =10;
@@ -122,7 +137,7 @@ public class Tower implements Serializable {
 	 *            cost of tower to upgrade
 	 */
 	public Tower(char towerId, int costToBuy, int level, int range, int power,
-			String attackType, int costToSell, int costToUpgrade,int attackStrategy,int damage) {
+			String attackType, int costToSell, int costToUpgrade,int attackStrategy,int damage,int maxAttackDelay,int towerAttackType) {
 		this.towerId = towerId;
 		this.costToBuy = costToBuy;
 		this.level = level;
@@ -133,6 +148,8 @@ public class Tower implements Serializable {
 		this.costToUpgrade = costToUpgrade;
 		this.attackStrategy=attackStrategy;
 		this.damage =damage;
+		this.maxAttackDelay=maxAttackDelay;
+		this.towerAttackType=towerAttackType;
 	}
 
 	/**
@@ -200,11 +217,11 @@ public class Tower implements Serializable {
 		graphic.clearRect(box2Xpos, box2Ypos, 250, 200);
 	}
 
-	public void fire(SmallEnemy enemy, int towerX, int towerY) {
+	public void fire(EnemyType enemy, int towerX, int towerY) {
 
 		double distance = distance(enemy, towerX, towerY);
 
-		if (distance <= range * towerSize && enemy.currentHealth > 0 )
+		if (distance <= range * towerSize && enemy.getCurrentHealth() > 0 )
 
 		{
 			if (enemyTargets!= null && !enemyTargets.contains(enemy) ) {
@@ -213,9 +230,12 @@ public class Tower implements Serializable {
 			}
 
 			targetEnemy = enemy;
-			targetEnemy.currentHealth  = targetEnemy.currentHealth - 100 ;
+			int tempcurrentHealth;
+			tempcurrentHealth=targetEnemy.getCurrentHealth();
+			tempcurrentHealth = tempcurrentHealth - 100 ;
+			targetEnemy.setCurrentHealth(tempcurrentHealth);
 
-			if(enemyTargets!= null && targetEnemy.currentHealth<=0)
+			if(enemyTargets!= null && targetEnemy.getCurrentHealth()<=0)
 			{
 				MapSimulatorView.power = MapSimulatorView.power + 5 ;
 				//remove the dead critter
@@ -241,7 +261,7 @@ public class Tower implements Serializable {
 		int enemyX = enemy.Xvalue();
 
 		int enemyY = enemy.Yvalue();
-		
+
 		enemyCenterX = enemyX + towerSize / 2;
 
 		enemyCenterY = enemyY + towerSize / 2;
@@ -266,11 +286,12 @@ public class Tower implements Serializable {
 		}
 	}
 
-	public EnemyType calculateEnemy(ArrayList<EnemyType> enemies,int towX,int towY){
+	public ArrayList<EnemyType> calculateEnemy(ArrayList<EnemyType> enemies,int towX,int towY){
 
 		EnemyType[] enemiesInRange=new EnemyType[enemies.size()];
 		ArrayList enemyDistanceList=new ArrayList();
 		ArrayList enemyHealthList=new ArrayList();
+		ArrayList<EnemyType> returnEnemyList=new ArrayList<EnemyType>();
 		for(int i=0;i<enemies.size();i++){
 			if(enemies.get(i)!=null){
 				EnemyType enemy=enemies.get(i);
@@ -279,11 +300,11 @@ public class Tower implements Serializable {
 				if (distance <= range * towerSize && enemy.getCurrentHealth() > 0 )
 				{
 					enemiesInRange[i]=enemy;
-					enemyDistanceList.add(distance);
-					enemyHealthList.add(enemy.getCurrentHealth());
+					enemyDistanceList.add((double)distance);
+					enemyHealthList.add((double)enemy.getCurrentHealth());
 
 				}else{
-					if(this.attackStrategy==attackFirstNearBaseEnemy||this.attackStrategy==attackMinimumHealthEnemy){
+					if(this.attackStrategy==ATTACK_FIRST_NEAR_TOWER_ENEMY||this.attackStrategy==ATTACK_MIN_HEALTH_ENEMY){
 						enemyDistanceList.add(400000000.00);
 						enemyHealthList.add(40000000000.00);
 					}else{
@@ -293,7 +314,7 @@ public class Tower implements Serializable {
 				}
 			}
 		}
-		if(this.attackStrategy==attackRandomEnemy){
+		if(this.attackStrategy==ATTACK_RANDOM_ENEMY){
 			int totalEnemies=0;
 			for(int i=0;i<enemiesInRange.length;i++){
 				if(enemiesInRange[i]!=null){
@@ -307,7 +328,15 @@ public class Tower implements Serializable {
 
 				while(true){
 					if(enemiesTaken==enemy&&enemiesInRange[k]!=null){
-						return enemiesInRange[k];
+						returnEnemyList.add(enemiesInRange[k]);
+						if(this.towerAttackType==SPLASHINHG&&totalEnemies>1){
+							for(int j=0;j<enemiesInRange.length;j++){
+								if(j!=enemy&&enemiesInRange[j]!=null){
+									returnEnemyList.add(enemiesInRange[j]);
+								}
+							}
+						}
+						return returnEnemyList;
 					}
 					if(enemiesInRange[k]!=null){
 						enemiesTaken++;
@@ -315,7 +344,7 @@ public class Tower implements Serializable {
 					k++;
 				}
 			}
-		}else if(this.attackStrategy==attackFirstNearBaseEnemy){
+		}else if(this.attackStrategy==ATTACK_FIRST_NEAR_TOWER_ENEMY){
 			int totalEnemies=0;
 			for(int i=0;i<enemiesInRange.length;i++){
 				if(enemiesInRange[i]!=null){
@@ -325,39 +354,51 @@ public class Tower implements Serializable {
 			if(totalEnemies>0){
 				int minIndex = enemyDistanceList.indexOf(Collections.min(enemyDistanceList));
 				if(enemiesInRange[minIndex]!=null){
-					return enemiesInRange[minIndex];
+					returnEnemyList.add(enemiesInRange[minIndex]);
+					if(this.towerAttackType==SPLASHINHG&&totalEnemies>1){
+						enemyDistanceList.set(minIndex, 40000000.00);
+						minIndex = enemyDistanceList.indexOf(Collections.min(enemyDistanceList));
+						returnEnemyList.add(enemiesInRange[minIndex]);
+					}
+					return returnEnemyList;
 				}
 			}
-		}else if(this.attackStrategy==attackMinimumHealthEnemy){
+		}else if(this.attackStrategy==ATTACK_MIN_HEALTH_ENEMY){
 			int totalEnemies=0;
 			for(int i=0;i<enemiesInRange.length;i++){
 				if(enemiesInRange[i]!=null){
 					totalEnemies++;
 				}
-			}
-			if(totalEnemies>1){
-				System.out.println("More Enemey in range");
 			}
 			if(totalEnemies>0){
 				int minIndex = enemyHealthList.indexOf(Collections.min(enemyHealthList));
 				if(enemiesInRange[minIndex]!=null){
-					return enemiesInRange[minIndex];
+					returnEnemyList.add(enemiesInRange[minIndex]);
+					if(this.towerAttackType==SPLASHINHG&&totalEnemies>1){
+						enemyDistanceList.set(minIndex, 40000000.00);
+						minIndex = enemyDistanceList.indexOf(Collections.min(enemyDistanceList));
+						returnEnemyList.add(enemiesInRange[minIndex]);
+					}
+					return returnEnemyList;
 				}
 			}
-		}else if(this.attackStrategy==attackMaximumHealthEnemy){
+		}else if(this.attackStrategy==ATTACK_MAX_HEALTH_ENEMY){
 			int totalEnemies=0;
 			for(int i=0;i<enemiesInRange.length;i++){
 				if(enemiesInRange[i]!=null){
 					totalEnemies++;
 				}
 			}
-			if(totalEnemies>1){
-				System.out.println("More Enemey in range");
-			}
 			if(totalEnemies>0){
 				int minIndex = enemyHealthList.indexOf(Collections.max(enemyHealthList));
 				if(enemiesInRange[minIndex]!=null){
-					return enemiesInRange[minIndex];
+					returnEnemyList.add(enemiesInRange[minIndex]);
+					if(this.towerAttackType==SPLASHINHG&&totalEnemies>1){
+						enemyDistanceList.set(minIndex, -1.00);
+						minIndex = enemyDistanceList.indexOf(Collections.min(enemyDistanceList));
+						returnEnemyList.add(enemiesInRange[minIndex]);
+					}
+					return returnEnemyList;
 				}
 			}
 		}
