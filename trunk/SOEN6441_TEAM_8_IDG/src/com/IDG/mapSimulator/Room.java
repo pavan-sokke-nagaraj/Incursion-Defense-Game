@@ -73,7 +73,9 @@ public class Room implements Serializable {
 		// set the starting position(x,y) to the center of the rectangle to be
 		// drawn
 		int xStart = 335 - ((mapColumn * blockSize) / 2);
+		MapSimulatorView.mapXStart = xStart ;
 		int yStart = 390 - ((mapRow * blockSize) / 2);
+		MapSimulatorView.mapYStart = yStart ;
 		// Draw each tile 
 		for (int i = 0; i < mapColumn; i++) {
 			for (int j = 0; j < mapRow; j++) {
@@ -85,6 +87,14 @@ public class Room implements Serializable {
 						&& gameValue[j][i] == '*') {
 					block[j][i].drawBlockRect(graphic);
 				}
+//				if(MapSimulatorView.moveEnemy &&  gameValue[j][i] == '-'){
+//					Enemy enemy = new Enemy();
+//					enemy.x = block[j][i].x;
+//					enemy.y = block[j][i].y;
+//					enemy.width = block[j][i].width;
+//					enemy.height = block[j][i].height;
+//					enemy.draw(graphic);
+//				}
 			}
 		}
 	}
