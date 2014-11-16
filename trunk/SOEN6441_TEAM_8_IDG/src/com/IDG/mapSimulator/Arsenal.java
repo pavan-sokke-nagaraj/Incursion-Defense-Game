@@ -9,10 +9,8 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 import com.IDG.controller.GameFileManager;
-import com.IDG.enemyFactory.EnemyType;
-import com.IDG.enemyFactory.SmallEnemy;
 import com.IDG.playGame.EnemyPath;
-import com.IDG.playGame.MoveEnemy;
+
 
 /**
  * class arsenal holds the information of tower, upgrade and sell tower
@@ -48,6 +46,7 @@ public class Arsenal {
 	/**
 	 * variable to hold the starting x position to draw tower information
 	 */
+	// public int box2Xpos = 750;
 	public int box2Xpos = 710;
 	/**
 	 * variable to hold the starting y position to draw tower information
@@ -144,15 +143,16 @@ public class Arsenal {
 					box1Ypos, towerWidth, towerWidth);
 			if (i == 0) {
 				towerBlocks[i] = new Tower('G', 5, 1, 1, 10, "Single", 5, 5, 1,
-						5);
+						5, 50, 3);// freezing
 			} else if (i == 1) {
 				towerBlocks[i] = new Tower('R', 10, 1, 2, 20, "Single", 5, 15,
-						1, 10);
+						1, 10, 1, 2);// burning
 			} else if (i == 2) {
 				towerBlocks[i] = new Tower('B', 15, 1, 4, 20, "Multiple", 10,
-						20, 1, 20);
+						20, 4, 5, 1, 2);// Splashing
 			} else if (i == 3) {
-				towerBlocks[i] = new Tower('D', 0, 0, 0, 0, "", 0, 0, 1, 10);
+				towerBlocks[i] = new Tower('D', 0, 0, 0, 0, "", 0, 0, 1, 10, 2,
+						2);
 			}
 		}
 
@@ -295,19 +295,11 @@ public class Arsenal {
 			graphic.setColor(Color.GRAY);
 			graphic.fillRect(box2Xpos, box2Ypos, 250, 200);
 		}
-
-		// System.out.println("Moveenemey:\t" + MapSimulatorView.moveEnemy);
 		if (isStrtergySelect) {
 			applyStratergy(mapTowerXpos, mapTowerYpos);
 		}
-	}
 
-	private void applyStratergy(int mapTowerXpos2, int mapTowerYpos2) {
-		Tower tower = GameFileManager
-				.getTowerObject(mapTowerXpos, mapTowerYpos);
-		tower.attackStrategy = selectedStratergy;
-		System.out.println(selectedStratergy);
-		GameFileManager.saveTowerObject(tower, mapTowerXpos, mapTowerYpos);
+		// System.out.println("Moveenemey:\t" + MapSimulatorView.moveEnemy);
 	}
 
 	/**
@@ -454,6 +446,7 @@ public class Arsenal {
 					if (MapSimulatorView.gridRow != 0
 							|| MapSimulatorView.gridColumn != 0) {
 						MapSimulatorView.enemyPath = EnemyPath.copyPath();
+
 						for (int i = 0; i < (MapSimulatorView.level * 10) / 2; i++) {
 							MapSimulatorView.enemiesOnMap
 									.add(MapSimulatorView.enemyFactory
@@ -464,7 +457,9 @@ public class Arsenal {
 													i * 20,
 													MapSimulatorView.level * 100,
 													MapSimulatorView.level * 100,
-													MapSimulatorView.level * 5));
+													MapSimulatorView.level * 5,
+													((MapSimulatorView.level * 5)),
+													((MapSimulatorView.level * 5))));
 						}
 					}
 				} else {
@@ -493,7 +488,6 @@ public class Arsenal {
 				}
 			}
 		}
-
 	}
 
 	private void drawTowerRange(Graphics graphic, int circleX, int circleY,
@@ -533,6 +527,15 @@ public class Arsenal {
 		graphic.drawString(" FAR TARGET", farTargetStratergy.x,
 				farTargetStratergy.y + 20);
 
+	}
+
+	private void applyStratergy(int mapTowerXpos2, int mapTowerYpos2) {
+		Tower tower = GameFileManager
+				.getTowerObject(mapTowerXpos, mapTowerYpos);
+		tower.attackStrategy = selectedStratergy;
+		System.out.println(selectedStratergy);
+		GameFileManager.saveTowerObject(tower, mapTowerXpos, mapTowerYpos);
+		isStrtergySelect = false;
 	}
 
 }

@@ -28,11 +28,11 @@ public class Colosseum extends JFrame {
 
 		// Set JFrame basic features
 
-		super(Game.getInstance().GAME_NAME);
+		super(Game.GAME_NAME);
 
 		// setExtendedState(Frame.MAXIMIZED_BOTH);
 		// setVisible(true);
-		setSize(Game.getInstance().GAME_FRAME_WIDTH, Game.getInstance().GAME_FRAME_HEIGHT);
+		setSize(Game.GAME_FRAME_WIDTH, Game.GAME_FRAME_HEIGHT);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

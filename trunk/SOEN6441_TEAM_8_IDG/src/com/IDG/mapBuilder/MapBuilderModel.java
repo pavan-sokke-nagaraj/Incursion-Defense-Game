@@ -1,3 +1,8 @@
+
+
+/**
+ * 
+ */
 package com.IDG.mapBuilder;
 
 
@@ -7,13 +12,18 @@ import com.IDG.utils.PopClickListener;
 
 import java.awt.event.*;
 /**
- * Model for the MapBuilder where each element is a JBtutton
- * @author Arjun Kariappa
- * this class implements the actionListener of the map built, depends on where the button was pressed certain actions are invoked
- * 
- * */
+ * This is the Model class that defines the basic element of the MAPbuilder application (Buttons) . 
+ * The class extends Jbuttons and creates a new data type MapbuilderModel that contains attributes that define th mapbuilder.
+ *  
+ * @author Kariappa @author Arjun
+ * @version Build 1
+ * @since Build 1
+ *
+ */
+
 public class MapBuilderModel extends JButton implements ActionListener{
-	public ImageIcon path,brick,start,end;
+	
+	public ImageIcon path,start,end;
 	int id=0;
 	public boolean isStart;
 	public boolean isEnd;
@@ -23,62 +33,78 @@ public class MapBuilderModel extends JButton implements ActionListener{
 	public String fileName;
 	public String mapType;
 	public String fileType;
+	
+	
 	/**
-	 * This constructor will initialize the the members of the class.
+	 * constructor that will intialize all Mapbuilder-buttons created during runtime .
+	 * 
 	 */
 	public MapBuilderModel()
 	{
-		path=new ImageIcon("Resource/GameImages/green.jpg");
-		start=new ImageIcon("Resource/GameImages/start.jpg");
-		end=new ImageIcon("Resource/GameImages/end.png");
-		isStart=false;
-		isEnd=false;
-		isPath=false;
-		isWall=false;
-		this.addActionListener(this);
-		this.addMouseListener(new PopClickListener(this));
+		isStart=false;  //class attribute used to indicate the Mapbuilder-button is a starting point .
+		isEnd=false;    //class attribute used to indicate the Mapbuilder-button is an ending/finish point .
+		isPath=false;	//class attribute used to indicate the Mapbuilder-button is part of the critter path.
+		isWall=false;	//class attribute used to indicate the Mapbuilder-button is a brick .
+		
+		path=new ImageIcon("Resource/GameImages/green.jpg"); // filesystem-Paths to image for a path Mapbuilder-button
+		start=new ImageIcon("Resource/GameImages/start.jpg"); // filesystem-Paths to image for a start Mapbuilder-button
+		end=new ImageIcon("Resource/GameImages/end.png");     // filesystem-Paths to image for a end Mapbuilder-button
+		
+		this.addActionListener(this); // each button clicked to is hooked to an action listner that listens to left mouse click events .
+		this.addMouseListener(new PopClickListener(this)); //each button clicked to is hooked to an action listner that listens to right mouse click event and invokes the constructor PopClickListener  .
 	}
-
+	
+	
+	/**
+	 * @param fileName
+	 * @param mapType
+	 * @param fileType
+	 */
 	public MapBuilderModel(String fileName,String mapType,String fileType){
 		this.fileName=fileName;
 		this.mapType=mapType;
 		this.fileType=fileType;
 	}
 
-	/**
-	 * Invoked when an action occurs, if the byte value on the map is 0(where the button is pressed), the icon is set to null and the path is set to false
-	 * the start point  and end point is set to false
-	 * if the byte value is 1 then the icon is set show the path image ans the path is set to true,
-	 * the start and end points are set to false
-	 * */
+
 	public void actionPerformed (ActionEvent e) 
 	{
-		if(this.isPath)
-			this.setPath(false);
-		value++;
-		value%=2;
-		switch(value) {
-		case 0:
-			//Indicate wall
-			setIcon(null);
-			this.setPath(false);
-			this.setStart(false);
-			this.setEnd(false);
-			break;
-		case 1:
-			//Indicate Path
-			setIcon(path);
-			this.setPath(true);
-			this.setStart(false);
-			this.setEnd(false);
-			break;
 
-		}
+
+			if(this.isPath)
+				this.setPath(false);
+			value++;
+			value%=2;
+			System.out.println("Value"+value);
+			switch(value) {
+			case 0:
+				setIcon(null);
+				this.setPath(false);
+				this.setStart(false);
+				this.setEnd(false);
+				break;
+			case 1:
+				setIcon(path);
+				this.setPath(true);
+				this.setStart(false);
+				this.setEnd(false);
+				break;
+			
+			}
+		
+		
+		System.out.println("Button Pressed"+id+this.isPath());
+
 	}
+
 	
 	/**
-	 * Setters and Getters of the data members
-	 **/
+	 * Getter setter methods for all class defined attributes .
+	 * 
+	 */
+	
+
+
 	public int getId() {
 		return id;
 	}
@@ -144,9 +170,6 @@ public class MapBuilderModel extends JButton implements ActionListener{
 	}
 
 
-	public ImageIcon getBrick() {
-		return brick;
-	}
 	public ImageIcon getStart() {
 		return start;
 	}

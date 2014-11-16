@@ -47,7 +47,7 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 	public SmallEnemy() {
 	}
 
-	public SmallEnemy(int enemyId,LinkedList<Point> enemyPath, int movePoint,int actualHealth,int currentHealth,int value) {
+	public SmallEnemy(int enemyId,LinkedList<Point> enemyPath, int movePoint,int actualHealth,int currentHealth,int value,int enemyActualSpeed,int enemyCurrentSpeed) {
 		this.enemyId=enemyId;
 		this.enemyPath = enemyPath;
 		this.enemyPathClone = cloneEnemyPath(enemyPath);
@@ -152,7 +152,7 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 
 	public void draw(Graphics g) {
 
-		Image image = new ImageIcon("ImageSource/enemy.png").getImage();
+		Image image = new ImageIcon("ImageSource/monster.gif").getImage();
 
 		g.drawImage(image, x, y, enemySize, enemySize, null);
 		drawHealthBar(g);
@@ -210,6 +210,22 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 
 	public void setEnemyId(int enemyId) {
 		this.enemyId = enemyId;
+	}
+
+	public boolean isSpeedSlow() {
+		return isSpeedSlow;
+	}
+
+	public void setSpeedSlow(boolean isSpeedSlow) {
+		this.isSpeedSlow = isSpeedSlow;
+	}
+
+	public int getEnemyCurrentSpeed() {
+		return enemyCurrentSpeed;
+	}
+
+	public void setEnemyCurrentSpeed(int enemyCurrentSpeed) {
+		this.enemyCurrentSpeed = enemyCurrentSpeed;
 	}
 
 }
