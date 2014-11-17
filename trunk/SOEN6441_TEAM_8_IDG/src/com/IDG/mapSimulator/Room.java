@@ -87,14 +87,6 @@ public class Room implements Serializable {
 						&& gameValue[j][i] == '*') {
 					block[j][i].drawBlockRect(graphic);
 				}
-//				if(MapSimulatorView.moveEnemy &&  gameValue[j][i] == '-'){
-//					Enemy enemy = new Enemy();
-//					enemy.x = block[j][i].x;
-//					enemy.y = block[j][i].y;
-//					enemy.width = block[j][i].width;
-//					enemy.height = block[j][i].height;
-//					enemy.draw(graphic);
-//				}
 			}
 		}
 	}
