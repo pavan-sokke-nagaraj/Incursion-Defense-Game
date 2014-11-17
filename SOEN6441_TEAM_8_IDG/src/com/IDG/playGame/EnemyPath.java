@@ -5,15 +5,37 @@ import java.util.LinkedList;
 
 import com.IDG.mapSimulator.Block;
 import com.IDG.mapSimulator.MapSimulatorView;
-
+/**
+ * This class is used to map the path followed by enemy
+ * @author Arjun
+ *
+ */
 public class EnemyPath {
-
+	/**
+	 * Entery and exit coordinates of enemy
+	 */
 	public static int entryX, entryY, exitX, exitY;
+	/**
+	 * Width and height of enemy
+	 */
 	private static int width, height;
+	/**
+	 * this will check if enemy has already followed this path
+	 */
 	private static boolean wasHere[][];
+	/**
+	 * Contain the copy of path
+	 */
 	private static LinkedList<Point> copiedPath = new LinkedList<Point>();
+	/**
+	 * Contain the map
+	 */
 	private static Block[][] map;
-
+	
+	/**
+	 * This method copy the enemy path
+	 * @return return the copied enemy path
+	 */
 	public static LinkedList<Point> copyPath() {
 		width = MapSimulatorView.gridRow;
 		height = MapSimulatorView.gridColumn;
@@ -46,7 +68,12 @@ public class EnemyPath {
 			copiedPath.addLast(addPoint(exitX, exitY));
 		return copiedPath;
 	}
-
+	/**
+	 * This method copy the Path points
+	 * @param entryX2 X coordinate of path
+	 * @param entryY2 Y coordinate of path
+	 * @return return the boolean if the path has been traveresed or not
+	 */
 	private static boolean copyPathPoints(int entryX2, int entryY2) {
 
 		if (entryX2 == exitX && entryY2 == exitY)
@@ -85,7 +112,12 @@ public class EnemyPath {
 
 		return false;
 	}
-
+	/**
+	 * Add new point
+	 * @param x X coordinate of path
+	 * @param y Y coordinate of path
+	 * @return return the newly added path
+	 */
 	private static Point addPoint(int x, int y) {
 		Point point;
 		point = new Point(map[x][y].x, map[x][y].y);
