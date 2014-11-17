@@ -16,29 +16,60 @@ import javax.swing.ImageIcon;
 import com.IDG.mapSimulator.MapSimulatorView;
 
 /**
+ * This class file creates a different kind of enemy called boss enemy
  * @author Pavan Sokke Nagaraj <pavansn8@gmail.com>
  *
  */
 public class SmallEnemy extends Rectangle implements EnemyType{
+	/**
+	 * Size of enemy
+	 */
 	public int enemySize = 40;
+	/**
+	 * Enemy path on map
+	 */
 	public static LinkedList<Point> enemyPath;
+	/**
+	 * Cloned path on map
+	 */
 	public LinkedList<Point> enemyPathClone;
+	/**
+	 * Enemy start position
+	 */
 	public Point startPoint;
+	/**
+	 * Enemy next position
+	 */
 	public Point nextPoint;
+	/**
+	 * current X and Y position of enemy
+	 */
 	public int x, y;
 	public int movePoint;
 	public static int moveStandard = 0;
+	/**
+	 * Id of enemy
+	 */
 	public int enemyId;
-	public boolean atExit;
-	public int value; // value of critter
-	public int speedOffsetX;
-	public int speedOffsetY;
-
+	/**
+	 * value of enemy
+	 */
+	public int value;
+	/**
+	 * Actual Health of enemy
+	 */
 	public int actualHealth;
+	/**
+	 * Current Health of enemy
+	 */
 	public int currentHealth;
-
+	/**
+	 * Actual Speed of enemy
+	 */
 	public int enemyActualSpeed=1;
-	
+	/**
+	 * Current Speed of enemy
+	 */
 	public int enemyCurrentSpeed=1;
 	
 	public boolean isSpeedSlow=false;
@@ -55,20 +86,17 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 		this.movePoint = movePoint;
 		this.y = startPoint.y;
 		this.x = startPoint.x;
-
 		this.nextPoint = enemyPathClone.pollFirst();
-
-		this.speedOffsetX = 5;
-		this.speedOffsetY = 5;
 		this.actualHealth = actualHealth;
 		this.currentHealth = currentHealth;
 		this.value=value;
 		this.enemyActualSpeed=enemyActualSpeed;
 		this.enemyCurrentSpeed=enemyCurrentSpeed;
-
-		// System.out.println("Enemy():\tx:\t"+x+"\tY:\t"+y);
 	}
 
+	/**
+	 * This function will move enemies on the screen
+	 */
 	public void move(Graphics graphics) {
 		int mapXStart = MapSimulatorView.mapXStart;
 		int mapYStart = MapSimulatorView.mapYStart;
@@ -76,16 +104,6 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 		double row = (double) (y - mapYStart) / enemySize;
 		int mapRow = MapSimulatorView.gridRow;
 		int mapCol = MapSimulatorView.gridRow;
-		// System.out.println("move():\tx:\t"+x+"\tY:\t"+y+"  row:  "+row+"  col:\t"+column);
-		
-		/*if(this.slowCounter>0){
-			this.enemyCurrentSpeed=5;
-			this.slowCounter--;
-		}else{
-			this.enemyCurrentSpeed=this.enemyActualSpeed;
-			this.slowCounter=0;
-		}*/
-//		System.out.println("Enemy ID :: "+this.enemyId+"\tCurrent Speed :: "+this.enemyCurrentSpeed+"\tActual Speed :: "+this.enemyActualSpeed);
 		if (row < mapRow && column < mapCol && nextPoint != null
 				&& currentHealth > 0) {
 			if (y < nextPoint.y) {
@@ -97,19 +115,16 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 			}
 
 			if (x > nextPoint.x) {
-//				y -= this.enemyCurrentSpeed;
 				x -= this.enemyCurrentSpeed;
 			}
 			if (y > nextPoint.y) {
 				y -= this.enemyCurrentSpeed;
-//				x -= this.enemyCurrentSpeed;
 			}
 
 			if (x == nextPoint.x && y == nextPoint.y) {
 				nextPoint = enemyPathClone.pollFirst();
 			}
 		}else{
-			//graphics.drawImage(null, x, y, enemySize, enemySize, null);
 			if(currentHealth <= 0){
 			MapSimulatorView.power = MapSimulatorView.power + this.value ;
 			MapSimulatorView.enemiesOnMap.remove(this);
@@ -126,21 +141,23 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 				}
 			}
 		}
-		//TODO what to do when critters exit the path
 	}
 
+	/**
+	 * This function will update the enemies movement
+	 */
 	public void update(Graphics graphics) {
 
-		if (movePoint == moveStandard /* && currentHp > 0 */) {
+		if (movePoint == moveStandard) {
 			move(graphics);
-			// endOfGameCheck();
-			// System.out.println("CHECK");
-
 		} else {
 			movePoint--;
 		}
 	}
 
+	/**
+	 * This method will clone the enemy path
+	 */
 	public LinkedList<Point> cloneEnemyPath(LinkedList<Point> enemyPath) {
 		LinkedList<Point> clonePath = new LinkedList<Point>();
 		for (ListIterator<Point> iterator = enemyPath.listIterator(); iterator
@@ -149,7 +166,10 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 		}
 		return clonePath;
 	}
-
+	
+	/**
+	 * This method will draw enemies on the map
+	 */
 	public void draw(Graphics g) {
 
 		Image image = new ImageIcon("ImageSource/monster.gif").getImage();
@@ -158,7 +178,9 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 		drawHealthBar(g);
 
 	}
-
+	/**
+	 * This method will draw health bar of enemy
+	 */
 	public void drawHealthBar(Graphics g) {
 		if (currentHealth > 0) {
 			g.setColor(Color.BLACK);
