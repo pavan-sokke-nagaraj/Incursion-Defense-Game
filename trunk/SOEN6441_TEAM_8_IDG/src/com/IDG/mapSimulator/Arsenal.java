@@ -150,11 +150,11 @@ public class Arsenal {
 			towers[i] = new Rectangle(box1Xpos + (gap * i) + (towerWidth * i),
 					box1Ypos, towerWidth, towerWidth);
 			if (i == 0) {
-				towerBlocks[i] = new Tower('G', 50, 1, 1,25,25, 2,30, 60, 3);// freezing//attack delay=50//Random
+				towerBlocks[i] = new Tower('G', 50, 1, 1,25,25, 1,30, 60, 3);// freezing//attack delay=50//Random
 			} else if (i == 1) {
-				towerBlocks[i] = new Tower('R', 150, 1, 2, 100, 100,3, 15, 40, 2);// Splashing//attack delay=70//Min Health
+				towerBlocks[i] = new Tower('R', 150, 1, 2, 100, 100,2, 15, 40, 1);// Splashing//attack delay=70//Random
 			} else if (i == 2) {
-				towerBlocks[i] = new Tower('B', 350, 1, 3, 200,200, 4, 10, 20, 1);// Burning//attack Delay = Max Health
+				towerBlocks[i] = new Tower('B', 350, 1, 3, 200,200, 4, 10, 20, 2);// Burning//attack Delay = Max Health
 			} else if (i == 3) {
 				towerBlocks[i] = new Tower('D', 0, 0, 0, 0, 0, 1, 10, 2,2);
 			}
