@@ -253,25 +253,11 @@ public class Arsenal {
 					MapSimulatorView.mse.y, towerBlocks[heldPosition].range);
 		}
 		if (selectMapTower) {
-			// System.out.println("While selectMapTower" + mapTowerXpos + "\t\t"
-			// + mapTowerYpos);
 			Tower tower = GameFileManager.getTowerObject(mapTowerXpos,
 					mapTowerYpos);
-			// MapSimulatorView.room.block[mapTowerXpos][mapTowerYpos].tower
-			// .drawMarketInformation(graphic);
+			TowerInfoView towerInfoView = new TowerInfoView();
+			tower.addObserver(towerInfoView);
 			tower.drawMarketInformation(graphic);
-			// draw range ----> circle/ rectangle
-			// int circleX =
-			// MapSimulatorView.room.block[mapTowerXpos][mapTowerYpos].x;
-			// int circleY =
-			// MapSimulatorView.room.block[mapTowerXpos][mapTowerYpos].y;
-			// int radius = tower.range;
-			// circleX = circleX - ((radius * towerWidth) / 2);
-			// circleY = circleX - ((radius * towerWidth) / 2);
-			// graphic.setColor(Color.RED);
-			// graphic.drawOval(circleX, circleY, radius * 2 * towerWidth,
-			// radius
-			// * 2 * towerWidth);
 			int circleX = MapSimulatorView.room.block[mapTowerXpos][mapTowerYpos].x;
 			int circleY = MapSimulatorView.room.block[mapTowerXpos][mapTowerYpos].y;
 			drawTowerRange(graphic, circleX, circleY, tower.range);
@@ -359,6 +345,8 @@ public class Arsenal {
 			tower.costToUpgrade = tower.costToUpgrade + 10;
 			tower.costToSell = tower.costToSell + 5;
 			tower.maxAttackDelay=tower.maxAttackDelay-5;
+			TowerInfoView towerInfoView = new TowerInfoView();
+			tower.addObserver(towerInfoView);
 			tower.drawMarketInformation(graphic);
 			GameFileManager.saveTowerObject(tower, mapTowerXpos, mapTowerYpos);
 			upgradeConfirm = false;
