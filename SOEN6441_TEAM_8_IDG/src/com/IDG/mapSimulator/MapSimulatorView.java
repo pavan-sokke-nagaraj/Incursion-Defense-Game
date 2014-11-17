@@ -88,6 +88,8 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	public static int mapXStart = 0;
 	public static int mapYStart = 0;
 	public static int level = 0;
+	
+	public static boolean isGameLost=false;
 
 	/**
 	 * Constructs a new object of our map simulator and start the paintThread
@@ -196,6 +198,11 @@ public class MapSimulatorView extends JPanel implements Runnable {
 			 * towerX, towerY); } } } } }
 			 */
 			if (moveEnemy) {
+				if(MapSimulatorView.health<0){
+					Arsenal.resetGame();
+					isGameLost=true;
+					
+				}
 				updateEnemies(graphic);
 				updateTower(graphic);
 
@@ -252,10 +259,6 @@ public class MapSimulatorView extends JPanel implements Runnable {
 										currentEnemy.setSpeedSlow(true);
 										currentEnemy.setEnemyCurrentSpeed(5);
 									}
-									// System.out.println(" Splash Applied to :: "+(k+1)+" Current Enemy :: "+currentEnemy.enemyId+"Hit by Tower :: "+tower.towerId);
-									// System.out.println(" Enemy :: "+currentEnemy.enemyId+"Hit by Tower :: "+tower.towerId);
-									// System.out.println("EnemyCurrentHealth :: "+
-									// currentEnemy.currentHealth);
 									tower.drawFireEffect(graphic, currentEnemy,
 											towerX, towerY);
 									tower.attackDelay = 0;
