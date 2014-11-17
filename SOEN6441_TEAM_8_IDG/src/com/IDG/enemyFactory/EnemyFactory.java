@@ -33,7 +33,7 @@ public EnemyType getEnemyfromFactory(String enemyType,int enemyId,LinkedList<Poi
 		 	return new SmallEnemy(enemyId,enemyPath,movePoint,actualHealth,currentHealth,value,enemyActualSpeed,enemyCurrentSpeed);
 	 }
 	 else if(enemyType.equalsIgnoreCase("bossenemy")){
-		 return new bossEnemy(enemyId,enemyPath,movePoint,actualHealth,currentHealth,value,enemyActualSpeed,enemyCurrentSpeed);
+		 return new StrongEnemy(enemyId,enemyPath,movePoint,actualHealth,currentHealth,value,enemyActualSpeed,enemyCurrentSpeed);
 	 }
            
 	 return null;
