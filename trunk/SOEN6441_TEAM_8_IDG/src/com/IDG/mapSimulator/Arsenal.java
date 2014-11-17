@@ -119,6 +119,8 @@ public class Arsenal {
 	public static boolean sellConfirm = false;
 
 	public Rectangle waveButton;
+	public Rectangle gameReset;
+	public Rectangle exitgame;
 
 	public Rectangle weakTargetStratergy;
 	public Rectangle strongTargetStratergy;
@@ -154,7 +156,9 @@ public class Arsenal {
 				towerWidth, towerWidth);
 		upgradeButton = new Rectangle(box2Xpos + 45, box2Ypos + 145, 160, 40);
 		sellButton = new Rectangle(box2Xpos + 45, box2Ypos + 125, 160, 20);
-		waveButton = new Rectangle(box2Xpos + 45, 565 + 125 - 100, 160, 60);
+		waveButton = new Rectangle(box2Xpos + 0, 565 + 125 - 100, 160, 60);
+		gameReset= new Rectangle(box2Xpos + 165, 565 + 125 - 100, 160, 60);
+		exitgame=new Rectangle  (box2Xpos + 330, 565 + 125 - 100 ,150, 60);
 
 		// box2Xpos+280, box2Ypos, 200, 200
 		weakTargetStratergy = new Rectangle(box2Xpos + 300, box2Ypos + 30, 160,
@@ -234,6 +238,19 @@ public class Arsenal {
 		graphic.setColor(Color.RED);
 		graphic.setFont(new Font("Courier New", Font.BOLD, 20));
 		graphic.drawString("START WAVE", waveButton.x + 20, waveButton.y + 20);
+		
+		graphic.fillRect(gameReset.x, gameReset.y, gameReset.width,
+				gameReset.height);
+		graphic.setColor(Color.WHITE);
+		graphic.setFont(new Font("Courier New", Font.BOLD, 20));
+		graphic.drawString("RESET GAME", gameReset.x + 20, gameReset.y + 20);
+
+		graphic.fillRect(exitgame.x, exitgame.y, exitgame.width,
+				exitgame.height);
+		graphic.setColor(Color.RED);
+		graphic.setFont(new Font("Courier New", Font.BOLD, 20));
+		graphic.drawString("EXIT GAME", exitgame.x + 20, exitgame.y + 20);
+		drawMoney(graphic);
 
 		drawMoney(graphic);
 
@@ -286,6 +303,25 @@ public class Arsenal {
 	 * @param graphic
 	 *            Graphic variable to draw the Components
 	 */
+	
+	public static void resetGame ()
+	{
+		MapSimulatorView.level=0;
+	MapSimulatorView.moveEnemy = false;
+	MapSimulatorView.enemiesOnMap.clear();
+	MapSimulatorView.health=1000;
+	MapSimulatorView.power=200;
+	for(int i=0;i<MapSimulatorView.gridRow;i++){
+		for(int j = 0;j<MapSimulatorView.gridColumn;j++){
+			char createId = MapSimulatorView.gameValue[j][i];
+			if(createId == 'R' || createId == 'G' || createId == 'B'){
+				MapSimulatorView.gameValue[j][i] = '*';
+			}
+		}
+	}
+	clearInfo = true ;
+	selectMapTower = false ;
+}
 	private void drawMoney(Graphics graphic) {
 		graphic.setFont(new Font("Courier New", Font.BOLD, 25));
 		graphic.setColor(new Color(255, 200, 0));
@@ -471,7 +507,23 @@ public class Arsenal {
 				} else {
 					// TODO
 				}
-			} else {
+			}
+				else if(gameReset.contains(MapSimulatorView.mse))
+					
+				{
+					
+						resetGame();
+				}
+							
+		else if (exitgame.contains(MapSimulatorView.mse))
+		{
+			MapSimulatorView.level=0;
+			MapSimulatorView.moveEnemy = false;
+			MapSimulatorView.enemiesOnMap.clear();
+			System.exit(0);
+		
+		}
+			else {
 				for (int i = 0; i < MapSimulatorView.room.mapRow; i++) {
 					for (int j = 0; j < MapSimulatorView.room.mapColumn; j++) {
 						char createId = MapSimulatorView.gameValue[i][j];
