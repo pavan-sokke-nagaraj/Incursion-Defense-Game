@@ -28,7 +28,7 @@ import com.IDG.test.TowerTest;
 		GameFileManagerTest.class, MapValidityTestCase.class, RoomTest.class,
 		TowerTest.class, StrongEnemyTest.class, SmallEnemyTest.class, EnemyFactoryTest.class,
 		EnemyPathTest.class, TowerDistanceTest.class, TowerInfoViewTest.class, MapSimulatorViewTest.class,
-		BlockTest.class
+		BlockTest.class, GameTest.class
 
 })
 public class TestAll {
