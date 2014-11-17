@@ -3,7 +3,8 @@
  */
 package com.IDG.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.IDG.enemyFactory.EnemyType;
-import com.IDG.enemyFactory.bossEnemy;
+import com.IDG.enemyFactory.StrongEnemy;
 import com.IDG.mapSimulator.Tower;
 
 /**
@@ -27,10 +28,10 @@ public class TowerDistanceTest {
 
 	
 	Tower nnTower = new Tower();
-	bossEnemy boss = new bossEnemy();
-	EnemyType[] enemiesInRange=new EnemyType[boss.enemySize];
+	StrongEnemy strongEnemy = new StrongEnemy();
+	EnemyType[] enemiesInRange=new EnemyType[strongEnemy.enemySize];
 	ArrayList<EnemyType> returnEnemyList=new ArrayList<EnemyType>();
-	double distance = nnTower.distance(boss, 50, 50);
+	double distance = nnTower.distance(strongEnemy, 50, 50);
 	
 	/**
 	 * @throws java.lang.Exception
@@ -52,8 +53,8 @@ public class TowerDistanceTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		boss.x = 10;
-		boss.y = 20;
+		strongEnemy.x = 10;
+		strongEnemy.y = 20;
 		nnTower.range = 20;
 		
 	}

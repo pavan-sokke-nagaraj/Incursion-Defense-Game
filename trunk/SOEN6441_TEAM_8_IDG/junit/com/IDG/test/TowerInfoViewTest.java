@@ -3,7 +3,7 @@
  */
 package com.IDG.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -11,8 +11,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.IDG.enemyFactory.bossEnemy;
 import com.IDG.mapSimulator.Tower;
+import com.IDG.mapSimulator.TowerInfoView;
 
 /**
  * The class <code>TowerInfoViewTest</code> contains tests for the class
