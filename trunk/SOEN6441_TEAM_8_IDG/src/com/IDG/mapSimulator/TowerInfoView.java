@@ -5,7 +5,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.Observable;
 import java.util.Observer;
-
+/**
+ * This class is view class for tower information
+ * @author Arjun
+ *
+ */
 public class TowerInfoView implements Observer {
 
 	@Override
@@ -48,8 +52,6 @@ public class TowerInfoView implements Observer {
 		graphic.setColor(new Color(255, 155, 0));
 		graphic.drawString("TOWER INFORMATION", tower.box2Xpos,
 				tower.box2Ypos + 20);
-
-		// graphic.fillRect(noteX, noteY, 250, 200);
 		if (tower.towerId != 'D') {
 			graphic.setFont(new Font("Courier New", Font.BOLD, 15));
 			graphic.setColor(Color.BLACK);
