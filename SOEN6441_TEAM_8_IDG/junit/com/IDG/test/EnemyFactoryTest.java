@@ -3,7 +3,7 @@
  */
 package com.IDG.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,9 +12,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.IDG.enemyFactory.EnemyFactory;
-import com.IDG.enemyFactory.EnemyType;
-import com.IDG.enemyFactory.SmallEnemy;
-import com.IDG.enemyFactory.bossEnemy;
 
 /**
  * The class <code>EnemyFactoryTest</code> contains tests for the class

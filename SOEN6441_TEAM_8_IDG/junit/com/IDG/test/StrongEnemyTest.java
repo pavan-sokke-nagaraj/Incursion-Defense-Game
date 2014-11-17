@@ -27,9 +27,9 @@ import com.IDG.mapSimulator.Room;
  * @version $Revision: 1.0 $
  */
 
-public class bossEnemyTest {
+public class StrongEnemyTest {
 
-	private bossEnemy bossEnemy;
+	private StrongEnemy strongEnemy;
 	private MapSimulatorView mapSimulatorView;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -41,7 +41,7 @@ public class bossEnemyTest {
 
 	@Before
 	public void setUp() throws Exception {
-		bossEnemy = new bossEnemy();
+		strongEnemy = new StrongEnemy();
 		mapSimulatorView = new MapSimulatorView();
 	}
 
@@ -55,7 +55,7 @@ public class bossEnemyTest {
 	
 	@Test
 	public void testBossEnemyIntLinkedListOfPointIntIntIntIntIntInt() {
-		assertNotNull(bossEnemy);
+		assertNotNull(strongEnemy);
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class bossEnemyTest {
 	
 	@Test
 	public void testUpdate() {
-		assertEquals(bossEnemy.movePoint, 0);
+		assertEquals(strongEnemy.movePoint, 0);
 		
 	}
 
