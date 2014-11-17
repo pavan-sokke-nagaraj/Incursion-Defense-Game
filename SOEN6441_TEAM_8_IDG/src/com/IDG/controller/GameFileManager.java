@@ -40,16 +40,10 @@ public class GameFileManager {
 	 */
 	public static char[][] loadSavedGame(File file) {
 
-		//JFileChooser fileChooser = new JFileChooser();
 		char a2Array[][] = new char[20][20];
 		Block block[][] = new Block[20][20];
 		Game game = new Game();
-		//int openValue = fileChooser.showOpenDialog(game);
 		if (file!=null) {
-			//String filename = fileChooser.getSelectedFile().getName();
-			//String directory = fileChooser.getCurrentDirectory().toString();
-			//String absolutePath = directory + "\\" + filename;
-			//File file = new File(absolutePath);
 			int tempRow = 0;
 			int tempCol = 0;
 			int row = 0;
