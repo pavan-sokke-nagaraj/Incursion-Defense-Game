@@ -128,7 +128,7 @@ public class Arsenal {
 	public Rectangle randomTargetStratergy;
 	public boolean isStrtergySelect = false;
 	public int selectedStratergy;
-	
+
 	/**
 	 * class constructor to initialize tower data, health data, money data
 	 * Upgrade: Build 2-> serialize he objects and retrieve data from xml files
@@ -238,7 +238,7 @@ public class Arsenal {
 		graphic.setColor(Color.RED);
 		graphic.setFont(new Font("Courier New", Font.BOLD, 20));
 		graphic.drawString("START WAVE", waveButton.x + 20, waveButton.y + 20);
-		
+
 		graphic.fillRect(gameReset.x, gameReset.y, gameReset.width,
 				gameReset.height);
 		graphic.setColor(Color.WHITE);
@@ -303,25 +303,26 @@ public class Arsenal {
 	 * @param graphic
 	 *            Graphic variable to draw the Components
 	 */
-	
+
 	public static void resetGame ()
 	{
 		MapSimulatorView.level=0;
-	MapSimulatorView.moveEnemy = false;
-	MapSimulatorView.enemiesOnMap.clear();
-	MapSimulatorView.health=1000;
-	MapSimulatorView.power=200;
-	for(int i=0;i<MapSimulatorView.gridRow;i++){
-		for(int j = 0;j<MapSimulatorView.gridColumn;j++){
-			char createId = MapSimulatorView.gameValue[j][i];
-			if(createId == 'R' || createId == 'G' || createId == 'B'){
-				MapSimulatorView.gameValue[j][i] = '*';
+		MapSimulatorView.moveEnemy = false;
+		MapSimulatorView.enemiesOnMap.clear();
+		MapSimulatorView.health=1000;
+		MapSimulatorView.power=200;
+		for(int i=0;i<MapSimulatorView.gridRow;i++){
+			for(int j = 0;j<MapSimulatorView.gridColumn;j++){
+				char createId = MapSimulatorView.gameValue[j][i];
+				if(createId == 'R' || createId == 'G' || createId == 'B'){
+					MapSimulatorView.gameValue[j][i] = '*';
+				}
 			}
+
 		}
+		clearInfo = true ;
+		selectMapTower = false ;
 	}
-	clearInfo = true ;
-	selectMapTower = false ;
-}
 	private void drawMoney(Graphics graphic) {
 		graphic.setFont(new Font("Courier New", Font.BOLD, 25));
 		graphic.setColor(new Color(255, 200, 0));
@@ -355,7 +356,7 @@ public class Arsenal {
 			mapTowerYpos = -1;
 			tower.drawTowerInformation(graphic);
 			GameFileManager
-					.deleteTowerObject(tower, mapTowerXpos, mapTowerYpos);
+			.deleteTowerObject(tower, mapTowerXpos, mapTowerYpos);
 		}
 	}
 
@@ -455,11 +456,13 @@ public class Arsenal {
 				isStrtergySelect = true;
 				selectedStratergy = Tower.ATTACK_MIN_HEALTH_ENEMY;
 			} else if (waveButton.contains(MapSimulatorView.mse)) {
-				
+
 				if (MapSimulatorView.level <= 10) {
 					int actualHealth=0,currentHealth=0,value=0,enemyActualSpeed=0,enemyCurrentSpeed=0;
 					int numberOFEnemies=0;
 					MapSimulatorView.moveEnemy = true;
+					MapSimulatorView.isGameLost=false;
+					MapSimulatorView.isGameWon=false;
 					MapSimulatorView.level++;
 					if (MapSimulatorView.gridRow != 0
 							|| MapSimulatorView.gridColumn != 0) {
@@ -508,21 +511,21 @@ public class Arsenal {
 					// TODO
 				}
 			}
-				else if(gameReset.contains(MapSimulatorView.mse))
-					
-				{
-					
-						resetGame();
-				}
-							
-		else if (exitgame.contains(MapSimulatorView.mse))
-		{
-			MapSimulatorView.level=0;
-			MapSimulatorView.moveEnemy = false;
-			MapSimulatorView.enemiesOnMap.clear();
-			System.exit(0);
-		
-		}
+			else if(gameReset.contains(MapSimulatorView.mse))
+
+			{
+
+				resetGame();
+			}
+
+			else if (exitgame.contains(MapSimulatorView.mse))
+			{
+				MapSimulatorView.level=0;
+				MapSimulatorView.moveEnemy = false;
+				MapSimulatorView.enemiesOnMap.clear();
+				System.exit(0);
+
+			}
 			else {
 				for (int i = 0; i < MapSimulatorView.room.mapRow; i++) {
 					for (int j = 0; j < MapSimulatorView.room.mapColumn; j++) {
