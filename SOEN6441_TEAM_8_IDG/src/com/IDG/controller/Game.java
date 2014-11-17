@@ -47,11 +47,11 @@ public class Game extends JComponent {
 	/**
 	 * Variable to hold the game power
 	 */
-	public final static int INITIAL_GAME_POWER = 100;
+	public final static int INITIAL_GAME_POWER = 200;
 	
 	/**
 	 * Variable to hold the game health
 	 */
-	public final static int INITIAL_GAME_HEALTH = 100;
+	public final static int INITIAL_GAME_HEALTH = 1000;
 
 }
