@@ -23,12 +23,30 @@ import java.awt.event.*;
 
 public class MapBuilderModel extends JButton implements ActionListener{
 	
+	/**
+	 * Different Images for start, end and wall
+	 */
 	public ImageIcon path,start,end;
 	int id=0;
+	/**
+	 * boolean to check if current element is start
+	 */
 	public boolean isStart;
+	/**
+	 * boolean to check if current element is End
+	 */
 	public boolean isEnd;
+	/**
+	 * boolean to check if current element is path
+	 */
 	public boolean isPath;
+	/**
+	 * boolean to check if current element is wall
+	 */
 	public boolean isWall;
+	/**
+	 * Value representing wall,path or start, end
+	 */
 	public byte value=0;
 	public String fileName;
 	public String mapType;
