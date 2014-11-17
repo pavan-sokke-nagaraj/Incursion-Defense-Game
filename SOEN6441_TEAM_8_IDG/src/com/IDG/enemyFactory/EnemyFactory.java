@@ -8,6 +8,7 @@ import com.IDG.mapSimulator.MapSimulatorView;
 /**
  * This is factory class to create different kind of enemies
  * @author Arjun
+ * @author Kariappa
  *
  */
 public class EnemyFactory {
