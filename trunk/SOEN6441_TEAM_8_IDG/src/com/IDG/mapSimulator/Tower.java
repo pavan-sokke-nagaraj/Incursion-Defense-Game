@@ -82,11 +82,11 @@ public class Tower extends Observable implements Serializable {
 	/**
 	 * Current Rate of hit of tower
 	 */
-	int attackDelay=0;
+	public int attackDelay=0;
 	/**
 	 * Max Rate of hit of tower
 	 */
-	int maxAttackDelay;
+	public int maxAttackDelay;
 	/**
 	 * Type of tower
 	 */
