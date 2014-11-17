@@ -216,16 +216,17 @@ public class MapSimulatorView extends JPanel implements Runnable {
 			arsenal.draw(graphic);
 
 			long start = System.currentTimeMillis();
-			if (moveEnemy) {
-				if(MapSimulatorView.health<0){
-					Arsenal.resetGame();
-					isGameLost=true;
+			if(MapSimulatorView.health<0){
+				Arsenal.resetGame();
+				isGameLost=true;
 
-				}
-				if(MapSimulatorView.level>10&&MapSimulatorView.health>0){
-					Arsenal.resetGame();
-					isGameWon=true;
-				}
+			}
+			if(MapSimulatorView.level>10&&MapSimulatorView.health>0){
+				Arsenal.resetGame();
+				isGameWon=true;
+			}
+			
+			if (moveEnemy) {
 				updateEnemies(graphic);
 				updateTower(graphic);
 
@@ -285,7 +286,6 @@ public class MapSimulatorView extends JPanel implements Runnable {
 										temphealth = temphealth - tower.damage;
 										currentEnemy
 										.setCurrentHealth(temphealth);
-										currentEnemy.setSpeedSlow(true);
 										currentEnemy.setEnemyCurrentSpeed(5);
 									}
 									tower.drawFireEffect(graphic, currentEnemy,
