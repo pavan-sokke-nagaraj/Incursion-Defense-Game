@@ -222,7 +222,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 					isGameLost=true;
 
 				}
-				if(MapSimulatorView.level>11&&MapSimulatorView.health>0){
+				if(MapSimulatorView.level>10&&MapSimulatorView.health>0){
 					Arsenal.resetGame();
 					isGameWon=true;
 				}

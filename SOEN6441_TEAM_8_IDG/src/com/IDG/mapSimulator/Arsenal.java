@@ -513,9 +513,10 @@ public class Arsenal {
 											enemyCurrentSpeed));
 						}
 					}
-				} else {
-					// TODO
-				}
+				}else{
+						//Arsenal.resetGame();
+						//MapSimulatorView.isGameWon=true;
+				}			
 			}
 			else if(gameReset.contains(MapSimulatorView.mse))
 
