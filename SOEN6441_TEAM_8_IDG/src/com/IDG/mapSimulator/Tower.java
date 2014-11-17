@@ -211,7 +211,7 @@ public class Tower extends Observable implements Serializable {
 	 * @param towerY Y Coordinate of Tower
 	 * @return distance between tower and enemy
 	 */
-	private double distance(EnemyType enemy, int towerX, int towerY) {
+	public double distance(EnemyType enemy, int towerX, int towerY) {
 
 		int enemyX = enemy.Xvalue();
 
