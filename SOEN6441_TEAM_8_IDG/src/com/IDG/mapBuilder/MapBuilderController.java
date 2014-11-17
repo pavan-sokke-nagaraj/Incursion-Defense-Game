@@ -73,8 +73,7 @@ public class MapBuilderController    {
 	MapBuilderModel tempLoadbuttons[][];
 	public static File rfile;
 	public MapBuilderController()
-	{	//this.rfile=rfile;
-		tArea1.setLineWrap(true);
+	{	tArea1.setLineWrap(true);
 		tArea1.setText("Validation Status");
 		JScrollPane scroller1 = new JScrollPane();
 		scroller1.setViewportView(tArea1);
@@ -114,10 +113,6 @@ public class MapBuilderController    {
 	}
 
 	public void setgridLayoutForMaps(String mapType,JPanel grid){
-
-
-
-
 		Scanner sc=null;
 		String line=null;
 		try {
@@ -149,9 +144,7 @@ public class MapBuilderController    {
 		mapType1=mapType;
 		try {
 			myPicture = ImageIO.read(new File("Resource/"+mapType+"/ScreenShots/"+fileName));
-			//myPicture = ImageIO.read(new File("D://end.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//Snapshot code
@@ -207,7 +200,7 @@ public class MapBuilderController    {
 		MapBuilderModel wl=null;
 		int count=0;
 		tempLoadbuttons=new MapBuilderModel[rows][cols];
-		
+
 		for(String line : lines) {            // for each line, add the 1s
 			char[] chars = line.toCharArray();
 
@@ -291,11 +284,11 @@ public class MapBuilderController    {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JPanel rowColPanel = new JPanel();
-				
+
 				JTextField rowField = new JTextField(2);
 				JTextField colField = new JTextField(2);
-				
-				
+
+
 				rowColPanel.setLayout(new BoxLayout(rowColPanel, BoxLayout.Y_AXIS));
 				rowColPanel.add(new JLabel("Number of Rows (MAX 15)",
 						SwingConstants.CENTER));
@@ -312,7 +305,7 @@ public class MapBuilderController    {
 					System.out.println("colField col value: " + colField.getText());
 					gridRow = Integer.parseInt(rowField.getText());
 					gridColumn = Integer.parseInt(colField.getText());
-					
+
 				}
 				if(gridColumn>15 || gridRow>15 )
 				{
@@ -320,30 +313,26 @@ public class MapBuilderController    {
 					error.setTitle("");
 					JOptionPane.showMessageDialog(error,
 							"<html>Map creation failed!<br>Row and Column size limited to 15.<br>Please retry!</html> ");
-					//error.add(new JLabel("Row and Column size limited to 15"),SwingConstants.CENTER);
-					//JOptionPane.showConfirmDialog(null, rowColPanel,"Row and Column size limited to 15",
-							//JOptionPane.OK_CANCEL_OPTION);
-					
 				}
 
 				else
 				{
-				temp1=new MapBuilderModel[gridRow][gridColumn];
-				mapGrid.removeAll();
-				mapGrid.revalidate();
-				//mapGrid.setVisible(false);
-				for(int i=0;i<gridRow;i++){
-					for(int j=0;j<gridColumn;j++){
-						temp1[i][j]=new MapBuilderModel();
-						temp1[i][j].setPreferredSize(new Dimension(40, 40));
-						mapGrid.add(temp1[i][j]);	
+					temp1=new MapBuilderModel[gridRow][gridColumn];
+					mapGrid.removeAll();
+					mapGrid.revalidate();
+					//mapGrid.setVisible(false);
+					for(int i=0;i<gridRow;i++){
+						for(int j=0;j<gridColumn;j++){
+							temp1[i][j]=new MapBuilderModel();
+							temp1[i][j].setPreferredSize(new Dimension(40, 40));
+							mapGrid.add(temp1[i][j]);	
+						}
 					}
-				}
-				mapGrid.setLayout(new GridLayout(gridRow, gridColumn));
-				mapGrid.setVisible(true);
-				errorList = new ArrayList<String>();
+					mapGrid.setLayout(new GridLayout(gridRow, gridColumn));
+					mapGrid.setVisible(true);
+					errorList = new ArrayList<String>();
 
-			}
+				}
 			}
 
 		});
@@ -368,7 +357,7 @@ public class MapBuilderController    {
 			}	
 
 		});
-		
+
 		game.addActionListener(new ActionListener() {
 
 			@Override
@@ -376,30 +365,11 @@ public class MapBuilderController    {
 				p2.dispose();
 				LayoutManager abc=new LayoutManager();
 				File file1=new File("Resource/CustomMaps/ScreenShots/Metadata.txt");
-			/**	if(!file1.exists()){
-					try {
-						file1.createNewFile();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}else{
-					PrintWriter writer=null;
-					try {
-						writer = new PrintWriter(file1);
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					writer.print("");
-					writer.close();
-				}**/
 				try {
 					PrintWriter writer=null;
 					try {
 						writer = new PrintWriter(file1);
 					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					writer.print(file.fileName+","+file.fileType);
@@ -407,16 +377,11 @@ public class MapBuilderController    {
 					System.out.println(file.fileName+","+file.fileType);
 					abc.populateFileHeader();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				//tAre21.setText(file.fileName);
-				
-				//rfile=new File("Resource/"+file.fileType+"/GameMatrix/"+file.fileName);
-}	
-
+	}	
 		});
 
-System.out.println("AJAY"+rfile);
+		System.out.println("AJAY"+rfile);
 	}
 }

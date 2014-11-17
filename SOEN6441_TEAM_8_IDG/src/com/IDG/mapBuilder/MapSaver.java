@@ -33,17 +33,41 @@ import com.IDG.utils.MapValidityHelper;
  */
 
 public class MapSaver  {
+	/**
+	 * Array of all Map buttons
+	 */
 	MapBuilderModel buttons[][];
 	JFrame frame=new JFrame();
-	JFrame p2;
+	/**
+	 * List containing the error while saving the map
+	 */
 	ArrayList<String> errorList=null;
+	/**
+	 * Text Area to show error messages
+	 */
 	JTextArea tArea1;
+	/**
+	 * Game panel
+	 */
 	JPanel gameMatrixPanel=null;
+	/**
+	 * Details of file to be saved
+	 */
 	StringBuffer fileContent=new StringBuffer();
 	int row=0,column=0;
 	MapBuilderModel tempFile=null;
 	boolean isEditEnabled;
-
+	/**
+	 * This function saves the map along with screen shots
+	 * @param buttons Actual Map to be saved
+	 * @param errorList List of errors while saving
+	 * @param tArea1 Text area to show error messages
+	 * @param p panel currently working on
+	 * @param row Current Row
+	 * @param column Current Column
+	 * @param isEditEnabled Check if edit of map is enabled or not
+	 * @param tempFile File containing details
+	 */
 	public MapSaver(MapBuilderModel buttons[][],ArrayList<String> errorList, JTextArea tArea1,JPanel p,int row,int column,boolean isEditEnabled,MapBuilderModel tempFile)
 	{
 		this.row=row;
