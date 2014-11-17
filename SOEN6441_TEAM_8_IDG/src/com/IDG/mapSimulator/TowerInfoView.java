@@ -14,7 +14,11 @@ public class TowerInfoView implements Observer {
 		Graphics graphic = (Graphics) arg1;
 		drawMarketInformation(tower, graphic);
 	}
-
+	/**
+	 * This method draw various information regardin to tower on screen
+	 * @param tower Tower for which information has to be displayed
+	 * @param graphic graphic variable
+	 */
 	public void drawMarketInformation(Tower tower, Graphics graphic) {
 		drawTowerInformation(tower, graphic);
 
@@ -30,7 +34,11 @@ public class TowerInfoView implements Observer {
 				tower.box2Ypos + 140);
 
 	}
-
+	/**
+	 * This method draw various information regardin to tower on screen
+	 * @param tower Tower for which information has to be displayed
+	 * @param graphic graphic variable
+	 */
 	public void drawTowerInformation(Tower tower, Graphics graphic) {
 
 		graphic.clearRect(tower.box2Xpos, tower.box2Ypos, 250, 200);
