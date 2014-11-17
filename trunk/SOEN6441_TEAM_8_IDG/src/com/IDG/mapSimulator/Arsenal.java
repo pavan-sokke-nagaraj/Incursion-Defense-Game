@@ -138,17 +138,13 @@ public class Arsenal {
 			towers[i] = new Rectangle(box1Xpos + (gap * i) + (towerWidth * i),
 					box1Ypos, towerWidth, towerWidth);
 			if (i == 0) {
-				towerBlocks[i] = new Tower('G', 5, 1, 1, 10, "Single", 5, 5, 2,
-						5, 50, 3);// freezing//attack delay=50//Random
+				towerBlocks[i] = new Tower('G', 50, 1, 1,25,25, 2,20, 60, 2);// freezing//attack delay=50//Random
 			} else if (i == 1) {
-				towerBlocks[i] = new Tower('R', 10, 1, 2, 20, "Single", 5, 15,
-						3, 10, 70, 1);// Splashing//attack delay=70//Min Health
+				towerBlocks[i] = new Tower('R', 150, 1, 2, 100, 100,3, 25, 40, 1);// Splashing//attack delay=70//Min Health
 			} else if (i == 2) {
-				towerBlocks[i] = new Tower('B', 15, 1, 3, 20, "Multiple", 10,
-						20, 4, 5, 80, 2);// Burning//attack Delay = Max Health
+				towerBlocks[i] = new Tower('B', 350, 1, 3, 200,200, 4, 35, 20, 2);// Burning//attack Delay = Max Health
 			} else if (i == 3) {
-				towerBlocks[i] = new Tower('D', 0, 0, 0, 0, "", 0, 0, 1, 10, 2,
-						2);
+				towerBlocks[i] = new Tower('D', 0, 0, 0, 0, 0, 1, 10, 2,2);
 			}
 		}
 
@@ -359,9 +355,10 @@ public class Arsenal {
 			drawMoney(graphic);
 			++tower.level;
 			++tower.range;
-			tower.power = tower.power + 5;
+			tower.damage = tower.damage + 5;
 			tower.costToUpgrade = tower.costToUpgrade + 10;
 			tower.costToSell = tower.costToSell + 5;
+			tower.maxAttackDelay=tower.maxAttackDelay-5;
 			tower.drawMarketInformation(graphic);
 			GameFileManager.saveTowerObject(tower, mapTowerXpos, mapTowerYpos);
 			upgradeConfirm = false;
@@ -435,15 +432,40 @@ public class Arsenal {
 				selectedStratergy = Tower.ATTACK_MIN_HEALTH_ENEMY;
 			} else if (waveButton.contains(MapSimulatorView.mse)) {
 				
-				if (MapSimulatorView.level < 10) {
-
+				if (MapSimulatorView.level <= 10) {
+					int actualHealth=0,currentHealth=0,value=0,enemyActualSpeed=0,enemyCurrentSpeed=0;
+					int numberOFEnemies=0;
 					MapSimulatorView.moveEnemy = true;
 					MapSimulatorView.level++;
 					if (MapSimulatorView.gridRow != 0
 							|| MapSimulatorView.gridColumn != 0) {
 						MapSimulatorView.enemyPath = EnemyPath.copyPath();
-
-						for (int i = 0; i < (MapSimulatorView.level * 10) / 2; i++) {
+						if(1<=MapSimulatorView.level&&MapSimulatorView.level<=3){
+							MapSimulatorView.enemyType="normalenemy";
+							actualHealth=MapSimulatorView.level * 100;
+							currentHealth=MapSimulatorView.level * 100;
+							value=MapSimulatorView.level * 10;
+							enemyActualSpeed=5;
+							enemyCurrentSpeed=5;
+							numberOFEnemies=3+(MapSimulatorView.level*2);
+						}else if(3<MapSimulatorView.level&&MapSimulatorView.level<=6){
+							MapSimulatorView.enemyType="normalenemy";
+							actualHealth=MapSimulatorView.level * 150;
+							currentHealth=MapSimulatorView.level * 150;
+							value=MapSimulatorView.level * 20;
+							enemyActualSpeed=8;
+							enemyCurrentSpeed=8;
+							numberOFEnemies=5+(MapSimulatorView.level*2);
+						}else if(6<MapSimulatorView.level&&MapSimulatorView.level<=10){
+							MapSimulatorView.enemyType="bossEnemy";
+							actualHealth=MapSimulatorView.level * 200;
+							currentHealth=MapSimulatorView.level * 200;
+							value=MapSimulatorView.level * 50;
+							enemyActualSpeed=10;
+							enemyCurrentSpeed=10;
+							numberOFEnemies=7+(MapSimulatorView.level*2);
+						}
+						for (int i = 0; i < numberOFEnemies; i++) {
 							MapSimulatorView.enemiesOnMap
 							.add(MapSimulatorView.enemyFactory
 									.getEnemyfromFactory(
@@ -451,11 +473,11 @@ public class Arsenal {
 											i,
 											MapSimulatorView.enemyPath,
 											i * 20,
-											MapSimulatorView.level * 100,
-											MapSimulatorView.level * 100,
-											MapSimulatorView.level * 5,
-											((MapSimulatorView.level * 5)),
-											((MapSimulatorView.level * 5))));
+											actualHealth,
+											currentHealth,
+											value,
+											enemyActualSpeed,
+											enemyCurrentSpeed));
 						}
 					}
 				} else {
@@ -514,13 +536,13 @@ public class Arsenal {
 				randomTargetStratergy.width, randomTargetStratergy.height);
 
 		graphic.setColor(Color.RED);
-		graphic.drawString(" WEAK TARGET", weakTargetStratergy.x,
+		graphic.drawString("WEAK TARGET", weakTargetStratergy.x,
 				weakTargetStratergy.y + 20);
 		graphic.drawString("STRONG TARGET", strongTargetStratergy.x,
 				strongTargetStratergy.y + 20);
-		graphic.drawString(" NEAR TARGET", nearTargetStratergy.x,
+		graphic.drawString("NEAR TARGET", nearTargetStratergy.x,
 				nearTargetStratergy.y + 20);
-		graphic.drawString(" RANDOM TARGET", randomTargetStratergy.x,
+		graphic.drawString("RANDOM TARGET", randomTargetStratergy.x,
 				randomTargetStratergy.y + 20);
 
 	}
