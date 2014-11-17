@@ -27,7 +27,8 @@ import com.IDG.test.TowerTest;
 @Suite.SuiteClasses({ ArsenalTest.class, GameControllerTest.class,
 		GameFileManagerTest.class, MapValidityTestCase.class, RoomTest.class,
 		TowerTest.class, bossEnemyTest.class, SmallEnemyTest.class, EnemyFactoryTest.class,
-		EnemyPathTest.class, TowerDistanceTest.class, TowerInfoViewTest.class, MapSimulatorViewTest.class
+		EnemyPathTest.class, TowerDistanceTest.class, TowerInfoViewTest.class, MapSimulatorViewTest.class,
+		BlockTest.class
 
 })
 public class TestAll {
