@@ -49,7 +49,7 @@ public class Tower implements Serializable {
 	/**
 	 * variable to hold the starting x position to draw tower information
 	 */
-//	int box2Xpos = 750;
+	//	int box2Xpos = 750;
 	int box2Xpos = 710;
 	/**
 	 * variable to hold the starting y position to draw tower information
@@ -85,10 +85,10 @@ public class Tower implements Serializable {
 	public static final int BURNING=2;
 
 	public static final int FREEZING=3;
-	
+
 	public boolean hasHitOnce=true;
-	
-	
+
+
 
 	/**
 	 * class tower constructor to set the default values
@@ -213,45 +213,6 @@ public class Tower implements Serializable {
 		graphic.clearRect(box2Xpos, box2Ypos, 250, 200);
 	}
 
-	/*public void fire(EnemyType enemy, int towerX, int towerY) {
-
-		double distance = distance(enemy, towerX, towerY);
-
-		if (distance <= range * towerSize && enemy.getCurrentHealth() > 0 )
-
-		{
-			if (enemyTargets!= null && !enemyTargets.contains(enemy) ) {
-				enemyTargets.add(enemy);
-
-			}
-
-			targetEnemy = enemy;
-			int tempcurrentHealth;
-			tempcurrentHealth=targetEnemy.getCurrentHealth();
-			tempcurrentHealth = tempcurrentHealth - 100 ;
-			targetEnemy.setCurrentHealth(tempcurrentHealth);
-
-			if(enemyTargets!= null && targetEnemy.getCurrentHealth()<=0)
-			{
-				MapSimulatorView.power = MapSimulatorView.power + 5 ;
-				//remove the dead critter
-				enemyTargets.remove(targetEnemy);
-				targetEnemy = null;
-			}	
-
-		}
-		else
-		{
-			//remove the critter from targets if it is out of the range
-			if(enemyTargets!= null && enemyTargets.contains(enemy)){
-				targetEnemy = null;
-				enemyTargets.remove(enemy);
-
-			}
-		}
-
-	}
-*/
 	private double distance(EnemyType enemy, int towerX, int towerY) {
 
 		int enemyX = enemy.Xvalue();
