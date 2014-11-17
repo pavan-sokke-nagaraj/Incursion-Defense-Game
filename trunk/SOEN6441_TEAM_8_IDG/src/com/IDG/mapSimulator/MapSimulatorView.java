@@ -90,6 +90,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	public static int level = 0;
 	
 	public static boolean isGameLost=false;
+	public static boolean isGameWon=false;
 
 	/**
 	 * Constructs a new object of our map simulator and start the paintThread
@@ -162,6 +163,15 @@ public class MapSimulatorView extends JPanel implements Runnable {
 			graphic.setFont(new Font("Courier New", Font.BOLD, 20));
 			graphic.drawString("GAME LEVEL : " + level, 25, 20);
 		}
+		
+		if (isGameLost) {
+			graphic.setFont(new Font("Courier New", Font.BOLD, 20));
+			graphic.drawString("GAME LOST", 180, 20);
+		}
+		if (isGameWon) {
+			graphic.setFont(new Font("Courier New", Font.BOLD, 20));
+			graphic.drawString("GAME WON", 180, 20);
+		}
 
 		// draw a yellow background for game grid
 		graphic.setColor(Color.ORANGE);
@@ -202,6 +212,10 @@ public class MapSimulatorView extends JPanel implements Runnable {
 					Arsenal.resetGame();
 					isGameLost=true;
 					
+				}
+				if(MapSimulatorView.level>11&&MapSimulatorView.health>0){
+					Arsenal.resetGame();
+					isGameWon=true;
 				}
 				updateEnemies(graphic);
 				updateTower(graphic);
