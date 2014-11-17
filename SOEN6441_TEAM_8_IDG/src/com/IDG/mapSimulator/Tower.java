@@ -190,18 +190,6 @@ public class Tower extends Observable implements Serializable {
 	 *            Graphic variable to draw the Components
 	 */
 	public void drawMarketInformation(Graphics graphic) {
-		//		drawTowerInformation(graphic);
-		//
-		//		graphic.setColor(Color.GREEN);
-		//		graphic.fillRect(box2Xpos + 45, box2Ypos + 150, 160, 30);
-		//		graphic.setColor(Color.magenta);
-		//		graphic.drawString("UPGRADE @ $" + costToUpgrade, box2Xpos + 50,
-		//				box2Ypos + 170);
-		//		graphic.setColor(Color.RED);
-		//		graphic.fillRect(box2Xpos + 45, box2Ypos + 125, 160, 20);
-		//		graphic.setColor(Color.WHITE);
-		//		graphic.drawString(" SELL @ $" + costToSell, box2Xpos + 50,
-		//				box2Ypos + 140);
 		setChanged();
 		notifyObservers(graphic);
 

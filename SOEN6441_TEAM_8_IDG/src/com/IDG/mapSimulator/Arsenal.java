@@ -170,7 +170,6 @@ public class Arsenal {
 		gameReset= new Rectangle(box2Xpos + 165, 565 + 125 - 100, 160, 60);
 		exitgame=new Rectangle  (box2Xpos + 330, 565 + 125 - 100 ,150, 60);
 
-		// box2Xpos+280, box2Ypos, 200, 200
 		weakTargetStratergy = new Rectangle(box2Xpos + 300, box2Ypos + 30, 160,
 				30);
 		strongTargetStratergy = new Rectangle(box2Xpos + 300, box2Ypos + 70,
@@ -303,8 +302,6 @@ public class Arsenal {
 		if (isStrtergySelect) {
 			applyStratergy(mapTowerXpos, mapTowerYpos);
 		}
-
-		// System.out.println("Moveenemey:\t" + MapSimulatorView.moveEnemy);
 	}
 
 	/**
@@ -352,9 +349,6 @@ public class Arsenal {
 	 *            Graphic variable to draw the Components
 	 */
 	private void drawSellTowerInfo(Graphics graphic) {
-		// System.out.println("While drawUpgradeTowerInfo" + mapTowerXpos +
-		// "\t\t"
-		// + mapTowerYpos);
 		Tower tower = GameFileManager
 				.getTowerObject(mapTowerXpos, mapTowerYpos);
 		if (tower.costToSell > 0) {
@@ -382,9 +376,6 @@ public class Arsenal {
 	 *            Graphic variable to draw the Components
 	 */
 	private void drawUpgradeTowerInfo(Graphics graphic) {
-		// System.out.println("While drawUpgradeTowerInfo" + mapTowerXpos +
-		// "\t\t"
-		// + mapTowerYpos);
 		Tower tower = GameFileManager
 				.getTowerObject(mapTowerXpos, mapTowerYpos);
 		if (MapSimulatorView.power >= tower.costToUpgrade) {
