@@ -16,7 +16,7 @@ import com.IDG.enemyFactory.EnemyType;
 
 /**
  * @author Pavan Sokke Nagaraj <pavansn8@gmail.com>
- * @version Build1
+ * @version Build2
  * @since Build1
  *
  */
@@ -50,7 +50,6 @@ public class Tower extends Observable implements Serializable {
 	/**
 	 * variable to hold the starting x position to draw tower information
 	 */
-	//	int box2Xpos = 750;
 	int box2Xpos = 710;
 	/**
 	 * variable to hold the starting y position to draw tower information
@@ -59,26 +58,38 @@ public class Tower extends Observable implements Serializable {
 
 	int towerSize = 40;
 
-	public ArrayList<EnemyType> enemyTargets;
-
-	public EnemyType targetEnemy;
-
+	/**
+	 * Different Enemy Choosing Strategy
+	 */
 	public static final int ATTACK_FIRST_NEAR_TOWER_ENEMY=1;//Attack enemy nearest to tower
 
 	public static final int ATTACK_RANDOM_ENEMY=2;//Attack random enemy
 
-	public static final int ATTACK_MIN_HEALTH_ENEMY=3;
+	public static final int ATTACK_MIN_HEALTH_ENEMY=3;//Attack Min Health Enemy
 
-	public static final int ATTACK_MAX_HEALTH_ENEMY=4;
-
+	public static final int ATTACK_MAX_HEALTH_ENEMY=4;//Attack Max Health Enemy
+	
+	/**
+	 * Selected Strategy to choose enemies
+	 */
 	int attackStrategy;
 
+	/**
+	 * Damage cost by tower to enemies
+	 */
 	int damage=0;
 
+	/**
+	 * Current Rate of hit of tower
+	 */
 	int attackDelay=0;
-
+	/**
+	 * Max Rate of hit of tower
+	 */
 	int maxAttackDelay;
-
+	/**
+	 * Type of tower
+	 */
 	int towerAttackType=0;
 
 	public static final int SPLASHINHG=1;
@@ -102,30 +113,21 @@ public class Tower extends Observable implements Serializable {
 		this.range = 0;
 		this.costToSell = 0;
 		this.costToUpgrade = 0;
-		this.enemyTargets = new ArrayList<EnemyType>();
-		this.targetEnemy = null;
 		this.attackStrategy=2;
 		this.damage =10;
 
 	}
-
 	/**
-	 * @param towerId
-	 *            tower id
-	 * @param costToBuy
-	 *            cost of tower to buy
-	 * @param level
-	 *            tower level
-	 * @param range
-	 *            tower range
-	 * @param power
-	 *            holds the tower power
-	 * @param attackType
-	 *            tower's attacking type (single or multiple)
-	 * @param costToSell
-	 *            cost of tower to sell
-	 * @param costToUpgrade
-	 *            cost of tower to upgrade
+	 * @param towerId tower id
+	 * @param costToBuy cost of tower to buy
+	 * @param level tower level
+	 * @param range tower range
+	 * @param costToSell cost of tower to sell
+	 * @param costToUpgrade cost of tower to upgrade
+	 * @param attackStrategy tower's attacking Startegy
+	 * @param damage damage it causes to enemy
+	 * @param maxAttackDelay after how much delay it attacks again
+	 * @param towerAttackType tower's attacking type
 	 */
 	public Tower(char towerId, int costToBuy, int level, int range, int costToSell, int costToUpgrade,int attackStrategy,int damage,int maxAttackDelay,int towerAttackType) {
 		this.towerId = towerId;
@@ -155,7 +157,6 @@ public class Tower extends Observable implements Serializable {
 		graphic.setColor(new Color(255, 155, 0));
 		graphic.drawString("TOWER INFORMATION", box2Xpos, box2Ypos + 20);
 
-		// graphic.fillRect(noteX, noteY, 250, 200);
 		if (towerId != 'D') {
 			graphic.setFont(new Font("Courier New", Font.BOLD, 15));
 			graphic.setColor(Color.BLACK);
@@ -215,7 +216,13 @@ public class Tower extends Observable implements Serializable {
 	public void clearInformation(Graphics graphic) {
 		graphic.clearRect(box2Xpos, box2Ypos, 250, 200);
 	}
-
+	/**
+	 * This function calculate the distance between the Tower and enemy
+	 * @param enemy Enemy for which the distance has to be calcuated
+	 * @param towerX X Coordinate of Tower 
+	 * @param towerY Y Coordinate of Tower
+	 * @return distance between tower and enemy
+	 */
 	private double distance(EnemyType enemy, int towerX, int towerY) {
 
 		int enemyX = enemy.Xvalue();
@@ -237,7 +244,13 @@ public class Tower extends Observable implements Serializable {
 		return distance;
 
 	}
-
+	/**
+	 * This method draw a Fire effect making a contact line between a tower and its enemies in range
+	 * @param graphic Graphic for the tower
+	 * @param enemy Enemy for which line has to be drawn
+	 * @param towerX X Coordinate of Tower
+	 * @param towerY Y Coordinate of Tower
+	 */
 	public void drawFireEffect(Graphics graphic, EnemyType enemy, int towerX, int towerY) {
 		double distance = distance(enemy, towerX, towerY);
 		if(distance <=range * towerSize){
@@ -245,7 +258,13 @@ public class Tower extends Observable implements Serializable {
 			graphic.drawLine(enemyCenterX, enemyCenterY, towerCenterX, towerCenterY);
 		}
 	}
-
+	/**
+	 * This method return the list of enemies that are in range of tower based on different strategy
+	 * @param enemies List of enemies currently running on map
+	 * @param towX X Coordinat of Tower
+	 * @param towY Y Coordinat of Tower
+	 * @return List of enemies in range
+	 */
 	public ArrayList<EnemyType> calculateEnemy(ArrayList<EnemyType> enemies,int towX,int towY){
 
 		EnemyType[] enemiesInRange=new EnemyType[enemies.size()];
