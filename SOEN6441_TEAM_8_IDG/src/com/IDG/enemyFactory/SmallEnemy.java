@@ -201,51 +201,77 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 		}
 	}
 
+	/**
+	 * getter method for X
+	 */
 	public int Xvalue()
 	{
 	return x;
 	}
+	/**
+	 * getter method for Y
+	 */
 	public int Yvalue()
 	{
 		return y;
 	}
-
+	/**
+	 * getter method for actualhealth
+	 */
 	public int getActualHealth() {
 		return actualHealth;
 	}
-
+	/**
+	 * Setter method for actualhealth
+	 */
 	public void setActualHealth(int actualHealth) {
 		this.actualHealth = actualHealth;
 	}
-
+	/**
+	 * getter method for currenthealth
+	 */
 	public int getCurrentHealth() {
 		return currentHealth;
 	}
-
+	/**
+	 * setter method for currenthealth
+	 */
 	public void setCurrentHealth(int currentHealth) {
 		this.currentHealth = currentHealth;
 	}
-
+	/**
+	 * getter method for EnemyId
+	 */
 	public int getEnemyId() {
 		return enemyId;
 	}
-
+	/**
+	 * getter method for CurrentSpeed()
+	 */
 	public void setEnemyId(int enemyId) {
 		this.enemyId = enemyId;
 	}
-
+	/**
+	 * getter method for isSpeedSlow
+	 */
 	public boolean isSpeedSlow() {
 		return isSpeedSlow;
-	}
+	}/**
+	 * getter method for EnemyId
+	 */
 
 	public void setSpeedSlow(boolean isSpeedSlow) {
 		this.isSpeedSlow = isSpeedSlow;
 	}
-
+	/**
+	 * getter method for EnemyCurrentSpeed
+	 */
 	public int getEnemyCurrentSpeed() {
 		return enemyCurrentSpeed;
 	}
-
+	/**
+	 * setter method for EnemyId
+	 */
 	public void setEnemyCurrentSpeed(int enemyCurrentSpeed) {
 		this.enemyCurrentSpeed = enemyCurrentSpeed;
 	}
