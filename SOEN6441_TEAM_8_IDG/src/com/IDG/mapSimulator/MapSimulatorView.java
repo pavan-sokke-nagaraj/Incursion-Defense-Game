@@ -76,20 +76,45 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 */
 	public static Arsenal arsenal;
 
-	// build 2 end
-
+	/**
+	 * Path of enemy that has to be followed
+	 */
 	public static LinkedList<Point> enemyPath = new LinkedList<Point>();
-	// public static Enemy[] enemies = new Enemy[100];
-	// public static ArrayList<Enemy> enemiesOnMap=new ArrayList<Enemy>();
+	/**
+	 * Enemy Factory
+	 */
 	public static EnemyFactory enemyFactory = new EnemyFactory();
+	/**
+	 * Enemy Type
+	 */
 	public static String enemyType = "bossenemy";
+	/**
+	 * List of Enemies on Map
+	 */
 	public static ArrayList<EnemyType> enemiesOnMap = new ArrayList<EnemyType>();
+	/**
+	 * boolean to check if enemies are running or not
+	 */
 	public static boolean moveEnemy = false;
+	/**
+	 * Map start X pos
+	 */
 	public static int mapXStart = 0;
+	/**
+	 * Map start Y pos
+	 */
 	public static int mapYStart = 0;
+	/**
+	 * Game level
+	 */
 	public static int level = 0;
-	
+	/**
+	 * boolean to define if game is lost
+	 */
 	public static boolean isGameLost=false;
+	/**
+	 * boolean to define if game is won
+	 */
 	public static boolean isGameWon=false;
 
 	/**
@@ -97,10 +122,6 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 */
 	public MapSimulatorView() {
 		super();
-
-		// B2 start
-		// B2 end
-
 		paintThread.start();
 	}
 
@@ -163,7 +184,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 			graphic.setFont(new Font("Courier New", Font.BOLD, 20));
 			graphic.drawString("GAME LEVEL : " + level, 25, 20);
 		}
-		
+
 		if (isGameLost) {
 			graphic.setFont(new Font("Courier New", Font.BOLD, 20));
 			graphic.drawString("GAME LOST", 180, 20);
@@ -195,23 +216,11 @@ public class MapSimulatorView extends JPanel implements Runnable {
 			arsenal.draw(graphic);
 
 			long start = System.currentTimeMillis();
-			/*
-			 * if (moveEnemy) { enemyPath = EnemyPath.copyPath(); for (int k =
-			 * 0; k < enemies.length; k++) { enemies[k].update();
-			 * enemies[k].draw(graphic); for (int i = 0; i < gridRow; i++) { for
-			 * (int j = 0; j < gridColumn; j++) { if(gameValue[i][j] == 'G' ||
-			 * gameValue[i][j] == 'R' || gameValue[i][j] == 'B'){ Tower tower =
-			 * GameFileManager .getTowerObject(i, j); int towerX =
-			 * MapSimulatorView.room.block[i][j].x; int towerY =
-			 * MapSimulatorView.room.block[i][j].y; tower.fire(enemies[k],
-			 * towerX, towerY); tower.drawFireEffect(graphic, enemies[k],
-			 * towerX, towerY); } } } } }
-			 */
 			if (moveEnemy) {
 				if(MapSimulatorView.health<0){
 					Arsenal.resetGame();
 					isGameLost=true;
-					
+
 				}
 				if(MapSimulatorView.level>11&&MapSimulatorView.health>0){
 					Arsenal.resetGame();
@@ -224,7 +233,10 @@ public class MapSimulatorView extends JPanel implements Runnable {
 			long time = System.currentTimeMillis() - start;
 		}
 	}
-
+	/**
+	 * This method will update all the enemies on the map, eventually reducing health and killing them among others
+	 * @param graphic Graphic variable to paint screen
+	 */
 	public void updateEnemies(Graphics graphic) {
 		for (int k = 0; k < enemiesOnMap.size(); k++) {
 			if (enemiesOnMap.size() > 0 && enemiesOnMap.get(k) != null) {
@@ -235,7 +247,10 @@ public class MapSimulatorView extends JPanel implements Runnable {
 			}
 		}
 	}
-
+	/**
+	 * This method will update all the towers on the map, eventually finding enemies and killing them among others
+	 * @param graphic Graphic variable to paint screen
+	 */
 	public void updateTower(Graphics graphic) {
 		for (int i = 0; i < gridRow; i++) {
 			for (int j = 0; j < gridColumn; j++) {
@@ -262,14 +277,14 @@ public class MapSimulatorView extends JPanel implements Runnable {
 										temphealth1 = temphealth1
 												- tower.damage;
 										currentEnemy
-												.setCurrentHealth(temphealth1);
+										.setCurrentHealth(temphealth1);
 									} else if (tower.towerAttackType == 3) {
 										int temphealth;
 										temphealth = currentEnemy
 												.getCurrentHealth();
 										temphealth = temphealth - tower.damage;
 										currentEnemy
-												.setCurrentHealth(temphealth);
+										.setCurrentHealth(temphealth);
 										currentEnemy.setSpeedSlow(true);
 										currentEnemy.setEnemyCurrentSpeed(5);
 									}
@@ -287,6 +302,4 @@ public class MapSimulatorView extends JPanel implements Runnable {
 			}
 		}
 	}
-	// public static boolean initalizeEnemy = true;
-
 }
