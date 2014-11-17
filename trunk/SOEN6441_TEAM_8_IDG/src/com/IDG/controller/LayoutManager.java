@@ -66,7 +66,9 @@ public class LayoutManager {
 			new MapBuilderController();
 		}
 	});
-			
+	/**
+	 * This method populate saved map file header		
+	 */
 	public void populateFileHeader() {
 
 				if (Game.Mode == Game.GameMode.Simulator) {
@@ -107,9 +109,7 @@ public class LayoutManager {
 	 */
 	private void populateTabs() {
 		// Add our tab elements to them
-//		tab.addTab("Editor", mapEditorView);
 		tab.addTab("PLAY GAME", mapSimulatorView);
-//		tab.setSelectedIndex(1);
 
 		// Add a listener to the tabs
 		tab.addChangeListener(new ChangeListener() {
@@ -130,15 +130,8 @@ public class LayoutManager {
 				} else if (tabSelectedIndex == 1) {
 					Game.Mode = Game.GameMode.Simulator;
 				}
-				// rebuildLayout();
 			}
 
 		});
 	}
-	// private void rebuildLayout() {
-	// if (World.Mode == WorldMode.Simulator)
-	// mapEditorView.removeAll();
-	// else if (World.Mode == WorldMode.Editor)
-	// mapSimulatorView.removeAll();
-	// }
 }

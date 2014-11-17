@@ -29,9 +29,6 @@ public class Colosseum extends JFrame {
 		// Set JFrame basic features
 
 		super(Game.GAME_NAME);
-
-		// setExtendedState(Frame.MAXIMIZED_BOTH);
-		// setVisible(true);
 		setSize(Game.GAME_FRAME_WIDTH, Game.GAME_FRAME_HEIGHT);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -53,8 +50,6 @@ public class Colosseum extends JFrame {
 	 *            Unused
 	 */
 	public static void main(String[] args) {
-		// Create an instance of our game and set the layout
-		// Colosseum colosseum = new Colosseum();
 	}
 
 }
