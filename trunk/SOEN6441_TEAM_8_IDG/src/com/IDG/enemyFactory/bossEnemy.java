@@ -20,6 +20,10 @@ import com.IDG.mapSimulator.MapSimulatorView;
  * @author Pavan Sokke Nagaraj <pavansn8@gmail.com>
  *
  */
+/**
+ * @author Kariappa
+ *
+ */
 public class bossEnemy extends Rectangle implements EnemyType{
 	/**
 	 * Size of enemy
@@ -72,12 +76,27 @@ public class bossEnemy extends Rectangle implements EnemyType{
 	 */
 	public int enemyCurrentSpeed=1;
 	
+	/**
+	 * Variable set when enemy speed is to be slowed
+	 */
 	public boolean isSpeedSlow=false;
-
-	public int slowCounter=0;
+	/**
+	 * counter to set enemy slow speed 
+	 */
+	public int slowCounter=0; 
 	public bossEnemy() {
 	}
 	
+	/**
+	 * @param enemyId
+	 * @param enemyPath
+	 * @param movePoint
+	 * @param actualHealth
+	 * @param currentHealth
+	 * @param value
+	 * @param enemyActualSpeed
+	 * @param enemyCurrentSpeed
+	 */
 	public bossEnemy(int enemyId,LinkedList<Point> enemyPath, int movePoint,int actualHealth,int currentHealth,int value,int enemyActualSpeed,int enemyCurrentSpeed)
 	{	
 		this.enemyId=enemyId;
@@ -97,6 +116,9 @@ public class bossEnemy extends Rectangle implements EnemyType{
 	}
 	/**
 	 * This function will move enemies on the screen
+	 */
+	/* (non-Javadoc)
+	 * @see com.IDG.enemyFactory.EnemyType#move(java.awt.Graphics)
 	 */
 	public void move(Graphics graphics) {
 		int mapXStart = MapSimulatorView.mapXStart;
@@ -145,6 +167,9 @@ public class bossEnemy extends Rectangle implements EnemyType{
 	}
 	/**
 	 * This function will update the enemies movement
+	 */
+	/* (non-Javadoc)
+	 * @see com.IDG.enemyFactory.EnemyType#update(java.awt.Graphics)
 	 */
 	public void update(Graphics graphics) {
 
