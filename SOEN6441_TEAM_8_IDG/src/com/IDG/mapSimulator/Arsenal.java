@@ -147,15 +147,14 @@ public class Arsenal {
 	public Arsenal() {
 
 		for (int i = 0; i < towerNumber; i++) {
-
 			towers[i] = new Rectangle(box1Xpos + (gap * i) + (towerWidth * i),
 					box1Ypos, towerWidth, towerWidth);
 			if (i == 0) {
-				towerBlocks[i] = new Tower('G', 50, 1, 1,25,25, 2,20, 60, 2);// freezing//attack delay=50//Random
+				towerBlocks[i] = new Tower('G', 50, 1, 1,25,25, 2,30, 60, 3);// freezing//attack delay=50//Random
 			} else if (i == 1) {
-				towerBlocks[i] = new Tower('R', 150, 1, 2, 100, 100,3, 25, 40, 1);// Splashing//attack delay=70//Min Health
+				towerBlocks[i] = new Tower('R', 150, 1, 2, 100, 100,3, 15, 40, 2);// Splashing//attack delay=70//Min Health
 			} else if (i == 2) {
-				towerBlocks[i] = new Tower('B', 350, 1, 3, 200,200, 4, 35, 20, 2);// Burning//attack Delay = Max Health
+				towerBlocks[i] = new Tower('B', 350, 1, 3, 200,200, 4, 10, 20, 1);// Burning//attack Delay = Max Health
 			} else if (i == 3) {
 				towerBlocks[i] = new Tower('D', 0, 0, 0, 0, 0, 1, 10, 2,2);
 			}
@@ -486,15 +485,15 @@ public class Arsenal {
 							MapSimulatorView.enemyType="normalenemy";
 							actualHealth=MapSimulatorView.level * 150;
 							currentHealth=MapSimulatorView.level * 150;
-							value=MapSimulatorView.level * 20;
+							value=MapSimulatorView.level * 10;
 							enemyActualSpeed=8;
 							enemyCurrentSpeed=8;
 							numberOFEnemies=5+(MapSimulatorView.level*2);
 						}else if(6<MapSimulatorView.level&&MapSimulatorView.level<=10){
 							MapSimulatorView.enemyType="bossEnemy";
-							actualHealth=MapSimulatorView.level * 200;
-							currentHealth=MapSimulatorView.level * 200;
-							value=MapSimulatorView.level * 50;
+							actualHealth=MapSimulatorView.level * 600;
+							currentHealth=MapSimulatorView.level * 600;
+							value=MapSimulatorView.level * 20;
 							enemyActualSpeed=10;
 							enemyCurrentSpeed=10;
 							numberOFEnemies=7+(MapSimulatorView.level*2);
