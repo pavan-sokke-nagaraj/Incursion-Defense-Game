@@ -71,7 +71,7 @@ public class LayoutManager {
 	 */
 	public void populateFileHeader() {
 
-				if (Game.Mode == Game.GameMode.Simulator) {
+				if (Game.getInstance().Mode == Game.GameMode.Simulator) {
 					Scanner sc=null;
 					String line1=null;
 					try {
@@ -99,7 +99,7 @@ public class LayoutManager {
 					mapSimulatorView.gridColumn = gameValue[0].length;
 					mapSimulatorView.room.block = new Block[gameValue.length][gameValue[0].length];
 					mapSimulatorView.arsenal = new Arsenal();
-					mapSimulatorView.power = Game.INITIAL_GAME_POWER;
+					mapSimulatorView.power = Game.getInstance().INITIAL_GAME_POWER;
 					}
 				}
 			}
@@ -126,9 +126,9 @@ public class LayoutManager {
 				int tabSelectedIndex = ((JTabbedPane) event.getSource())
 						.getSelectedIndex();
 				if (tabSelectedIndex == 0) {
-					Game.Mode = Game.GameMode.Editor;
+					Game.getInstance().Mode = Game.GameMode.Editor;
 				} else if (tabSelectedIndex == 1) {
-					Game.Mode = Game.GameMode.Simulator;
+					Game.getInstance().Mode = Game.GameMode.Simulator;
 				}
 			}
 

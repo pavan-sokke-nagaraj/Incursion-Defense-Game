@@ -47,13 +47,13 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 * variable to hold the game's power.The value is set from
 	 * {@code Game.INITIAL_GAME_POWER}
 	 */
-	public static int power = Game.INITIAL_GAME_POWER;
+	public static int power = Game.getInstance().INITIAL_GAME_POWER;
 
 	/**
 	 * variable to hold the game's health.The value is set from
 	 * {@code Game.INITIAL_GAME_HEALTH}
 	 */
-	public static int health = Game.INITIAL_GAME_HEALTH;
+	public static int health = Game.getInstance().INITIAL_GAME_HEALTH;
 
 	/**
 	 * variable to hold the each grids game value

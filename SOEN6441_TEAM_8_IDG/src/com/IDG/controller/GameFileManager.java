@@ -42,7 +42,7 @@ public class GameFileManager {
 
 		char a2Array[][] = new char[20][20];
 		Block block[][] = new Block[20][20];
-		Game game = new Game();
+		Game game = Game.getInstance();
 		if (file!=null) {
 			int tempRow = 0;
 			int tempCol = 0;
@@ -102,7 +102,7 @@ public class GameFileManager {
 	 */
 	public static void saveGameFile(Block[][] block) {
 		JFileChooser fileChooser = new JFileChooser();
-		Game game = new Game();
+		Game game = Game.getInstance();
 		int saveValue = fileChooser.showSaveDialog(game);
 		if (saveValue == JFileChooser.APPROVE_OPTION) {
 			String filename = fileChooser.getSelectedFile().getName();

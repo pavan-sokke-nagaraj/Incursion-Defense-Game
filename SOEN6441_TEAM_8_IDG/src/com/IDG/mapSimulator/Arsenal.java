@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 
+import com.IDG.controller.Game;
 import com.IDG.controller.GameFileManager;
 import com.IDG.playGame.EnemyPath;
 
@@ -316,8 +317,8 @@ public class Arsenal {
 		MapSimulatorView.level=0;
 		MapSimulatorView.moveEnemy = false;
 		MapSimulatorView.enemiesOnMap.clear();
-		MapSimulatorView.health=1000;
-		MapSimulatorView.power=200;
+		MapSimulatorView.health=Game.getInstance().INITIAL_GAME_HEALTH ;
+		MapSimulatorView.power=Game.getInstance().INITIAL_GAME_POWER ;
 		for(int i=0;i<MapSimulatorView.gridRow;i++){
 			for(int j = 0;j<MapSimulatorView.gridColumn;j++){
 				char createId = MapSimulatorView.gameValue[j][i];
