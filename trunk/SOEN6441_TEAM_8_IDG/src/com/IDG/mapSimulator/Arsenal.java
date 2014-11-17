@@ -117,11 +117,21 @@ public class Arsenal {
 	 * flag to check if the sell button is selected or not
 	 */
 	public static boolean sellConfirm = false;
-
+	/**
+	 * Button for wave to start
+	 */
 	public Rectangle waveButton;
+	/**
+	 * Button for game to start
+	 */
 	public Rectangle gameReset;
+	/**
+	 * Button for game to exit
+	 */
 	public Rectangle exitgame;
-
+	/**
+	 * Different strategy patterns
+	 */
 	public Rectangle weakTargetStratergy;
 	public Rectangle strongTargetStratergy;
 	public Rectangle nearTargetStratergy;
@@ -323,6 +333,11 @@ public class Arsenal {
 		clearInfo = true ;
 		selectMapTower = false ;
 	}
+
+	/**
+	 * Draws the Money Component
+	 * @param graphic Graphic variable to draw the Components
+	 */
 	private void drawMoney(Graphics graphic) {
 		graphic.setFont(new Font("Courier New", Font.BOLD, 25));
 		graphic.setColor(new Color(255, 200, 0));
@@ -550,7 +565,13 @@ public class Arsenal {
 			}
 		}
 	}
-
+	/**
+	 * function to draw the tower range on map
+	 * @param graphic Graphic variable to draw the Components
+	 * @param circleX Circle X Coordinate
+	 * @param circleY Circle Y Coordinate
+	 * @param radius Circle radius
+	 */
 	private void drawTowerRange(Graphics graphic, int circleX, int circleY,
 			int radius) {
 		radius = radius * towerWidth;
@@ -560,6 +581,12 @@ public class Arsenal {
 		graphic.drawOval(circleX, circleY, 2 * radius, 2 * radius);
 	}
 
+	/**
+	 * function to draw the tower strategy information
+	 * 
+	 * @param graphic
+	 *            Graphic variable to draw the Components
+	 */
 	private void drawStratergyWindow(Graphics graphic) {
 		graphic.clearRect(box2Xpos + 280, box2Ypos, 200, 200);
 		graphic.setColor(Color.WHITE);
@@ -589,7 +616,11 @@ public class Arsenal {
 				randomTargetStratergy.y + 20);
 
 	}
-
+	/**
+	 * Function to apply particular startegy on selected tower
+	 * @param mapTowerXpos2 Tower X Coordinate
+	 * @param mapTowerYpos2 Tower Y Coordinate
+	 */
 	private void applyStratergy(int mapTowerXpos2, int mapTowerYpos2) {
 		Tower tower = GameFileManager
 				.getTowerObject(mapTowerXpos, mapTowerYpos);
