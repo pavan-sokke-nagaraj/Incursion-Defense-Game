@@ -38,14 +38,6 @@ public class Tower implements Serializable {
 	 */
 	public int range;
 	/**
-	 * holds the tower power
-	 */
-	public int power;
-	/**
-	 * hold the tower attacking type (single or multiple)
-	 */
-	public String attackType;
-	/**
 	 * variable to hold the cost of tower to sell
 	 */
 	public int costToSell;
@@ -107,8 +99,6 @@ public class Tower implements Serializable {
 		this.costToBuy = 0;
 		this.level = 0;
 		this.range = 0;
-		this.power = 0;
-		this.attackType = "";
 		this.costToSell = 0;
 		this.costToUpgrade = 0;
 		this.enemyTargets = new ArrayList<EnemyType>();
@@ -136,14 +126,11 @@ public class Tower implements Serializable {
 	 * @param costToUpgrade
 	 *            cost of tower to upgrade
 	 */
-	public Tower(char towerId, int costToBuy, int level, int range, int power,
-			String attackType, int costToSell, int costToUpgrade,int attackStrategy,int damage,int maxAttackDelay,int towerAttackType) {
+	public Tower(char towerId, int costToBuy, int level, int range, int costToSell, int costToUpgrade,int attackStrategy,int damage,int maxAttackDelay,int towerAttackType) {
 		this.towerId = towerId;
 		this.costToBuy = costToBuy;
 		this.level = level;
 		this.range = range;
-		this.power = power;
-		this.attackType = attackType;
 		this.costToSell = costToSell;
 		this.costToUpgrade = costToUpgrade;
 		this.attackStrategy=attackStrategy;
@@ -169,18 +156,27 @@ public class Tower implements Serializable {
 
 		// graphic.fillRect(noteX, noteY, 250, 200);
 		if (towerId != 'D') {
-			graphic.setFont(new Font("Courier New", Font.BOLD, 20));
-			graphic.setColor(Color.GREEN);
+			graphic.setFont(new Font("Courier New", Font.BOLD, 15));
+			graphic.setColor(Color.BLACK);
 			graphic.drawString("INITIAL COST: $" + costToBuy, box2Xpos,
 					box2Ypos + 40);
-			graphic.drawString("LEVEL: " + level, box2Xpos, box2Ypos + 60);
+			graphic.drawString("LEVEL: " + level, box2Xpos, box2Ypos + 55);
 			graphic.drawString("RANGE: " + range + " Block Radius", box2Xpos,
-					box2Ypos + 80);
-			graphic.drawString("POWER: " + power + '%', box2Xpos,
-					box2Ypos + 100);
+					box2Ypos + 70);
+			graphic.drawString("POWER: " + damage + '%', box2Xpos,
+					box2Ypos + 85);
+			String attackType="";
+			if(towerAttackType==1){
+				attackType="Splashing";
+			}else if(towerAttackType==2){
+				attackType="Burning";
+			}else if(towerAttackType==3){
+				attackType="Freezing";
+			}
 			graphic.drawString("ATTACK TYPE: " + attackType, box2Xpos,
-					box2Ypos + 120);
-
+					box2Ypos + 100);
+			graphic.drawString("ATTACK RATE: " + maxAttackDelay + "ms Delay", box2Xpos,
+					box2Ypos + 115);
 		}
 
 	}
@@ -217,7 +213,7 @@ public class Tower implements Serializable {
 		graphic.clearRect(box2Xpos, box2Ypos, 250, 200);
 	}
 
-	public void fire(EnemyType enemy, int towerX, int towerY) {
+	/*public void fire(EnemyType enemy, int towerX, int towerY) {
 
 		double distance = distance(enemy, towerX, towerY);
 
@@ -255,7 +251,7 @@ public class Tower implements Serializable {
 		}
 
 	}
-
+*/
 	private double distance(EnemyType enemy, int towerX, int towerY) {
 
 		int enemyX = enemy.Xvalue();
