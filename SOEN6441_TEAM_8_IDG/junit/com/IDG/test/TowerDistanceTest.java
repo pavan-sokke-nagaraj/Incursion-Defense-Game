@@ -5,6 +5,8 @@ package com.IDG.test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -23,8 +25,11 @@ import com.IDG.mapSimulator.Tower;
  */
 public class TowerDistanceTest {
 
+	
 	Tower nnTower = new Tower();
 	bossEnemy boss = new bossEnemy();
+	EnemyType[] enemiesInRange=new EnemyType[boss.enemySize];
+	ArrayList<EnemyType> returnEnemyList=new ArrayList<EnemyType>();
 	double distance = nnTower.distance(boss, 50, 50);
 	
 	/**
@@ -50,6 +55,7 @@ public class TowerDistanceTest {
 		boss.x = 10;
 		boss.y = 20;
 		nnTower.range = 20;
+		
 	}
 
 	/**
@@ -65,6 +71,20 @@ public class TowerDistanceTest {
 	@Test
 	public void testDistance() {
 		assertEquals(70, distance, 1);
+	}
+	/**
+	 * Test if the enemy and in the range of tower
+	 */
+	@Test
+	public void testCalculateEnemy() {
+		assertNotNull(enemiesInRange);
+	}
+	/**
+	 * Test when the enemy has been shot, they go to returnEnemyList
+	 */
+	@Test
+	public void testCalculateDeadEnemy() {
+		assertNotNull(returnEnemyList);
 	}
 
 }
