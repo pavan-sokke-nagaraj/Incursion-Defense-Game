@@ -72,7 +72,7 @@ public class Tower extends Observable implements Serializable {
 	/**
 	 * Selected Strategy to choose enemies
 	 */
-	int attackStrategy;
+	public int attackStrategy;
 
 	/**
 	 * Damage cost by tower to enemies
