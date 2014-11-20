@@ -31,7 +31,7 @@ public class TowerDistanceTest {
 	StrongEnemy strongEnemy = new StrongEnemy();
 	EnemyType[] enemiesInRange=new EnemyType[strongEnemy.enemySize];
 	ArrayList<EnemyType> returnEnemyList=new ArrayList<EnemyType>();
-	double distance = nnTower.distance(strongEnemy, 50, 50);
+	double distance =0.0;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -53,9 +53,10 @@ public class TowerDistanceTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		strongEnemy.x = 10;
-		strongEnemy.y = 20;
-		nnTower.range = 20;
+		strongEnemy.x = 1;
+		strongEnemy.y = 1;
+		nnTower.range = 2;
+		distance = nnTower.distance(strongEnemy, 50, 50);
 		
 	}
 
