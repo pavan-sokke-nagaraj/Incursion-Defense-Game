@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.IDG.enemyFactory.EnemyType;
 import com.IDG.enemyFactory.StrongEnemy;
+import com.IDG.mapSimulator.MapSimulatorView;
 import com.IDG.mapSimulator.Tower;
 
 public class CalculateEnemyBasedOnStrategy {
