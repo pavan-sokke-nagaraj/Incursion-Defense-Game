@@ -117,11 +117,19 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 */
 	public static boolean isGameWon=false;
 
+	public static LinkedList<StringBuffer> levelLogList=new LinkedList<StringBuffer>();
+
+	public static StringBuffer levelLog=new StringBuffer();
+
+	public static StringBuffer gameLog=new StringBuffer();	
+
 	/**
 	 * Constructs a new object of our map simulator and start the paintThread
 	 */
 	public MapSimulatorView() {
 		super();
+		gameLog.append("Game Started !!!! Map is Loaded");
+		gameLog.append("\n");
 		paintThread.start();
 	}
 
@@ -217,15 +225,24 @@ public class MapSimulatorView extends JPanel implements Runnable {
 
 			long start = System.currentTimeMillis();
 			if(MapSimulatorView.health<0){
+				MapSimulatorView.gameLog.append("Game has been Lost");
+				MapSimulatorView.gameLog.append("\n");
+				MapSimulatorView.levelLog.append("Wave Ended as Game is Lost");
+				MapSimulatorView.levelLog.append("\n");
 				Arsenal.resetGame();
 				isGameLost=true;
 
+
 			}
 			if(MapSimulatorView.level>10&&MapSimulatorView.health>0){
+				MapSimulatorView.gameLog.append("Game has been Won");
+				MapSimulatorView.gameLog.append("\n");
+				MapSimulatorView.levelLog.append("Wave Ended and Game is Won");
+				MapSimulatorView.levelLog.append("\n");
 				Arsenal.resetGame();
 				isGameWon=true;
 			}
-			
+
 			if (moveEnemy) {
 				updateEnemies(graphic);
 				updateTower(graphic);
@@ -270,28 +287,17 @@ public class MapSimulatorView extends JPanel implements Runnable {
 								EnemyType currentEnemy = currentEnemyList
 										.get(k);
 								if (currentEnemy != null) {
-									if (tower.towerAttackType == 2
-											|| tower.towerAttackType == 1) {
-										int temphealth1;
-										temphealth1 = currentEnemy
-												.getCurrentHealth();
-										temphealth1 = temphealth1
-												- tower.damage;
-										currentEnemy
-										.setCurrentHealth(temphealth1);
-									} else if (tower.towerAttackType == 3) {
-										int temphealth;
-										temphealth = currentEnemy
-												.getCurrentHealth();
-										temphealth = temphealth - tower.damage;
-										currentEnemy
-										.setCurrentHealth(temphealth);
-										currentEnemy.setEnemyCurrentSpeed(5);
-									}
-									tower.drawFireEffect(graphic, currentEnemy,
-											towerX, towerY);
-									tower.attackDelay = 0;
+									attackEnemiesBasedOnStrategies(tower,currentEnemy,graphic,towerX,towerY);
 								}
+								tower.individualTowerlog.append("Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
+								tower.individualTowerlog.append("\n");
+								Tower.collectiveTowerlog.append("Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
+								Tower.collectiveTowerlog.append("\n");
+								MapSimulatorView.levelLog.append("Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
+								MapSimulatorView.levelLog.append("\n");
+								MapSimulatorView.gameLog.append("Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
+								MapSimulatorView.gameLog.append("\n");
+								GameFileManager.saveTowerObject(tower, i, j);
 							}
 						}
 					} else {
@@ -301,5 +307,46 @@ public class MapSimulatorView extends JPanel implements Runnable {
 				}
 			}
 		}
+	}
+	public void attackEnemiesBasedOnStrategies(Tower tower,EnemyType currentEnemy,Graphics graphic,int towerX,int towerY){
+
+		if(tower.towerAttackType != 2){
+			if (tower.towerAttackType == 1
+					) {
+				int temphealth1;
+				temphealth1 = currentEnemy
+						.getCurrentHealth();
+				temphealth1 = temphealth1
+						- tower.damage;
+				currentEnemy
+				.setCurrentHealth(temphealth1);
+			} else if (tower.towerAttackType == 3) {
+				int temphealth;
+				temphealth = currentEnemy
+						.getCurrentHealth();
+				temphealth = temphealth - tower.damage;
+				currentEnemy
+				.setCurrentHealth(temphealth);
+				currentEnemy.setEnemyCurrentSpeed(5);
+			}
+			tower.drawFireEffect(graphic, currentEnemy,
+					towerX, towerY);
+			tower.attackDelay = 0;
+		}
+		else{
+			for(int g=0;g<2;g++){
+				int temphealth1;
+				temphealth1 = currentEnemy
+						.getCurrentHealth();
+				temphealth1 = temphealth1
+						- tower.damage;
+				currentEnemy
+				.setCurrentHealth(temphealth1);
+				tower.drawFireEffect(graphic, currentEnemy,
+						towerX, towerY);
+				tower.attackDelay = 0;
+			}
+		}
+
 	}
 }
