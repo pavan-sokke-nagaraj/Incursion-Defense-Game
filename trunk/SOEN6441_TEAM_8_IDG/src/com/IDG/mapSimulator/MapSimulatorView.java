@@ -16,7 +16,6 @@ import com.IDG.controller.Game;
 import com.IDG.controller.GameFileManager;
 import com.IDG.enemyFactory.EnemyFactory;
 import com.IDG.enemyFactory.EnemyType;
-import com.IDG.playGame.EnemyPath;
 
 /**
  * 
@@ -32,7 +31,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	/**
 	 * A simple thread intialized to repaint
 	 */
-	public Thread paintThread = new Thread(this);
+	public static Thread paintThread;
 
 	/**
 	 * Static variable to hold number of rows in the map grid
@@ -107,15 +106,15 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	/**
 	 * Game level
 	 */
-	public static int level = 0;
+	public static int waveLevel = 0;
 	/**
 	 * boolean to define if game is lost
 	 */
-	public static boolean isGameLost=false;
+	public static boolean isGameLost = false;
 	/**
 	 * boolean to define if game is won
 	 */
-	public static boolean isGameWon=false;
+	public static boolean isGameWon = false;
 
 	public static LinkedList<StringBuffer> levelLogList=new LinkedList<StringBuffer>();
 
@@ -128,6 +127,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 */
 	public MapSimulatorView() {
 		super();
+		paintThread = new Thread(this);
 		gameLog.append("Game Started !!!! Map is Loaded");
 		gameLog.append("\n");
 		paintThread.start();
@@ -149,7 +149,6 @@ public class MapSimulatorView extends JPanel implements Runnable {
 		long beforeTime, timeDiff, sleep;
 		beforeTime = System.currentTimeMillis();
 		while (true) {
-
 			repaint();
 			timeDiff = System.currentTimeMillis() - beforeTime;
 			sleep = 30 - timeDiff;
@@ -178,8 +177,6 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
 	public void paintComponent(Graphics graphic) {
-
-		// draws a white background
 		graphic.setColor(Color.WHITE);
 		graphic.fillRect(0, 0, getWidth(), getHeight());
 		// System.out.println(getWidth() + "\t\t" + getHeight());
@@ -188,9 +185,36 @@ public class MapSimulatorView extends JPanel implements Runnable {
 		graphic.setColor(Color.BLACK);
 		graphic.drawRect(20, 0, 1200, 30);
 
-		if (level != 0) {
+		// if (Game.getInstance().isGamePaused()) {
+		//
+		// graphic.setColor(Color.YELLOW);
+		//
+		// graphic.fillRect(20, 35, 1200, 750);
+		// graphic.setColor(Color.green);
+		// graphic.setFont(new Font("Courier New", Font.BOLD, 50));
+		// graphic.drawString("GAME PAUSED!!!!", 400, 300);
+		// // System.out.println(getWidth());
+		// // System.out.println(getHeight());
+		//
+		// arsenal.drawGamePauseWindow(graphic);
+		// arsenal.drawGameResetExitButton(graphic);
+		// // arsenal.drawGameSaveWindow(graphic);
+		// // arsenal.disableButtons = true ;
+		// // arsenal.selectMapTower = false ;
+		// // suspend = true ;
+		// // if(isGameReset){
+		// // arsenal.resetGame();
+		// // Game.getInstance().setGamePaused(false);
+		// // // isGameReset = false;
+		// // }
+		//
+		// } else {
+		// arsenal.disableButtons = false ;
+		// draws a white background
+
+		if (waveLevel != 0) {
 			graphic.setFont(new Font("Courier New", Font.BOLD, 20));
-			graphic.drawString("GAME LEVEL : " + level, 25, 20);
+			graphic.drawString("GAME LEVEL : " + waveLevel, 25, 20);
 		}
 
 		if (isGameLost) {
@@ -224,23 +248,23 @@ public class MapSimulatorView extends JPanel implements Runnable {
 			arsenal.draw(graphic);
 
 			long start = System.currentTimeMillis();
-			if(MapSimulatorView.health<0){
+			if (MapSimulatorView.health < 0) {
 				MapSimulatorView.gameLog.append("Game has been Lost");
 				MapSimulatorView.gameLog.append("\n");
 				MapSimulatorView.levelLog.append("Wave Ended as Game is Lost");
 				MapSimulatorView.levelLog.append("\n");
 				Arsenal.resetGame();
-				isGameLost=true;
+				isGameLost = true;
 
 
 			}
-			if(MapSimulatorView.level>10&&MapSimulatorView.health>0){
+			if (MapSimulatorView.waveLevel > 10 && MapSimulatorView.health > 0) {
 				MapSimulatorView.gameLog.append("Game has been Won");
 				MapSimulatorView.gameLog.append("\n");
 				MapSimulatorView.levelLog.append("Wave Ended and Game is Won");
 				MapSimulatorView.levelLog.append("\n");
 				Arsenal.resetGame();
-				isGameWon=true;
+				isGameWon = true;
 			}
 
 			if (moveEnemy) {
@@ -251,23 +275,37 @@ public class MapSimulatorView extends JPanel implements Runnable {
 			long time = System.currentTimeMillis() - start;
 		}
 	}
+
+	// }
+
 	/**
-	 * This method will update all the enemies on the map, eventually reducing health and killing them among others
-	 * @param graphic Graphic variable to paint screen
+	 * This method will update all the enemies on the map, eventually reducing
+	 * health and killing them among others
+	 * 
+	 * @param graphic
+	 *            Graphic variable to paint screen
 	 */
 	public void updateEnemies(Graphics graphic) {
+		
+		System.out.println("Game paused flag:\t " + Game.getInstance().isGamePaused());
 		for (int k = 0; k < enemiesOnMap.size(); k++) {
-			if (enemiesOnMap.size() > 0 && enemiesOnMap.get(k) != null) {
-				enemiesOnMap.get(k).update(graphic);
+			if (!Game.getInstance().isGamePaused()) {
+				if (enemiesOnMap.size() > 0 && enemiesOnMap.get(k) != null) {
+					enemiesOnMap.get(k).update(graphic);
+				}
 			}
 			if (enemiesOnMap.size() > 0 && enemiesOnMap.get(k) != null) {
 				enemiesOnMap.get(k).draw(graphic);
 			}
 		}
 	}
+
 	/**
-	 * This method will update all the towers on the map, eventually finding enemies and killing them among others
-	 * @param graphic Graphic variable to paint screen
+	 * This method will update all the towers on the map, eventually finding
+	 * enemies and killing them among others
+	 * 
+	 * @param graphic
+	 *            Graphic variable to paint screen
 	 */
 	public void updateTower(Graphics graphic) {
 		for (int i = 0; i < gridRow; i++) {
@@ -308,9 +346,17 @@ public class MapSimulatorView extends JPanel implements Runnable {
 			}
 		}
 	}
-	public void attackEnemiesBasedOnStrategies(Tower tower,EnemyType currentEnemy,Graphics graphic,int towerX,int towerY){
 
+	public static boolean isGameReset = false;
+
+	// public static boolean isGamePaused = false ;
+	// public static boolean isGameSave = false ;
+	// public static boolean isGameLoad = false ;
+	// public static boolean suspend = false ;
+	public void attackEnemiesBasedOnStrategies(Tower tower,EnemyType currentEnemy,Graphics graphic,int towerX,int towerY){
+		
 		if(tower.towerAttackType != 2){
+			if (!Game.getInstance().isGamePaused()){
 			if (tower.towerAttackType == 1
 					) {
 				int temphealth1;
@@ -329,12 +375,15 @@ public class MapSimulatorView extends JPanel implements Runnable {
 				.setCurrentHealth(temphealth);
 				currentEnemy.setEnemyCurrentSpeed(5);
 			}
+		}
 			tower.drawFireEffect(graphic, currentEnemy,
 					towerX, towerY);
 			tower.attackDelay = 0;
 		}
 		else{
 			for(int g=0;g<2;g++){
+				if (!Game.getInstance().isGamePaused()){
+					
 				int temphealth1;
 				temphealth1 = currentEnemy
 						.getCurrentHealth();
@@ -342,6 +391,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 						- tower.damage;
 				currentEnemy
 				.setCurrentHealth(temphealth1);
+				}
 				tower.drawFireEffect(graphic, currentEnemy,
 						towerX, towerY);
 				tower.attackDelay = 0;
