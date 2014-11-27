@@ -89,4 +89,24 @@ public class Game extends JComponent {
 	 */
 	public final static int INITIAL_GAME_HEALTH = 1000;
 
+	private boolean isGamePaused = false;
+
+	private String playingMapName;
+
+	public String getPlayingMapName() {
+		return playingMapName;
+	}
+
+	public void setPlayingMapName(String playingMapName) {
+		this.playingMapName = playingMapName;
+	}
+
+	public boolean isGamePaused() {
+		return isGamePaused;
+	}
+
+	public void setGamePaused(boolean isGamePaused) {
+		this.isGamePaused = isGamePaused;
+	}
+
 }
