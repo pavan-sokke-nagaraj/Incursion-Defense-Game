@@ -7,7 +7,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 import javax.swing.JPanel;
@@ -128,8 +130,6 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	public MapSimulatorView() {
 		super();
 		paintThread = new Thread(this);
-		gameLog.append("Game Started !!!! Map is Loaded");
-		gameLog.append("\n");
 		paintThread.start();
 	}
 
@@ -249,9 +249,9 @@ public class MapSimulatorView extends JPanel implements Runnable {
 
 			long start = System.currentTimeMillis();
 			if (MapSimulatorView.health < 0) {
-				MapSimulatorView.gameLog.append("Game has been Lost");
+				MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Game has been Lost");
 				MapSimulatorView.gameLog.append("\n");
-				MapSimulatorView.levelLog.append("Wave Ended as Game is Lost");
+				MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Wave Ended as Game is Lost");
 				MapSimulatorView.levelLog.append("\n");
 				Arsenal.resetGame();
 				isGameLost = true;
@@ -259,9 +259,9 @@ public class MapSimulatorView extends JPanel implements Runnable {
 
 			}
 			if (MapSimulatorView.waveLevel > 10 && MapSimulatorView.health > 0) {
-				MapSimulatorView.gameLog.append("Game has been Won");
-				MapSimulatorView.gameLog.append("\n");
-				MapSimulatorView.levelLog.append("Wave Ended and Game is Won");
+				MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Game has been Won");
+				MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" \n");
+				MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Wave Ended and Game is Won");
 				MapSimulatorView.levelLog.append("\n");
 				Arsenal.resetGame();
 				isGameWon = true;
@@ -327,13 +327,13 @@ public class MapSimulatorView extends JPanel implements Runnable {
 								if (currentEnemy != null) {
 									attackEnemiesBasedOnStrategies(tower,currentEnemy,graphic,towerX,towerY);
 								}
-								tower.individualTowerlog.append("Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
+								tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
 								tower.individualTowerlog.append("\n");
-								Tower.collectiveTowerlog.append("Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
+								Tower.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
 								Tower.collectiveTowerlog.append("\n");
-								MapSimulatorView.levelLog.append("Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
+								MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
 								MapSimulatorView.levelLog.append("\n");
-								MapSimulatorView.gameLog.append("Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
+								MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
 								MapSimulatorView.gameLog.append("\n");
 								GameFileManager.saveTowerObject(tower, i, j);
 							}
