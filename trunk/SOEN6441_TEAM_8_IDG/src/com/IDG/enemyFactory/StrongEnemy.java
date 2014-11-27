@@ -8,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -152,13 +154,20 @@ public class StrongEnemy extends Rectangle implements EnemyType{
 				MapSimulatorView.power = MapSimulatorView.power + this.value ;
 				MapSimulatorView.enemiesOnMap.remove(this);
 				System.out.println("Died Enemy NO :: "+this.enemyId);
-				MapSimulatorView.levelLog.append("Enemy :: "+this.enemyId+" Died");
+				MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemy :: "+this.enemyId+" Died");
 				MapSimulatorView.levelLog.append("\n");
+				MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemy :: "+this.enemyId+" Died");
+				MapSimulatorView.gameLog.append("\n");
 				if(MapSimulatorView.enemiesOnMap.size()==0){
-					MapSimulatorView.levelLog.append("All Enemies Died Or Escaped");
+					MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" All Enemies Died Or Escaped");
+					MapSimulatorView.levelLog.append("\n");
+					MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" End of Level :: "+MapSimulatorView.waveLevel);
 					MapSimulatorView.levelLog.append("\n");
 					MapSimulatorView.levelLogList.add(MapSimulatorView.levelLog);
-					MapSimulatorView.gameLog.append("All Enemies Died Or Escaped");
+					MapSimulatorView.levelLog=new StringBuffer();
+					MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" All Enemies Died Or Escaped");
+					MapSimulatorView.gameLog.append("\n");
+					MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" End of Level :: "+MapSimulatorView.waveLevel);
 					MapSimulatorView.gameLog.append("\n");
 					MapSimulatorView.moveEnemy=false;
 				}
@@ -168,10 +177,15 @@ public class StrongEnemy extends Rectangle implements EnemyType{
 				System.out.println("Died Enemy NO :: "+this.enemyId);
 				*/
 				if(MapSimulatorView.enemiesOnMap.size()==0){
-					MapSimulatorView.levelLog.append("All Enemies Died Or Escaped");
+					MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" All Enemies Died Or Escaped");
+					MapSimulatorView.levelLog.append("\n");
+					MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" End of Level :: "+MapSimulatorView.waveLevel);
 					MapSimulatorView.levelLog.append("\n");
 					MapSimulatorView.levelLogList.add(MapSimulatorView.levelLog);
-					MapSimulatorView.gameLog.append("All Enemies Died Or Escaped");
+					MapSimulatorView.levelLog=new StringBuffer();
+					MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" All Enemies Died Or Escaped");
+					MapSimulatorView.gameLog.append("\n");
+					MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" End of Level :: "+MapSimulatorView.waveLevel);
 					MapSimulatorView.gameLog.append("\n");
 					MapSimulatorView.moveEnemy=false;
 				}
