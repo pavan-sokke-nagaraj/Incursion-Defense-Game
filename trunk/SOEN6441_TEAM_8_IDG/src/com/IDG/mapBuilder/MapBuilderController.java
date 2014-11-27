@@ -363,7 +363,7 @@ public class MapBuilderController    {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				p2.dispose();
-				LayoutManager abc=new LayoutManager();
+				LayoutManager layoutManager = new LayoutManager();
 				File file1=new File("Resource/CustomMaps/ScreenShots/Metadata.txt");
 				try {
 					PrintWriter writer=null;
@@ -375,7 +375,7 @@ public class MapBuilderController    {
 					writer.print(file.fileName+","+file.fileType);
 					writer.close();
 					System.out.println(file.fileName+","+file.fileType);
-					abc.populateFileHeader();
+					layoutManager.populateFileHeader();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
