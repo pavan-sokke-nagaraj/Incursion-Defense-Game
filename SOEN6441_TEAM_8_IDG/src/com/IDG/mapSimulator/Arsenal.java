@@ -150,7 +150,7 @@ public class Arsenal {
 			towers[i] = new Rectangle(box1Xpos + (gap * i) + (towerWidth * i),
 					box1Ypos, towerWidth, towerWidth);
 			if (i == 0) {
-				towerBlocks[i] = new Tower('G', 50, 1, 1,25,25, 1,30, 60, 3);// freezing//attack delay=50//Random
+				towerBlocks[i] = new Tower('G', 50, 1, 1,25,25, 1,50, 10, 2);// freezing//attack delay=50//Random
 			} else if (i == 1) {
 				towerBlocks[i] = new Tower('R', 150, 1, 2, 100, 100,2, 15, 40, 1);// Splashing//attack delay=70//Random
 			} else if (i == 2) {
@@ -313,6 +313,8 @@ public class Arsenal {
 
 	public static void resetGame ()
 	{
+		MapSimulatorView.gameLog.append("Game Has been Reset");
+		MapSimulatorView.gameLog.append("\n");
 		MapSimulatorView.level=0;
 		MapSimulatorView.moveEnemy = false;
 		MapSimulatorView.enemiesOnMap.clear();
@@ -354,6 +356,14 @@ public class Arsenal {
 		if (tower.costToSell > 0) {
 			MapSimulatorView.power = MapSimulatorView.power + tower.costToSell;
 			drawMoney(graphic);
+			tower.individualTowerlog.append("Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
+			tower.individualTowerlog.append("\n");
+			Tower.collectiveTowerlog.append("Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
+			Tower.collectiveTowerlog.append("\n");
+			MapSimulatorView.levelLog.append("Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
+			MapSimulatorView.levelLog.append("\n");
+			MapSimulatorView.gameLog.append("Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
+			MapSimulatorView.gameLog.append("\n");
 			MapSimulatorView.gameValue[mapTowerXpos][mapTowerYpos] = '*';
 			MapSimulatorView.room.block[mapTowerXpos][mapTowerYpos].createId = '*';
 			MapSimulatorView.room.block[mapTowerXpos][mapTowerYpos]
@@ -363,6 +373,7 @@ public class Arsenal {
 			selectMapTower = false;
 			mapTowerXpos = -1;
 			mapTowerYpos = -1;
+			
 			tower.drawTowerInformation(graphic);
 			GameFileManager
 			.deleteTowerObject(tower, mapTowerXpos, mapTowerYpos);
@@ -381,6 +392,15 @@ public class Arsenal {
 		if (MapSimulatorView.power >= tower.costToUpgrade) {
 			MapSimulatorView.power = MapSimulatorView.power
 					- tower.costToUpgrade;
+			tower.individualTowerlog.append("Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
+			tower.individualTowerlog.append("\n");
+			Tower.collectiveTowerlog.append("Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
+			Tower.collectiveTowerlog.append("\n");
+			MapSimulatorView.levelLog.append("Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
+			MapSimulatorView.levelLog.append("\n");
+			MapSimulatorView.gameLog.append("Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
+			MapSimulatorView.gameLog.append("\n");
+			
 			drawMoney(graphic);
 			++tower.level;
 			++tower.range;
@@ -431,9 +451,20 @@ public class Arsenal {
 									MapSimulatorView.gameValue[i][j] = heldValue;
 									// MapSimulatorView.towers[i][j] =
 									// towerBlocks[heldPosition];
+									int xpos = MapSimulatorView.room.block[i][j].x;
+									int ypos = MapSimulatorView.room.block[i][j].y;
 									MapSimulatorView.room.block[i][j].createId = heldValue;
+									Tower tower=towerBlocks[heldPosition];
+									tower.individualTowerlog.append("Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
+									tower.individualTowerlog.append("\n");
+									Tower.collectiveTowerlog.append("Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
+									Tower.collectiveTowerlog.append("\n");
+									MapSimulatorView.levelLog.append("Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
+									MapSimulatorView.levelLog.append("\n");
+									MapSimulatorView.gameLog.append("Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
+									MapSimulatorView.gameLog.append("\n");
 									GameFileManager.saveTowerObject(
-											towerBlocks[heldPosition], i, j);
+											tower, i, j);
 									MapSimulatorView.power = MapSimulatorView.power
 											- towerBlocks[heldPosition].costToBuy;
 									holdsTower = false;
@@ -464,12 +495,16 @@ public class Arsenal {
 			} else if (waveButton.contains(MapSimulatorView.mse)) {
 
 				if (MapSimulatorView.level <= 10) {
+					//MapSimulatorView.levelLog.add(particularLevelLog);
+					MapSimulatorView.levelLog=new StringBuffer();
 					int actualHealth=0,currentHealth=0,value=0,enemyActualSpeed=0,enemyCurrentSpeed=0;
 					int numberOFEnemies=0;
 					MapSimulatorView.moveEnemy = true;
 					MapSimulatorView.isGameLost=false;
 					MapSimulatorView.isGameWon=false;
 					MapSimulatorView.level++;
+					MapSimulatorView.levelLog.append("Level :: "+MapSimulatorView.level+" started");
+					MapSimulatorView.gameLog.append("Level :: "+MapSimulatorView.level+" started");
 					if (MapSimulatorView.gridRow != 0
 							|| MapSimulatorView.gridColumn != 0) {
 						MapSimulatorView.enemyPath = EnemyPath.copyPath();
@@ -498,6 +533,24 @@ public class Arsenal {
 							enemyCurrentSpeed=10;
 							numberOFEnemies=7+(MapSimulatorView.level*2);
 						}
+						MapSimulatorView.levelLog.append("\n");
+						MapSimulatorView.levelLog.append("Total No of Enemies :: "+numberOFEnemies);
+						MapSimulatorView.levelLog.append("\n");
+						MapSimulatorView.levelLog.append("Enemies Health:: "+actualHealth);
+						MapSimulatorView.levelLog.append("\n");
+						MapSimulatorView.levelLog.append("Enemies Value:: "+value);
+						MapSimulatorView.levelLog.append("\n");
+						MapSimulatorView.levelLog.append("Enemy Speed:: "+enemyActualSpeed);
+						MapSimulatorView.levelLog.append("\n");
+						MapSimulatorView.gameLog.append("\n");
+						MapSimulatorView.gameLog.append("Total No of Enemies :: "+numberOFEnemies);
+						MapSimulatorView.gameLog.append("\n");
+						MapSimulatorView.gameLog.append("Enemies Health:: "+actualHealth);
+						MapSimulatorView.gameLog.append("\n");
+						MapSimulatorView.gameLog.append("Enemies Value:: "+value);
+						MapSimulatorView.gameLog.append("\n");
+						MapSimulatorView.gameLog.append("Enemy Speed:: "+enemyActualSpeed);
+						MapSimulatorView.gameLog.append("\n");
 						for (int i = 0; i < numberOFEnemies; i++) {
 							MapSimulatorView.enemiesOnMap
 							.add(MapSimulatorView.enemyFactory
@@ -617,7 +670,14 @@ public class Arsenal {
 		Tower tower = GameFileManager
 				.getTowerObject(mapTowerXpos, mapTowerYpos);
 		tower.attackStrategy = selectedStratergy;
-		System.out.println(selectedStratergy);
+		tower.individualTowerlog.append("Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
+		tower.individualTowerlog.append("\n");
+		Tower.collectiveTowerlog.append("Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
+		Tower.collectiveTowerlog.append("\n");
+		MapSimulatorView.levelLog.append("Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
+		MapSimulatorView.levelLog.append("\n");
+		MapSimulatorView.gameLog.append("Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
+		MapSimulatorView.gameLog.append("\n");
 		GameFileManager.saveTowerObject(tower, mapTowerXpos, mapTowerYpos);
 		isStrtergySelect = false;
 	}
