@@ -10,8 +10,8 @@ import javax.swing.ImageIcon;
 
 import com.IDG.controller.Game;
 import com.IDG.controller.GameFileManager;
+import com.IDG.logs.GameLogging;
 import com.IDG.playGame.EnemyPath;
-
 
 /**
  * class arsenal holds the information of tower, upgrade and sell tower
@@ -125,11 +125,11 @@ public class Arsenal {
 	/**
 	 * Button for game to start
 	 */
-	public Rectangle gameReset;
+	public Rectangle gameResetButton;
 	/**
 	 * Button for game to exit
 	 */
-	public Rectangle exitgame;
+	public Rectangle exitGameButton;
 	/**
 	 * Different strategy patterns
 	 */
@@ -152,11 +152,13 @@ public class Arsenal {
 			if (i == 0) {
 				towerBlocks[i] = new Tower('G', 50, 1, 1,25,25, 1,50, 10, 2);// freezing//attack delay=50//Random
 			} else if (i == 1) {
-				towerBlocks[i] = new Tower('R', 150, 1, 2, 100, 100,2, 15, 40, 1);// Splashing//attack delay=70//Random
+				towerBlocks[i] = new Tower('R', 150, 1, 2, 100, 100, 2, 15, 40,
+						1);// Splashing//attack delay=70//Random
 			} else if (i == 2) {
-				towerBlocks[i] = new Tower('B', 350, 1, 3, 200,200, 4, 10, 20, 2);// Burning//attack Delay = Max Health
+				towerBlocks[i] = new Tower('B', 350, 1, 3, 200, 200, 4, 10, 20,
+						2);// Burning//attack Delay = Max Health
 			} else if (i == 3) {
-				towerBlocks[i] = new Tower('D', 0, 0, 0, 0, 0, 1, 10, 2,2);
+				towerBlocks[i] = new Tower('D', 0, 0, 0, 0, 0, 1, 10, 2, 2);
 			}
 		}
 
@@ -167,8 +169,9 @@ public class Arsenal {
 		upgradeButton = new Rectangle(box2Xpos + 45, box2Ypos + 145, 160, 40);
 		sellButton = new Rectangle(box2Xpos + 45, box2Ypos + 125, 160, 20);
 		waveButton = new Rectangle(box2Xpos + 0, 565 + 125 - 100, 160, 60);
-		gameReset= new Rectangle(box2Xpos + 165, 565 + 125 - 100, 160, 60);
-		exitgame=new Rectangle  (box2Xpos + 330, 565 + 125 - 100 ,150, 60);
+		gameResetButton = new Rectangle(box2Xpos + 165, 565 + 125 - 100, 160,
+				60);
+		exitGameButton = new Rectangle(box2Xpos + 330, 565 + 125 - 100, 150, 60);
 
 		weakTargetStratergy = new Rectangle(box2Xpos + 300, box2Ypos + 30, 160,
 				30);
@@ -176,8 +179,24 @@ public class Arsenal {
 				160, 30);
 		nearTargetStratergy = new Rectangle(box2Xpos + 300, box2Ypos + 110,
 				160, 30);
-		randomTargetStratergy = new Rectangle(box2Xpos + 300, box2Ypos + 150, 160,
-				30);
+		randomTargetStratergy = new Rectangle(box2Xpos + 300, box2Ypos + 150,
+				160, 30);
+
+		pauseButton = new Rectangle(box2Xpos + 0, 565 + 125 - 100 + 70, 250,
+				100);
+
+//		logButton = new Rectangle(box2Xpos + 255, 565 + 125 - 100 + 70, 230, 100);
+		logButton = new Rectangle(50, 50, 230, 100);
+
+		towerLogButton = new Rectangle(logButton.x + 3, logButton.y + 3, 110,
+				45);
+		allTowerLogButton = new Rectangle(logButton.x + 117, logButton.y + 3,
+				110, 45);
+		waveLogButton = new Rectangle(logButton.x + 3, logButton.y + 52, 110,
+				45);
+		gameLogButton = new Rectangle(logButton.x + 117, logButton.y + 52, 110,
+				45);
+
 	}
 
 	/**
@@ -246,19 +265,10 @@ public class Arsenal {
 				waveButton.height);
 		graphic.setColor(Color.RED);
 		graphic.setFont(new Font("Courier New", Font.BOLD, 20));
-		graphic.drawString("START WAVE", waveButton.x + 20, waveButton.y + 20);
+		graphic.drawString("START WAVE " + (MapSimulatorView.waveLevel + 1),
+				waveButton.x + 5, waveButton.y + 20);
 
-		graphic.fillRect(gameReset.x, gameReset.y, gameReset.width,
-				gameReset.height);
-		graphic.setColor(Color.WHITE);
-		graphic.setFont(new Font("Courier New", Font.BOLD, 20));
-		graphic.drawString("RESET GAME", gameReset.x + 20, gameReset.y + 20);
-
-		graphic.fillRect(exitgame.x, exitgame.y, exitgame.width,
-				exitgame.height);
-		graphic.setColor(Color.RED);
-		graphic.setFont(new Font("Courier New", Font.BOLD, 20));
-		graphic.drawString("EXIT GAME", exitgame.x + 20, exitgame.y + 20);
+		drawGameResetExitButton(graphic);
 		drawMoney(graphic);
 
 		drawMoney(graphic);
@@ -302,6 +312,27 @@ public class Arsenal {
 		if (isStrtergySelect) {
 			applyStratergy(mapTowerXpos, mapTowerYpos);
 		}
+
+		drawGamePauseWindow(graphic);
+		drawGameLogsWindow(graphic);
+	}
+
+	public void drawGameResetExitButton(Graphics graphic) {
+
+		graphic.setColor(Color.RED);
+		graphic.fillRect(gameResetButton.x, gameResetButton.y,
+				gameResetButton.width, gameResetButton.height);
+		graphic.setColor(Color.WHITE);
+		graphic.setFont(new Font("Courier New", Font.BOLD, 20));
+		graphic.drawString("RESET GAME", gameResetButton.x + 20,
+				gameResetButton.y + 20);
+
+		graphic.fillRect(exitGameButton.x, exitGameButton.y,
+				exitGameButton.width, exitGameButton.height);
+		graphic.setColor(Color.RED);
+		graphic.setFont(new Font("Courier New", Font.BOLD, 20));
+		graphic.drawString("EXIT GAME", exitGameButton.x + 20,
+				exitGameButton.y + 20);
 	}
 
 	/**
@@ -315,27 +346,31 @@ public class Arsenal {
 	{
 		MapSimulatorView.gameLog.append("Game Has been Reset");
 		MapSimulatorView.gameLog.append("\n");
-		MapSimulatorView.level=0;
+		MapSimulatorView.waveLevel = 0;
 		MapSimulatorView.moveEnemy = false;
 		MapSimulatorView.enemiesOnMap.clear();
-		MapSimulatorView.health=Game.getInstance().INITIAL_GAME_HEALTH ;
-		MapSimulatorView.power=Game.getInstance().INITIAL_GAME_POWER ;
-		for(int i=0;i<MapSimulatorView.gridRow;i++){
-			for(int j = 0;j<MapSimulatorView.gridColumn;j++){
+		MapSimulatorView.health = Game.getInstance().INITIAL_GAME_HEALTH;
+		MapSimulatorView.power = Game.getInstance().INITIAL_GAME_POWER;
+		for (int i = 0; i < MapSimulatorView.gridRow; i++) {
+			for (int j = 0; j < MapSimulatorView.gridColumn; j++) {
 				char createId = MapSimulatorView.gameValue[j][i];
-				if(createId == 'R' || createId == 'G' || createId == 'B'){
+				if (createId == 'R' || createId == 'G' || createId == 'B') {
 					MapSimulatorView.gameValue[j][i] = '*';
 				}
 			}
 
 		}
-		clearInfo = true ;
-		selectMapTower = false ;
+		clearInfo = true;
+		selectMapTower = false;
+		MapSimulatorView.isGameReset = false;
+		Game.getInstance().setGamePaused(false);
 	}
 
 	/**
 	 * Draws the Money Component
-	 * @param graphic Graphic variable to draw the Components
+	 * 
+	 * @param graphic
+	 *            Graphic variable to draw the Components
 	 */
 	private void drawMoney(Graphics graphic) {
 		graphic.setFont(new Font("Courier New", Font.BOLD, 25));
@@ -376,7 +411,7 @@ public class Arsenal {
 			
 			tower.drawTowerInformation(graphic);
 			GameFileManager
-			.deleteTowerObject(tower, mapTowerXpos, mapTowerYpos);
+					.deleteTowerObject(tower, mapTowerXpos, mapTowerYpos);
 		}
 	}
 
@@ -407,7 +442,7 @@ public class Arsenal {
 			tower.damage = tower.damage + 5;
 			tower.costToUpgrade = tower.costToUpgrade + 10;
 			tower.costToSell = tower.costToSell + 5;
-			tower.maxAttackDelay=tower.maxAttackDelay-5;
+			tower.maxAttackDelay = tower.maxAttackDelay - 5;
 			TowerInfoView towerInfoView = new TowerInfoView();
 			tower.addObserver(towerInfoView);
 			tower.drawMarketInformation(graphic);
@@ -494,44 +529,47 @@ public class Arsenal {
 				selectedStratergy = Tower.ATTACK_MIN_HEALTH_ENEMY;
 			} else if (waveButton.contains(MapSimulatorView.mse)) {
 
-				if (MapSimulatorView.level <= 10) {
+				if (MapSimulatorView.waveLevel <= 10) {
 					//MapSimulatorView.levelLog.add(particularLevelLog);
 					MapSimulatorView.levelLog=new StringBuffer();
 					int actualHealth=0,currentHealth=0,value=0,enemyActualSpeed=0,enemyCurrentSpeed=0;
 					int numberOFEnemies=0;
 					MapSimulatorView.moveEnemy = true;
-					MapSimulatorView.isGameLost=false;
-					MapSimulatorView.isGameWon=false;
-					MapSimulatorView.level++;
-					MapSimulatorView.levelLog.append("Level :: "+MapSimulatorView.level+" started");
-					MapSimulatorView.gameLog.append("Level :: "+MapSimulatorView.level+" started");
+					MapSimulatorView.isGameLost = false;
+					MapSimulatorView.isGameWon = false;
+					MapSimulatorView.waveLevel++;
+					MapSimulatorView.levelLog.append("Level :: "+MapSimulatorView.waveLevel+" started");
+					MapSimulatorView.gameLog.append("Level :: "+MapSimulatorView.waveLevel+" started");
 					if (MapSimulatorView.gridRow != 0
 							|| MapSimulatorView.gridColumn != 0) {
 						MapSimulatorView.enemyPath = EnemyPath.copyPath();
-						if(1<=MapSimulatorView.level&&MapSimulatorView.level<=3){
-							MapSimulatorView.enemyType="normalenemy";
-							actualHealth=MapSimulatorView.level * 100;
-							currentHealth=MapSimulatorView.level * 100;
-							value=MapSimulatorView.level * 10;
-							enemyActualSpeed=5;
-							enemyCurrentSpeed=5;
-							numberOFEnemies=3+(MapSimulatorView.level*2);
-						}else if(3<MapSimulatorView.level&&MapSimulatorView.level<=6){
-							MapSimulatorView.enemyType="normalenemy";
-							actualHealth=MapSimulatorView.level * 150;
-							currentHealth=MapSimulatorView.level * 150;
-							value=MapSimulatorView.level * 10;
-							enemyActualSpeed=8;
-							enemyCurrentSpeed=8;
-							numberOFEnemies=5+(MapSimulatorView.level*2);
-						}else if(6<MapSimulatorView.level&&MapSimulatorView.level<=10){
-							MapSimulatorView.enemyType="bossEnemy";
-							actualHealth=MapSimulatorView.level * 600;
-							currentHealth=MapSimulatorView.level * 600;
-							value=MapSimulatorView.level * 20;
-							enemyActualSpeed=10;
-							enemyCurrentSpeed=10;
-							numberOFEnemies=7+(MapSimulatorView.level*2);
+						if (1 <= MapSimulatorView.waveLevel
+								&& MapSimulatorView.waveLevel <= 3) {
+							MapSimulatorView.enemyType = "normalenemy";
+							actualHealth = MapSimulatorView.waveLevel * 100;
+							currentHealth = MapSimulatorView.waveLevel * 100;
+							value = MapSimulatorView.waveLevel * 10;
+							enemyActualSpeed = 5;
+							enemyCurrentSpeed = 5;
+							numberOFEnemies = 3 + (MapSimulatorView.waveLevel * 2);
+						} else if (3 < MapSimulatorView.waveLevel
+								&& MapSimulatorView.waveLevel <= 6) {
+							MapSimulatorView.enemyType = "normalenemy";
+							actualHealth = MapSimulatorView.waveLevel * 150;
+							currentHealth = MapSimulatorView.waveLevel * 150;
+							value = MapSimulatorView.waveLevel * 10;
+							enemyActualSpeed = 8;
+							enemyCurrentSpeed = 8;
+							numberOFEnemies = 5 + (MapSimulatorView.waveLevel * 2);
+						} else if (6 < MapSimulatorView.waveLevel
+								&& MapSimulatorView.waveLevel <= 10) {
+							MapSimulatorView.enemyType = "bossEnemy";
+							actualHealth = MapSimulatorView.waveLevel * 600;
+							currentHealth = MapSimulatorView.waveLevel * 600;
+							value = MapSimulatorView.waveLevel * 20;
+							enemyActualSpeed = 10;
+							enemyCurrentSpeed = 10;
+							numberOFEnemies = 7 + (MapSimulatorView.waveLevel * 2);
 						}
 						MapSimulatorView.levelLog.append("\n");
 						MapSimulatorView.levelLog.append("Total No of Enemies :: "+numberOFEnemies);
@@ -553,40 +591,22 @@ public class Arsenal {
 						MapSimulatorView.gameLog.append("\n");
 						for (int i = 0; i < numberOFEnemies; i++) {
 							MapSimulatorView.enemiesOnMap
-							.add(MapSimulatorView.enemyFactory
-									.getEnemyfromFactory(
-											MapSimulatorView.enemyType,
-											i,
-											MapSimulatorView.enemyPath,
-											i * 20,
-											actualHealth,
-											currentHealth,
-											value,
-											enemyActualSpeed,
-											enemyCurrentSpeed));
+									.add(MapSimulatorView.enemyFactory
+											.getEnemyfromFactory(
+													MapSimulatorView.enemyType,
+													i,
+													MapSimulatorView.enemyPath,
+													i * 20, actualHealth,
+													currentHealth, value,
+													enemyActualSpeed,
+													enemyCurrentSpeed));
 						}
 					}
-				}else{
-						//Arsenal.resetGame();
-						//MapSimulatorView.isGameWon=true;
-				}			
-			}
-			else if(gameReset.contains(MapSimulatorView.mse))
-
-			{
-
-				resetGame();
-			}
-
-			else if (exitgame.contains(MapSimulatorView.mse))
-			{
-				MapSimulatorView.level=0;
-				MapSimulatorView.moveEnemy = false;
-				MapSimulatorView.enemiesOnMap.clear();
-				System.exit(0);
-
-			}
-			else {
+				} else {
+					// Arsenal.resetGame();
+					// MapSimulatorView.isGameWon=true;
+				}
+			} else {
 				for (int i = 0; i < MapSimulatorView.room.mapRow; i++) {
 					for (int j = 0; j < MapSimulatorView.room.mapColumn; j++) {
 						char createId = MapSimulatorView.gameValue[i][j];
@@ -608,14 +628,50 @@ public class Arsenal {
 					}
 				}
 			}
+
+			if (gameResetButton.contains(MapSimulatorView.mse)) {
+				MapSimulatorView.isGameReset = true;
+				resetGame();
+			} else if (exitGameButton.contains(MapSimulatorView.mse)) {
+				MapSimulatorView.waveLevel = 0;
+				MapSimulatorView.moveEnemy = false;
+				MapSimulatorView.enemiesOnMap.clear();
+				System.exit(0);
+			} else if (pauseButton.contains(MapSimulatorView.mse)) {
+				if (Game.getInstance().isGamePaused()) {
+					Game.getInstance().setGamePaused(false);
+				} else {
+					Game.getInstance().setGamePaused(true);
+					// MapSimulatorView.paintThread.resume();
+				}
+			} else if (towerLogButton.contains(MapSimulatorView.mse)) {
+				GameLogging log = new GameLogging();
+				 log.showTowerLog(mapTowerXpos, mapTowerYpos);
+			} else if (allTowerLogButton.contains(MapSimulatorView.mse)) {
+				GameLogging log = new GameLogging();
+				 log.showAllTowerLog();
+			} else if (waveLogButton.contains(MapSimulatorView.mse)) {
+				 GameLogging log = new GameLogging();
+				 log.showWaveLog(MapSimulatorView.waveLevel);
+			} else if (gameLogButton.contains(MapSimulatorView.mse)) {
+				GameLogging log = new GameLogging();
+				 log.showGameLog();
+			} 
+			
 		}
 	}
+
 	/**
 	 * function to draw the tower range on map
-	 * @param graphic Graphic variable to draw the Components
-	 * @param circleX Circle X Coordinate
-	 * @param circleY Circle Y Coordinate
-	 * @param radius Circle radius
+	 * 
+	 * @param graphic
+	 *            Graphic variable to draw the Components
+	 * @param circleX
+	 *            Circle X Coordinate
+	 * @param circleY
+	 *            Circle Y Coordinate
+	 * @param radius
+	 *            Circle radius
 	 */
 	private void drawTowerRange(Graphics graphic, int circleX, int circleY,
 			int radius) {
@@ -661,10 +717,14 @@ public class Arsenal {
 				randomTargetStratergy.y + 20);
 
 	}
+
 	/**
 	 * Function to apply particular startegy on selected tower
-	 * @param mapTowerXpos2 Tower X Coordinate
-	 * @param mapTowerYpos2 Tower Y Coordinate
+	 * 
+	 * @param mapTowerXpos2
+	 *            Tower X Coordinate
+	 * @param mapTowerYpos2
+	 *            Tower Y Coordinate
 	 */
 	private void applyStratergy(int mapTowerXpos2, int mapTowerYpos2) {
 		Tower tower = GameFileManager
@@ -681,5 +741,79 @@ public class Arsenal {
 		GameFileManager.saveTowerObject(tower, mapTowerXpos, mapTowerYpos);
 		isStrtergySelect = false;
 	}
+
+	public void drawGamePauseWindow(Graphics graphic) {
+
+		graphic.setColor(Color.WHITE);
+		graphic.fillRect(pauseButton.x, pauseButton.y, pauseButton.width,
+				pauseButton.height);
+
+		String pausePlay;
+		Image image;
+		if (Game.getInstance().isGamePaused()) {
+			pausePlay = "RESUME";
+			image = new ImageIcon("ImageSource/PLay.png").getImage();
+		} else {
+			pausePlay = "PAUSE";
+			image = new ImageIcon("ImageSource/Pause.png").getImage();
+		}
+
+		graphic.drawImage(image, pauseButton.x + 10, pauseButton.y + 10, 80,
+				80, null);
+		graphic.setColor(Color.BLACK);
+		graphic.setFont(new Font("Courier New", Font.BOLD, 40));
+		graphic.drawString(pausePlay, pauseButton.x + 100, pauseButton.y + 60);
+
+	}
+
+	private void drawGameLogsWindow(Graphics graphic) {
+
+		
+		graphic.setColor(Color.GREEN);
+		graphic.fillRect(logButton.x, logButton.y, logButton.width,
+				logButton.height);
+		
+		graphic.setColor(Color.BLACK);
+		graphic.fillRect(towerLogButton.x, towerLogButton.y,
+				towerLogButton.width, towerLogButton.height);
+		graphic.fillRect(allTowerLogButton.x, allTowerLogButton.y,
+				allTowerLogButton.width, allTowerLogButton.height);
+		graphic.fillRect(waveLogButton.x, waveLogButton.y, waveLogButton.width,
+				waveLogButton.height);
+		graphic.fillRect(gameLogButton.x, gameLogButton.y, gameLogButton.width,
+				gameLogButton.height);
+		
+
+//		
+//		towerLogButton = new Rectangle(logButton.x + 3, logButton.y + 3, 110,
+//				45);
+//		allTowerLogButton = new Rectangle(logButton.x + 117, logButton.y + 3,
+//				110, 45);
+//		waveLogButton = new Rectangle(logButton.x + 3, logButton.y + 52, 110,
+//				45);
+//		gameLogButton = new Rectangle(logButton.x + 117, logButton.y + 52, 110,
+//				45);
+		
+
+		graphic.setColor(Color.WHITE);
+		graphic.setFont(new Font("Courier New", Font.BOLD, 18));
+		graphic.drawString("TOWER", towerLogButton.x + 30, towerLogButton.y + 18);
+		graphic.drawString(" LOG", towerLogButton.x + 30, towerLogButton.y + 40);
+		graphic.drawString("ALL TOWER", allTowerLogButton.x + 5, allTowerLogButton.y + 18);
+		graphic.drawString(" LOG", allTowerLogButton.x + 30, allTowerLogButton.y + 40);
+		graphic.drawString("WAVE", waveLogButton.x + 30, waveLogButton.y + 18);
+		graphic.drawString(" LOG", waveLogButton.x + 30, waveLogButton.y + 40);
+		graphic.drawString("GAME", gameLogButton.x + 30, gameLogButton.y + 18);
+		graphic.drawString(" LOG", gameLogButton.x + 30, gameLogButton.y + 40);
+
+	}
+
+	public Rectangle pauseButton;
+
+	public Rectangle logButton;
+	public Rectangle towerLogButton;
+	public Rectangle allTowerLogButton;
+	public Rectangle waveLogButton;
+	public Rectangle gameLogButton;
 
 }
