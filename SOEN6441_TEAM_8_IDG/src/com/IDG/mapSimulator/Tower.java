@@ -90,7 +90,7 @@ public class Tower extends Observable implements Serializable {
 	/**
 	 * Type of tower
 	 */
-	int towerAttackType=0;
+	public int towerAttackType=0;
 
 	public static final int SPLASHINHG=1;
 
@@ -100,8 +100,9 @@ public class Tower extends Observable implements Serializable {
 
 	public boolean hasHitOnce=true;
 
+	public StringBuffer individualTowerlog= new StringBuffer();
 
-
+	public static StringBuffer collectiveTowerlog = new StringBuffer(); 
 	/**
 	 * class tower constructor to set the default values
 	 */
@@ -281,96 +282,49 @@ public class Tower extends Observable implements Serializable {
 				}
 			}
 		}
+		StrategyContext strategyContext=new StrategyContext();
 		if(this.attackStrategy==ATTACK_RANDOM_ENEMY){
-			int totalEnemies=0;
-			for(int i=0;i<enemiesInRange.length;i++){
-				if(enemiesInRange[i]!=null){
-					totalEnemies++;
-				}
-			}
-			if(totalEnemies>0){
-				int enemy=new Random().nextInt(totalEnemies);
-				int enemiesTaken=0;
-				int k=0;
-
-				while(true){
-					if(enemiesTaken==enemy&&enemiesInRange[k]!=null){
-						returnEnemyList.add(enemiesInRange[k]);
-						if(this.towerAttackType==SPLASHINHG&&totalEnemies>1){
-							for(int j=0;j<enemiesInRange.length;j++){
-								if(j!=enemy&&enemiesInRange[j]!=null){
-									returnEnemyList.add(enemiesInRange[j]);
-								}
-							}
-						}
-						return returnEnemyList;
-					}
-					if(enemiesInRange[k]!=null){
-						enemiesTaken++;
-					}
-					k++;
-				}
-			}
+			strategyContext.setStrategy(new TargetRandomEnemies());
+			return strategyContext.executeStrategy(this, enemiesInRange, enemyHealthList, enemyDistanceList);
 		}else if(this.attackStrategy==ATTACK_FIRST_NEAR_TOWER_ENEMY){
-			int totalEnemies=0;
-			for(int i=0;i<enemiesInRange.length;i++){
-				if(enemiesInRange[i]!=null){
-					totalEnemies++;
-				}
-			}
-			if(totalEnemies>0){
-				int minIndex = enemyDistanceList.indexOf(Collections.min(enemyDistanceList));
-				if(enemiesInRange[minIndex]!=null){
-					returnEnemyList.add(enemiesInRange[minIndex]);
-					if(this.towerAttackType==SPLASHINHG&&totalEnemies>1){
-						enemyDistanceList.set(minIndex, 40000000.00);
-						minIndex = enemyDistanceList.indexOf(Collections.min(enemyDistanceList));
-						returnEnemyList.add(enemiesInRange[minIndex]);
-					}
-					return returnEnemyList;
-				}
-			}
+			strategyContext.setStrategy(new TargetNearBaseEnemies());
+			return strategyContext.executeStrategy(this, enemiesInRange, enemyHealthList, enemyDistanceList);
 		}else if(this.attackStrategy==ATTACK_MIN_HEALTH_ENEMY){
-			int totalEnemies=0;
-			for(int i=0;i<enemiesInRange.length;i++){
-				if(enemiesInRange[i]!=null){
-					totalEnemies++;
-				}
-			}
-			if(totalEnemies>0){
-				int minIndex = enemyHealthList.indexOf(Collections.min(enemyHealthList));
-				if(enemiesInRange[minIndex]!=null){
-					returnEnemyList.add(enemiesInRange[minIndex]);
-					if(this.towerAttackType==SPLASHINHG&&totalEnemies>1){
-						enemyDistanceList.set(minIndex, 40000000.00);
-						minIndex = enemyDistanceList.indexOf(Collections.min(enemyDistanceList));
-						returnEnemyList.add(enemiesInRange[minIndex]);
-					}
-					return returnEnemyList;
-				}
-			}
+			strategyContext.setStrategy(new TargetMinHealthEnemies());
+			return strategyContext.executeStrategy(this, enemiesInRange, enemyHealthList, enemyDistanceList);
 		}else if(this.attackStrategy==ATTACK_MAX_HEALTH_ENEMY){
-			int totalEnemies=0;
-			for(int i=0;i<enemiesInRange.length;i++){
-				if(enemiesInRange[i]!=null){
-					totalEnemies++;
-				}
-			}
-			if(totalEnemies>0){
-				int minIndex = enemyHealthList.indexOf(Collections.max(enemyHealthList));
-				if(enemiesInRange[minIndex]!=null){
-					returnEnemyList.add(enemiesInRange[minIndex]);
-					if(this.towerAttackType==SPLASHINHG&&totalEnemies>1){
-						enemyDistanceList.set(minIndex, -1.00);
-						minIndex = enemyDistanceList.indexOf(Collections.min(enemyDistanceList));
-						returnEnemyList.add(enemiesInRange[minIndex]);
-					}
-					return returnEnemyList;
-				}
-			}
+			strategyContext.setStrategy(new TargetMaxHealthEnemies());
+			return strategyContext.executeStrategy(this, enemiesInRange, enemyHealthList, enemyDistanceList);
 		}
 		return null;
 	}
+	
+	public String getEnemySelectionStrategy(){
+		int number=this.towerAttackType;
+		if(number==1){
+			return "Attack First Enemy";
+		}else if(number==2){
+			return "Attack Random Enemy";
+		}else if(number==3){
+			return "Attack Min Health Enemy";
+		}else if(number==4){
+			return "Attack Max Health Enemy";
+		}
+		return null;
+	}
+	
+	public String getEnemyDamageStrategy(){
+		int number=this.towerAttackType;
+		if(number==1){
+			return "Splashing";
+		}else if(number==2){
+			return "Burning";
+		}else if(number==3){
+			return "Freezing";
+		}
+		return null;
+	}
+	
 	public int enemyCenterX ;
 	public int enemyCenterY ;
 	public int towerCenterX ;
