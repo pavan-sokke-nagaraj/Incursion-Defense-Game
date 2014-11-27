@@ -149,17 +149,30 @@ public class StrongEnemy extends Rectangle implements EnemyType{
 			}
 		}else{
 			if(currentHealth <= 0){
-			MapSimulatorView.power = MapSimulatorView.power + this.value ;
-			MapSimulatorView.enemiesOnMap.remove(this);
-			System.out.println("Died Enemy NO :: "+this.enemyId);
-			if(MapSimulatorView.enemiesOnMap.size()==0){
-				MapSimulatorView.moveEnemy=false;
-			}
-			}else{
-				MapSimulatorView.health = MapSimulatorView.health - this.value ;
+				MapSimulatorView.power = MapSimulatorView.power + this.value ;
 				MapSimulatorView.enemiesOnMap.remove(this);
 				System.out.println("Died Enemy NO :: "+this.enemyId);
+				MapSimulatorView.levelLog.append("Enemy :: "+this.enemyId+" Died");
+				MapSimulatorView.levelLog.append("\n");
 				if(MapSimulatorView.enemiesOnMap.size()==0){
+					MapSimulatorView.levelLog.append("All Enemies Died Or Escaped");
+					MapSimulatorView.levelLog.append("\n");
+					MapSimulatorView.levelLogList.add(MapSimulatorView.levelLog);
+					MapSimulatorView.gameLog.append("All Enemies Died Or Escaped");
+					MapSimulatorView.gameLog.append("\n");
+					MapSimulatorView.moveEnemy=false;
+				}
+			}else{
+				MapSimulatorView.health = MapSimulatorView.health - this.value ;
+				/*MapSimulatorView.enemiesOnMap.remove(this);
+				System.out.println("Died Enemy NO :: "+this.enemyId);
+				*/
+				if(MapSimulatorView.enemiesOnMap.size()==0){
+					MapSimulatorView.levelLog.append("All Enemies Died Or Escaped");
+					MapSimulatorView.levelLog.append("\n");
+					MapSimulatorView.levelLogList.add(MapSimulatorView.levelLog);
+					MapSimulatorView.gameLog.append("All Enemies Died Or Escaped");
+					MapSimulatorView.gameLog.append("\n");
 					MapSimulatorView.moveEnemy=false;
 				}
 			}
