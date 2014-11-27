@@ -16,7 +16,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-
 import com.IDG.mapBuilder.MapBuilderController;
 
 import com.IDG.mapSimulator.Arsenal;
@@ -34,75 +33,80 @@ import com.IDG.mapSimulator.MapSimulatorView;
  */
 public class LayoutManager {
 
-	
 	private JMenuBar menu = new JMenuBar();
 	private JMenu fileMenu = new JMenu("Game");
 	private JTabbedPane tab = new JTabbedPane();
 	private MapSimulatorView mapSimulatorView = new MapSimulatorView();
+
 	public LayoutManager() {
 		// populates the file selector and add to menu tab
-		//populateFileHeader();
+		// populateFileHeader();
 		menu.add(fileMenu);
 		fileMenu.add(fileLoad);
+		fileMenu.add(saveGame);
+		fileMenu.add(loadGame);
 
 		fileMenu.addSeparator();
 		// populate the tabs
 		populateTabs();
 	}
 
-	
 	public JMenuBar getMenuBar() {
 		return menu;
 	}
 
-	
 	public JTabbedPane getTabs() {
 		return tab;
 	}
 
-	JMenuItem fileLoad = new JMenuItem(new AbstractAction("Create/Load") {
+	JMenuItem fileLoad = new JMenuItem(new AbstractAction("Create/Load Map") {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
 			new MapBuilderController();
 		}
 	});
+
 	/**
-	 * This method populate saved map file header		
+	 * This method populate saved map file header
 	 */
 	public void populateFileHeader() {
 
-				if (Game.getInstance().Mode == Game.GameMode.Simulator) {
-					Scanner sc=null;
-					String line1=null;
-					try {
-						sc = new Scanner(new File("Resource/CustomMaps/ScreenShots/Metadata.txt"));
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					String fileType=null,fileName=null;
-					while(sc.hasNextLine()) {
-						line1=sc.nextLine().toString().trim();
-						if(line1!=null&&!line1.isEmpty()){
-							System.out.println("csdsadsadsadsadsad"+line1);
-							fileName=line1.substring(0,line1.indexOf(","));
-							fileType=line1.substring(line1.indexOf(",")+1);
-						}
-					}
-				GameFileManager gameFileMananger = new GameFileManager();
-				File tempFile=new File("Resource/"+fileType+"/GameMatrix/"+fileName);
-				char[][] gameValue = gameFileMananger.loadSavedGame(tempFile);
-					if(gameValue != null){
-					mapSimulatorView = new MapSimulatorView();
-					mapSimulatorView.gameValue = gameValue;
-					mapSimulatorView.gridRow = gameValue.length;
-					mapSimulatorView.gridColumn = gameValue[0].length;
-					mapSimulatorView.room.block = new Block[gameValue.length][gameValue[0].length];
-					mapSimulatorView.arsenal = new Arsenal();
-					mapSimulatorView.power = Game.getInstance().INITIAL_GAME_POWER;
-					}
+		if (Game.getInstance().Mode == Game.GameMode.Simulator) {
+			Scanner sc = null;
+			String line1 = null;
+			try {
+				sc = new Scanner(new File(
+						"Resource/CustomMaps/ScreenShots/Metadata.txt"));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String fileType = null, fileName = null;
+			while (sc.hasNextLine()) {
+				line1 = sc.nextLine().toString().trim();
+				if (line1 != null && !line1.isEmpty()) {
+					System.out.println("csdsadsadsadsadsad" + line1);
+					fileName = line1.substring(0, line1.indexOf(","));
+					fileType = line1.substring(line1.indexOf(",") + 1);
 				}
 			}
+			GameFileManager gameFileMananger = new GameFileManager();
+			File tempFile = new File("Resource/" + fileType + "/GameMatrix/"
+					+ fileName);
+			char[][] gameValue = gameFileMananger.loadSavedGame(tempFile);
+			if (gameValue != null) {
+				Game.getInstance().setPlayingMapName(
+						fileName.substring(0, fileName.lastIndexOf('.')));
+				mapSimulatorView = new MapSimulatorView();
+				mapSimulatorView.gameValue = gameValue;
+				mapSimulatorView.gridRow = gameValue.length;
+				mapSimulatorView.gridColumn = gameValue[0].length;
+				mapSimulatorView.room.block = new Block[gameValue.length][gameValue[0].length];
+				mapSimulatorView.arsenal = new Arsenal();
+				mapSimulatorView.power = Game.getInstance().INITIAL_GAME_POWER;
+			}
+		}
+	}
 
 	/**
 	 * The function to populate Editor tab and simulator tab
@@ -134,4 +138,27 @@ public class LayoutManager {
 
 		});
 	}
+
+	JMenuItem saveGame = new JMenuItem(new AbstractAction("Save Game") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+
+			if (Game.getInstance().Mode == Game.GameMode.Simulator) {
+				GameFileManager gameFileManager = new GameFileManager();
+				gameFileManager.saveGameState(mapSimulatorView);
+			}
+		}
+	});
+
+	JMenuItem loadGame = new JMenuItem(new AbstractAction("Load Game") {
+		@Override
+		public void actionPerformed(ActionEvent actionEvent) {
+
+			if (Game.getInstance().Mode == Game.GameMode.Simulator) {
+				GameFileManager gameFileManager = new GameFileManager();
+				mapSimulatorView = gameFileManager
+						.loadGameState(mapSimulatorView);
+			}
+		}
+	});
 }
