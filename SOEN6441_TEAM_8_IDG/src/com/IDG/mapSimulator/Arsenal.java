@@ -5,6 +5,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 
@@ -360,10 +363,15 @@ public class Arsenal {
 			}
 
 		}
+		MapSimulatorView.gameLog=new StringBuffer();
+		MapSimulatorView.levelLogList=new LinkedList<StringBuffer>();
+		MapSimulatorView.levelLog=new StringBuffer();
+		Tower.collectiveTowerlog=new StringBuffer();
 		clearInfo = true;
 		selectMapTower = false;
 		MapSimulatorView.isGameReset = false;
 		Game.getInstance().setGamePaused(false);
+		
 	}
 
 	/**
@@ -391,13 +399,13 @@ public class Arsenal {
 		if (tower.costToSell > 0) {
 			MapSimulatorView.power = MapSimulatorView.power + tower.costToSell;
 			drawMoney(graphic);
-			tower.individualTowerlog.append("Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
+			tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
 			tower.individualTowerlog.append("\n");
-			Tower.collectiveTowerlog.append("Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
+			Tower.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
 			Tower.collectiveTowerlog.append("\n");
-			MapSimulatorView.levelLog.append("Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
+			MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
 			MapSimulatorView.levelLog.append("\n");
-			MapSimulatorView.gameLog.append("Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
+			MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
 			MapSimulatorView.gameLog.append("\n");
 			MapSimulatorView.gameValue[mapTowerXpos][mapTowerYpos] = '*';
 			MapSimulatorView.room.block[mapTowerXpos][mapTowerYpos].createId = '*';
@@ -427,13 +435,13 @@ public class Arsenal {
 		if (MapSimulatorView.power >= tower.costToUpgrade) {
 			MapSimulatorView.power = MapSimulatorView.power
 					- tower.costToUpgrade;
-			tower.individualTowerlog.append("Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
+			tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
 			tower.individualTowerlog.append("\n");
-			Tower.collectiveTowerlog.append("Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
+			Tower.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
 			Tower.collectiveTowerlog.append("\n");
-			MapSimulatorView.levelLog.append("Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
+			MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
 			MapSimulatorView.levelLog.append("\n");
-			MapSimulatorView.gameLog.append("Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
+			MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
 			MapSimulatorView.gameLog.append("\n");
 			
 			drawMoney(graphic);
@@ -490,13 +498,13 @@ public class Arsenal {
 									int ypos = MapSimulatorView.room.block[i][j].y;
 									MapSimulatorView.room.block[i][j].createId = heldValue;
 									Tower tower=towerBlocks[heldPosition];
-									tower.individualTowerlog.append("Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
+									tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
 									tower.individualTowerlog.append("\n");
-									Tower.collectiveTowerlog.append("Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
+									Tower.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
 									Tower.collectiveTowerlog.append("\n");
-									MapSimulatorView.levelLog.append("Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
+									MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
 									MapSimulatorView.levelLog.append("\n");
-									MapSimulatorView.gameLog.append("Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
+									MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
 									MapSimulatorView.gameLog.append("\n");
 									GameFileManager.saveTowerObject(
 											tower, i, j);
@@ -531,15 +539,15 @@ public class Arsenal {
 
 				if (MapSimulatorView.waveLevel <= 10) {
 					//MapSimulatorView.levelLog.add(particularLevelLog);
-					MapSimulatorView.levelLog=new StringBuffer();
+					//MapSimulatorView.levelLog=new StringBuffer();
 					int actualHealth=0,currentHealth=0,value=0,enemyActualSpeed=0,enemyCurrentSpeed=0;
 					int numberOFEnemies=0;
 					MapSimulatorView.moveEnemy = true;
 					MapSimulatorView.isGameLost = false;
 					MapSimulatorView.isGameWon = false;
 					MapSimulatorView.waveLevel++;
-					MapSimulatorView.levelLog.append("Level :: "+MapSimulatorView.waveLevel+" started");
-					MapSimulatorView.gameLog.append("Level :: "+MapSimulatorView.waveLevel+" started");
+					MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Start of Level :: "+MapSimulatorView.waveLevel);
+					MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Start of Level :: "+MapSimulatorView.waveLevel);
 					if (MapSimulatorView.gridRow != 0
 							|| MapSimulatorView.gridColumn != 0) {
 						MapSimulatorView.enemyPath = EnemyPath.copyPath();
@@ -572,22 +580,22 @@ public class Arsenal {
 							numberOFEnemies = 7 + (MapSimulatorView.waveLevel * 2);
 						}
 						MapSimulatorView.levelLog.append("\n");
-						MapSimulatorView.levelLog.append("Total No of Enemies :: "+numberOFEnemies);
+						MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Total No of Enemies :: "+numberOFEnemies);
 						MapSimulatorView.levelLog.append("\n");
-						MapSimulatorView.levelLog.append("Enemies Health:: "+actualHealth);
+						MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemies Health:: "+actualHealth);
 						MapSimulatorView.levelLog.append("\n");
-						MapSimulatorView.levelLog.append("Enemies Value:: "+value);
+						MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemies Value:: "+value);
 						MapSimulatorView.levelLog.append("\n");
-						MapSimulatorView.levelLog.append("Enemy Speed:: "+enemyActualSpeed);
+						MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemy Speed:: "+enemyActualSpeed);
 						MapSimulatorView.levelLog.append("\n");
 						MapSimulatorView.gameLog.append("\n");
-						MapSimulatorView.gameLog.append("Total No of Enemies :: "+numberOFEnemies);
+						MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Total No of Enemies :: "+numberOFEnemies);
 						MapSimulatorView.gameLog.append("\n");
-						MapSimulatorView.gameLog.append("Enemies Health:: "+actualHealth);
+						MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemies Health:: "+actualHealth);
 						MapSimulatorView.gameLog.append("\n");
-						MapSimulatorView.gameLog.append("Enemies Value:: "+value);
+						MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemies Value:: "+value);
 						MapSimulatorView.gameLog.append("\n");
-						MapSimulatorView.gameLog.append("Enemy Speed:: "+enemyActualSpeed);
+						MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemy Speed:: "+enemyActualSpeed);
 						MapSimulatorView.gameLog.append("\n");
 						for (int i = 0; i < numberOFEnemies; i++) {
 							MapSimulatorView.enemiesOnMap
@@ -730,13 +738,13 @@ public class Arsenal {
 		Tower tower = GameFileManager
 				.getTowerObject(mapTowerXpos, mapTowerYpos);
 		tower.attackStrategy = selectedStratergy;
-		tower.individualTowerlog.append("Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
+		tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
 		tower.individualTowerlog.append("\n");
-		Tower.collectiveTowerlog.append("Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
+		Tower.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
 		Tower.collectiveTowerlog.append("\n");
-		MapSimulatorView.levelLog.append("Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
+		MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
 		MapSimulatorView.levelLog.append("\n");
-		MapSimulatorView.gameLog.append("Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
+		MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
 		MapSimulatorView.gameLog.append("\n");
 		GameFileManager.saveTowerObject(tower, mapTowerXpos, mapTowerYpos);
 		isStrtergySelect = false;
