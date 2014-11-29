@@ -644,6 +644,8 @@ public class Arsenal {
 				MapSimulatorView.waveLevel = 0;
 				MapSimulatorView.moveEnemy = false;
 				MapSimulatorView.enemiesOnMap.clear();
+				GameFileManager gameFileManager = new GameFileManager() ;
+				gameFileManager.deleteGameTowers();
 				System.exit(0);
 			} else if (pauseButton.contains(MapSimulatorView.mse)) {
 				if (Game.getInstance().isGamePaused()) {
