@@ -198,6 +198,14 @@ public class GameFileManager {
 		file.delete();
 	}
 
+	public static void deleteGameTowers() {
+		File directory = new File(tempDirectory);
+		for (File file : directory.listFiles()) {
+			System.out.println(file.getName());
+			file.delete();
+		}
+	}
+
 	public void saveGameState(MapSimulatorView mapSimulatorView) {
 
 		GameStateVO gameStateVO = new GameStateVO();
