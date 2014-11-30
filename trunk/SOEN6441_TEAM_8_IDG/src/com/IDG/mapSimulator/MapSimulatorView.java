@@ -286,7 +286,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 *            Graphic variable to paint screen
 	 */
 	public void updateEnemies(Graphics graphic) {
-		
+
 		System.out.println("Game paused flag:\t " + Game.getInstance().isGamePaused());
 		for (int k = 0; k < enemiesOnMap.size(); k++) {
 			if (!Game.getInstance().isGamePaused()) {
@@ -354,49 +354,39 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	// public static boolean isGameLoad = false ;
 	// public static boolean suspend = false ;
 	public void attackEnemiesBasedOnStrategies(Tower tower,EnemyType currentEnemy,Graphics graphic,int towerX,int towerY){
-		
-		if(tower.towerAttackType != 2){
+
 			if (!Game.getInstance().isGamePaused()){
-			if (tower.towerAttackType == 1
-					) {
-				int temphealth1;
-				temphealth1 = currentEnemy
-						.getCurrentHealth();
-				temphealth1 = temphealth1
-						- tower.damage;
-				currentEnemy
-				.setCurrentHealth(temphealth1);
-			} else if (tower.towerAttackType == 3) {
-				int temphealth;
-				temphealth = currentEnemy
-						.getCurrentHealth();
-				temphealth = temphealth - tower.damage;
-				currentEnemy
-				.setCurrentHealth(temphealth);
-				currentEnemy.setEnemyCurrentSpeed(5);
+				if (tower.towerAttackType == 1 
+						) {
+					int temphealth1;
+					temphealth1 = currentEnemy
+							.getCurrentHealth();
+					temphealth1 = temphealth1
+							- tower.damage;
+					currentEnemy
+					.setCurrentHealth(temphealth1);
+				}else if(tower.towerAttackType == 2){
+					int temphealth1;
+					temphealth1 = currentEnemy
+							.getCurrentHealth();
+					temphealth1 = temphealth1
+							- tower.damage;
+					currentEnemy
+					.setCurrentHealth(temphealth1);
+					currentEnemy.setBurning(true);
+				}
+				else if (tower.towerAttackType == 3) {
+					int temphealth;
+					temphealth = currentEnemy
+							.getCurrentHealth();
+					temphealth = temphealth - tower.damage;
+					currentEnemy
+					.setCurrentHealth(temphealth);
+					currentEnemy.setEnemyCurrentSpeed(5);
+				}
 			}
-		}
 			tower.drawFireEffect(graphic, currentEnemy,
 					towerX, towerY);
 			tower.attackDelay = 0;
-		}
-		else{
-			for(int g=0;g<2;g++){
-				if (!Game.getInstance().isGamePaused()){
-					
-				int temphealth1;
-				temphealth1 = currentEnemy
-						.getCurrentHealth();
-				temphealth1 = temphealth1
-						- tower.damage;
-				currentEnemy
-				.setCurrentHealth(temphealth1);
-				}
-				tower.drawFireEffect(graphic, currentEnemy,
-						towerX, towerY);
-				tower.attackDelay = 0;
-			}
-		}
-
 	}
 }
