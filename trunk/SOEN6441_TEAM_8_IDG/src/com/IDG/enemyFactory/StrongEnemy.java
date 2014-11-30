@@ -86,6 +86,9 @@ public class StrongEnemy extends Rectangle implements EnemyType{
 	 * counter to set enemy slow speed 
 	 */
 	public int slowCounter=0; 
+	
+	public boolean isBurning=false;
+	
 	public StrongEnemy() {
 	}
 	
@@ -298,6 +301,14 @@ public class StrongEnemy extends Rectangle implements EnemyType{
 
 	public void setEnemyCurrentSpeed(int enemyCurrentSpeed) {
 		this.enemyCurrentSpeed = enemyCurrentSpeed;
+	}
+
+	public boolean isBurning() {
+		return isBurning;
+	}
+
+	public void setBurning(boolean isBurning) {
+		this.isBurning = isBurning;
 	}
 
 }
