@@ -78,6 +78,8 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 	public boolean isSpeedSlow=false;
 
 	public int slowCounter=0;
+	
+	public boolean isBurning=false;
 	public SmallEnemy() {
 	}
 
@@ -302,6 +304,14 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 	 */
 	public void setEnemyCurrentSpeed(int enemyCurrentSpeed) {
 		this.enemyCurrentSpeed = enemyCurrentSpeed;
+	}
+
+	public boolean isBurning() {
+		return isBurning;
+	}
+
+	public void setBurning(boolean isBurning) {
+		this.isBurning = isBurning;
 	}
 
 }
