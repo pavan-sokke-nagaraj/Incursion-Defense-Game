@@ -83,4 +83,8 @@ public interface EnemyType {
 	 */
 	public void setEnemyId(int enemyId);
 	
+	public void setBurning(boolean isBurning);
+	
+	public boolean isBurning();
+
 }
