@@ -17,7 +17,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import com.IDG.controller.GameFileManager;
 import com.IDG.mapSimulator.MapSimulatorView;
+import com.IDG.mapSimulator.Tower;
 
 /**
  * @author Pavan Sokke Nagaraj <pavansn8@gmail.com>
@@ -72,7 +74,8 @@ public class GameLogging {
 
 	public void showTowerLog(int mapTowerXpos, int mapTowerYpos) {
 		if (MapSimulatorView.arsenal.selectMapTower) {
-			showLog("Tower logs");
+			Tower tower=(Tower)GameFileManager.getTowerObject(mapTowerXpos,mapTowerYpos);
+			showLog("Tower logs",tower.individualTowerlog);
 		} else {
 			JOptionPane.showMessageDialog(null,
 					"Please click on a Game Tower to view logs");
@@ -81,28 +84,29 @@ public class GameLogging {
 	}
 
 	public void showAllTowerLog() {
-		showLog("All Tower logs");
+		showLog("All Tower logs",Tower.collectiveTowerlog);
 
 	}
 
 	public void showWaveLog(int waveLevel) {
+		String log=MapSimulatorView.levelLogList.get(0).toString();
 		if (waveLevel == 0) {
 			JOptionPane.showMessageDialog(null,
 					"No waves have been Finished playing");
 		} else {
 			if (createLogPanel(waveLevel)) {
 				System.out.println(selectedWaveLevel);
-				showLog("Wave " + selectedWaveLevel + " logs");
+				showLog("Wave " + selectedWaveLevel + " logs",MapSimulatorView.levelLogList.get(selectedWaveLevel-1));
 			}
 		}
 
 	}
 
 	public void showGameLog() {
-		showLog("Game logs");
+		showLog("Game logs",MapSimulatorView.gameLog);
 	}
 
-	public void showLog(String logMessage) {
+	public void showLog(String logMessage,StringBuffer logBuffer) {
 
 		JFrame logFrame = new JFrame();
 		logFrame.setTitle(logMessage);
@@ -110,30 +114,30 @@ public class GameLogging {
 		// logFrame.setResizable(false);
 		logFrame.setLocationRelativeTo(null);
 
-		BufferedReader br;
-		String logsToDisplay = null;
-		try {
-			br = new BufferedReader(new FileReader("D:\\logs.txt"));
+//		BufferedReader br;
+//		String logsToDisplay = null;
+//		try {
+//			br = new BufferedReader(new FileReader("D:\\logs.txt"));
+//
+//			StringBuilder sb = new StringBuilder();
+//			String line;
+//
+//			line = br.readLine();
+//
+//			while (line != null) {
+//				sb.append(line);
+//				sb.append(System.lineSeparator());
+//				line = br.readLine();
+//			}
+//			logsToDisplay = sb.toString();
+//			br.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//
+//		}
 
-			StringBuilder sb = new StringBuilder();
-			String line;
-
-			line = br.readLine();
-
-			while (line != null) {
-				sb.append(line);
-				sb.append(System.lineSeparator());
-				line = br.readLine();
-			}
-			logsToDisplay = sb.toString();
-			br.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-
-		}
-
-		JTextArea logText = new JTextArea(logsToDisplay);
+		JTextArea logText = new JTextArea(logBuffer.toString());
 		logText.setEditable(false);
 		// logFrame.add(log);
 
