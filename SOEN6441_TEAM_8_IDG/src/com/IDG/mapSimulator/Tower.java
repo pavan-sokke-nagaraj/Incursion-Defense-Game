@@ -7,7 +7,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Observable;
 import java.util.Random;
@@ -278,6 +280,23 @@ public class Tower extends Observable implements Serializable {
 					}else{
 						enemyDistanceList.add(-1.00);
 						enemyHealthList.add(-1.00);
+					}
+					if(enemy.getCurrentHealth()>0&&enemy.isBurning()){
+						System.out.println("Before Burning Effect::  "+enemy.getCurrentHealth());
+						for(int j=0;j<2;j++){
+							if(enemy.getCurrentHealth()>0){
+								enemy.setCurrentHealth(enemy.getCurrentHealth()-this.damage);
+								this.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+"Out of Range Burning Effect "+" Tower "+this.towerId+ " used Damage Strategy :: "+this.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+this.getEnemySelectionStrategy()+"to hit Enemy "+enemy.getEnemyId());
+								this.individualTowerlog.append("\n");
+								Tower.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+"Out of Range Burning Effect "+" Tower "+this.towerId+ " used Damage Strategy :: "+this.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+this.getEnemySelectionStrategy()+"to hit Enemy "+enemy.getEnemyId());
+								Tower.collectiveTowerlog.append("\n");
+								MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+"Out of Range Burning Effect "+" Tower "+this.towerId+ " used Damage Strategy :: "+this.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+this.getEnemySelectionStrategy()+"to hit Enemy "+enemy.getEnemyId());
+								MapSimulatorView.levelLog.append("\n");
+								MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+"Out of Range Burning Effect "+" Tower "+this.towerId+ " used Damage Strategy :: "+this.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+this.getEnemySelectionStrategy()+"to hit Enemy "+enemy.getEnemyId());
+								MapSimulatorView.gameLog.append("\n");
+							}
+						}
+						enemy.setBurning(false);
 					}
 				}
 			}
