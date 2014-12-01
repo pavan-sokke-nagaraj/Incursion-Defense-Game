@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 
@@ -13,7 +14,9 @@ import javax.swing.ImageIcon;
 
 import com.IDG.controller.Game;
 import com.IDG.controller.GameFileManager;
+import com.IDG.controller.LayoutManager;
 import com.IDG.logs.GameLogging;
+import com.IDG.mapBuilder.MapDetails;
 import com.IDG.playGame.EnemyPath;
 
 /**
@@ -133,6 +136,7 @@ public class Arsenal {
 	 * Button for game to exit
 	 */
 	public Rectangle exitGameButton;
+	public static Rectangle exitgame1; 
 	/**
 	 * Different strategy patterns
 	 */
@@ -142,6 +146,7 @@ public class Arsenal {
 	public Rectangle randomTargetStratergy;
 	public boolean isStrtergySelect = false;
 	public int selectedStratergy;
+	public MapDetails exitupdatetofile =new MapDetails();
 
 	/**
 	 * class constructor to initialize tower data, health data, money data
@@ -175,7 +180,7 @@ public class Arsenal {
 		gameResetButton = new Rectangle(box2Xpos + 165, 565 + 125 - 100, 160,
 				60);
 		exitGameButton = new Rectangle(box2Xpos + 330, 565 + 125 - 100, 150, 60);
-
+		exitgame1=new Rectangle(10,400,150,60);
 		weakTargetStratergy = new Rectangle(box2Xpos + 300, box2Ypos + 30, 160,
 				30);
 		strongTargetStratergy = new Rectangle(box2Xpos + 300, box2Ypos + 70,
@@ -214,7 +219,9 @@ public class Arsenal {
 		graphic.setColor(Color.GREEN);
 		graphic.setFont(new Font("Courier New", Font.BOLD, 30));
 		graphic.drawString("SELECT TOWERS", box1Xpos - 5, box1Ypos - 15);
-
+		graphic.setColor(Color.BLACK);
+		graphic.setFont(new Font("Courier New", Font.BOLD, 25));
+		drawhighscore(graphic, LayoutManager.passvalue);
 		Image image = null;
 		for (int i = 0; i < towerNumber; i++) {
 			graphic.fillRect(box1Xpos + (gap * i) + (towerWidth * i), box1Ypos,
@@ -374,6 +381,48 @@ public class Arsenal {
 		
 	}
 
+	public static void drawhighscore(Graphics graphic,ArrayList<Integer> tempabc)
+	{
+		graphic.setColor(Color.YELLOW);
+		graphic.fillRect(box1Xpos+300, box1Ypos-55,200, 250);
+		graphic.setColor(Color.BLACK);
+		graphic.drawString("HIGH SCORE", box1Xpos+300 , box1Ypos - 15);
+		int j=0;
+		
+		for (int i=0;i<tempabc.size();i++)
+		{	j=j+20;
+			graphic.drawString(Integer.toString(tempabc.get(i)) ,box1Xpos+350 , 90+j);
+		}
+	}
+	static int ctr=0;
+	public static void drawendofgame (Graphics graphic,ArrayList<Integer> tempabc)
+	{
+		ctr++;
+		//Arsenal.resetGame();
+		graphic.setColor(Color.BLACK);
+		
+		graphic.fillRect(0, 0, 1239,709);
+		graphic.setColor(Color.YELLOW);
+		graphic.setFont(new Font("TimesRoman", Font.BOLD, 70));
+		if(MapSimulatorView.isGameWon)
+		graphic.drawString("GAME WON!!", 10, 70);
+		else
+			graphic.drawString("GAME LOST!!", 10, 70);
+		graphic.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+		graphic.drawString("HIGH SCORE", 10, 120);
+		int j=0;
+		for (int i=0;i<tempabc.size();i++)
+		{	j=j+40;
+			graphic.drawString(Integer.toString(tempabc.get(i)) ,10, 120+j);
+		}
+		graphic.fillRect(exitgame1.x, exitgame1.y, exitgame1.width,
+				exitgame1.height);
+		graphic.setColor(Color.RED);
+		graphic.setFont(new Font("Courier New", Font.BOLD, 20));
+		graphic.drawString("EXIT GAME", exitgame1.x + 20, exitgame1.y + 20);
+		System.out.println(ctr);
+	
+	}
 	/**
 	 * Draws the Money Component
 	 * 
@@ -644,10 +693,33 @@ public class Arsenal {
 				MapSimulatorView.waveLevel = 0;
 				MapSimulatorView.moveEnemy = false;
 				MapSimulatorView.enemiesOnMap.clear();
+				exitupdatetofile.mapid=LayoutManager.mapid;
+				 exitupdatetofile=exitupdatetofile.readFromFile(exitupdatetofile);
+				 exitupdatetofile.gamestatus.add("TERMINATED");
+				 exitupdatetofile.writeToFile(exitupdatetofile);
 				GameFileManager gameFileManager = new GameFileManager() ;
 				gameFileManager.deleteGameTowers();
 				System.exit(0);
-			} else if (pauseButton.contains(MapSimulatorView.mse)) {
+				} 
+			else if (exitgame1.contains(MapSimulatorView.mse))
+			{
+				MapSimulatorView.waveLevel=0;
+				MapSimulatorView.moveEnemy = false;
+				MapSimulatorView.enemiesOnMap.clear();
+				 exitupdatetofile.mapid=LayoutManager.mapid;
+				 exitupdatetofile=exitupdatetofile.readFromFile(exitupdatetofile);
+				 if (MapSimulatorView.isGameLost)
+						 
+				 exitupdatetofile.gamestatus.add("GAME LOST");
+				 if(MapSimulatorView.isGameWon)
+					 exitupdatetofile.gamestatus.add("GAME WON");
+				 exitupdatetofile.writeToFile(exitupdatetofile);
+				 GameFileManager gameFileManager = new GameFileManager() ;
+					gameFileManager.deleteGameTowers();
+				 
+				 System.exit(0);
+			}
+			else if (pauseButton.contains(MapSimulatorView.mse)) {
 				if (Game.getInstance().isGamePaused()) {
 					Game.getInstance().setGamePaused(false);
 				} else {
