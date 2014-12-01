@@ -10,14 +10,17 @@ import java.awt.Point;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
 import com.IDG.controller.Game;
 import com.IDG.controller.GameFileManager;
+import com.IDG.controller.LayoutManager;
 import com.IDG.enemyFactory.EnemyFactory;
 import com.IDG.enemyFactory.EnemyType;
+import com.IDG.mapBuilder.MapDetails;
 
 /**
  * 
@@ -117,7 +120,11 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 * boolean to define if game is won
 	 */
 	public static boolean isGameWon = false;
+	
+	public static int healthcounter=0;
+	public static ArrayList<Integer> temphighscore= new ArrayList(); 
 
+	MapDetails updateMapwithDetails= new MapDetails();
 	public static LinkedList<StringBuffer> levelLogList=new LinkedList<StringBuffer>();
 
 	public static StringBuffer levelLog=new StringBuffer();
@@ -148,7 +155,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 		arsenal = new Arsenal();
 		long beforeTime, timeDiff, sleep;
 		beforeTime = System.currentTimeMillis();
-		while (true) {
+		while ((!isGameLost)&&(!isGameWon)) {
 			repaint();
 			timeDiff = System.currentTimeMillis() - beforeTime;
 			sleep = 30 - timeDiff;
@@ -177,13 +184,15 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
 	public void paintComponent(Graphics graphic) {
-		graphic.setColor(Color.WHITE);
-		graphic.fillRect(0, 0, getWidth(), getHeight());
+		if (healthcounter==0)
+		{
+			graphic.setColor(Color.WHITE);
+			graphic.fillRect(0, 0, getWidth(), getHeight());
 		// System.out.println(getWidth() + "\t\t" + getHeight());
 
 		// draws a black box to enter text
-		graphic.setColor(Color.BLACK);
-		graphic.drawRect(20, 0, 1200, 30);
+			graphic.setColor(Color.BLACK);
+			graphic.drawRect(20, 0, 1200, 30);
 
 		// if (Game.getInstance().isGamePaused()) {
 		//
@@ -233,6 +242,9 @@ public class MapSimulatorView extends JPanel implements Runnable {
 		graphic.setColor(Color.LIGHT_GRAY);
 		graphic.fillRect(700, 35, 500, 250);
 
+		graphic.setColor(Color.YELLOW);
+		graphic.fillRect(1020, 35, 180, 250);
+		
 		// game Tower board
 		graphic.setColor(Color.GRAY);
 		graphic.fillRect(700, 300, 500, 250);
@@ -248,23 +260,102 @@ public class MapSimulatorView extends JPanel implements Runnable {
 			arsenal.draw(graphic);
 
 			long start = System.currentTimeMillis();
-			if (MapSimulatorView.health < 0) {
+			if (MapSimulatorView.health < 0){
+				isGameLost = true;
 				MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Game has been Lost");
 				MapSimulatorView.gameLog.append("\n");
 				MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Wave Ended as Game is Lost");
 				MapSimulatorView.levelLog.append("\n");
+				
+				updateMapwithDetails.mapid=Integer.parseInt(LayoutManager.fileName.substring(LayoutManager.fileName.lastIndexOf("p") + 1, LayoutManager.fileName.indexOf(".")));
+				updateMapwithDetails=updateMapwithDetails.readFromFile(updateMapwithDetails);
+				if (updateMapwithDetails.highscore.size()>=5)
+				{
+					System.out.println(":Size of array:"+updateMapwithDetails.highscore.size());
+					updateMapwithDetails.highscore.sort(null);
+					Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
+					System.out.println("Last high score is "+updateMapwithDetails.highscore.get(4));
+					System.out.println("Power is "+MapSimulatorView.power);
+					if(updateMapwithDetails.highscore.get(4).intValue()<(MapSimulatorView.power))
+					{
+						updateMapwithDetails.highscore.remove(4);
+						updateMapwithDetails.highscore.add(MapSimulatorView.power);
+						updateMapwithDetails.highscore.sort(null);
+						Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
+						
+						System.out.println("Score Changed");
+						
+					}
+					
+				}
+				else
+				{
+					System.out.println(":reached Else part");
+					updateMapwithDetails.highscore.sort(null);
+					Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
+					updateMapwithDetails.highscore.add(MapSimulatorView.power);
+					updateMapwithDetails.highscore.sort(null);
+					Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
+					
+				}
+				
+				healthcounter=1;
+				LayoutManager.passvalue=updateMapwithDetails.highscore;
+				updateMapwithDetails.writeToFile(updateMapwithDetails);
 				Arsenal.resetGame();
-				isGameLost = true;
+				Arsenal.drawhighscore(graphic,updateMapwithDetails.highscore);
+			Arsenal.drawendofgame(graphic, updateMapwithDetails.highscore);
+				
+				
 
 
 			}
-			if (MapSimulatorView.waveLevel > 10 && MapSimulatorView.health > 0) {
+			if (MapSimulatorView.waveLevel > 10 && MapSimulatorView.health > 0 ) {
+				isGameWon = true;
 				MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Game has been Won");
 				MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" \n");
 				MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Wave Ended and Game is Won");
 				MapSimulatorView.levelLog.append("\n");
-				Arsenal.resetGame();
-				isGameWon = true;
+				updateMapwithDetails.mapid=Integer.parseInt(LayoutManager.fileName.substring(LayoutManager.fileName.lastIndexOf("p") + 1, LayoutManager.fileName.indexOf(".")));
+				updateMapwithDetails=updateMapwithDetails.readFromFile(updateMapwithDetails);
+				if (updateMapwithDetails.highscore.size()>=5)
+				{	
+					System.out.println(":Size of array:"+updateMapwithDetails.highscore.size());
+					updateMapwithDetails.highscore.sort(null);
+					Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
+					System.out.println("Last high score is "+updateMapwithDetails.highscore.get(4));
+					System.out.println("Power is "+MapSimulatorView.power);
+					if(updateMapwithDetails.highscore.get(4).intValue()<(MapSimulatorView.power))
+					{
+					updateMapwithDetails.highscore.remove(4);
+					updateMapwithDetails.highscore.add(MapSimulatorView.power);
+					updateMapwithDetails.highscore.sort(null);
+					Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
+					
+					System.out.println("Score Changed");
+					}
+						
+				}
+				else
+				{
+					System.out.println(":reached Else part");
+				updateMapwithDetails.highscore.sort(null);
+				Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
+				updateMapwithDetails.highscore.add(MapSimulatorView.power);
+				updateMapwithDetails.highscore.sort(null);
+				Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
+				
+				
+				}
+				
+				healthcounter=1;
+				LayoutManager.passvalue=updateMapwithDetails.highscore;
+				updateMapwithDetails.writeToFile(updateMapwithDetails);
+				//Arsenal.resetGame();
+				Arsenal.drawhighscore(graphic,updateMapwithDetails.highscore);
+				Arsenal.drawendofgame(graphic, updateMapwithDetails.highscore);
+				//Arsenal.resetGame();
+				
 			}
 
 			if (moveEnemy) {
@@ -274,8 +365,9 @@ public class MapSimulatorView extends JPanel implements Runnable {
 			}
 			long time = System.currentTimeMillis() - start;
 		}
+	
+		}
 	}
-
 	// }
 
 	/**
