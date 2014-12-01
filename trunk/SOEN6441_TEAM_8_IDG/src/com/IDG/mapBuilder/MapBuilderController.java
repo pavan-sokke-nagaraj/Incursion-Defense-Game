@@ -12,6 +12,7 @@ package com.IDG.mapBuilder;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -26,7 +27,13 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -64,6 +71,10 @@ public class MapBuilderController    {
 	JButton dMap3 = new JButton("Level3");
 	JButton udMap3 = new JButton("Level3");
 	JTextArea tArea1 = new JTextArea(15,30);
+	MapDetails playGame=new MapDetails();
+	Calendar time = Calendar.getInstance();
+	//SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	int gridRow = 0;
 	int gridColumn = 0;
 	String mapType1 = null;
@@ -72,6 +83,7 @@ public class MapBuilderController    {
 	boolean isEditEnabled;
 	MapBuilderModel tempLoadbuttons[][];
 	public static File rfile;
+	DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 	public MapBuilderController()
 	{	tArea1.setLineWrap(true);
 		tArea1.setText("Validation Status");
@@ -83,7 +95,7 @@ public class MapBuilderController    {
 		p2.setLocationRelativeTo(null);
 		dMap1.setPreferredSize(new Dimension(60, 60));
 		udMap1.setPreferredSize(new Dimension(60, 60));
-
+		
 
 		/*************************************************************MY CODE*********************************************************************/
 		//Read ScreenShotHeaderFile
@@ -106,7 +118,7 @@ public class MapBuilderController    {
 		p2.add(gameButtons,BorderLayout.SOUTH);
 		Component[] components = p2.getComponents();
 		System.out.println("Number of Comp="+components.length);
-		setGameMatrixOnPanel(new File("Resource/DefaultMaps/GameMatrix/Map129.txt"));
+		setGameMatrixOnPanel(new File("Resource/CustomMaps/GameMatrix/Map585.txt"));
 		p2.setVisible(true);
 
 
@@ -163,50 +175,133 @@ public class MapBuilderController    {
 		picLabel.setIcon(new ImageIcon(ii.getImage().getScaledInstance(newWidth, -1,java.awt.Image.SCALE_SMOOTH)));
 		picLabel.setMaximumSize(new Dimension(10,10));
 		picLabel.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(MouseEvent e) 
+			{
+				MapDetails displayArea= new MapDetails();
+				StringBuffer todisplay=new StringBuffer();
 				file = (MapBuilderModel)e.getSource();
+				tArea1.setText(" ");
+				
+				displayArea.mapid=Integer.parseInt(file.getFileName().substring(file.getFileName().lastIndexOf("p") + 1, file.getFileName().indexOf(".")));
+				displayArea=displayArea.readFromFile(displayArea);
+				tArea1.setFont(new Font("Serif",Font.PLAIN,12));
+				String reportDate = df.format(displayArea.creationTime);
+				tArea1.append(reportDate);
+				tArea1.append(":[MAP CREATED]");
+				
+				if(displayArea.modifiedTime.size()>0)
+				{
+					for(int i=0;i<displayArea.modifiedTime.size();i++)
+				
+					{
+						reportDate = df.format(displayArea.modifiedTime.get(i));
+						tArea1.append("\n"+reportDate);
+						tArea1.append(":[MAP MODIFIED]");
+						
+					}
+				}
+				
+				//displayArea.highscore.sort(null);
+				//Collections.sort(displayArea.highscore,Collections.reverseOrder());
+				//displayArea.highscore.remove(4);
+				//}
+				//displayArea.highscore.add(100);
+				
+				
+				
+				
+				if(displayArea.lastPlayedTime.size()>0)
+				{
+					System.out.println("lastPlayedTime Size"+displayArea.lastPlayedTime.size());
+					System.out.println("Game Status Size"+displayArea.gamestatus.size());
+					
+					for (int i=0;i<displayArea.lastPlayedTime.size();i++)
+					{
+						
+						reportDate = df.format(displayArea.lastPlayedTime.get(i));
+						tArea1.append("\n"+reportDate);
+						tArea1.append(":[MAP PLAYED]");
+						tArea1.append(displayArea.gamestatus.get(i));
+						
+					}
+				}
+				
+				if(displayArea.highscore.size()>0)
+				{
+					String temp=null;
+					tArea1.append("\n\n High Score:");
+					tArea1.append("\n");
+					for(int i=0;i<displayArea.highscore.size();i++)
+					{
+						temp=Integer.toString(displayArea.highscore.get(i));
+					tArea1.append(temp);
+					tArea1.append("\n");
+					}
+				}
+				//tArea1.setText(todisplay.toString());
 				setGameMatrixOnPanel(new File("Resource/"+file.mapType+"/GameMatrix/"+file.fileName));
+				System.out.println("Resource/"+file.mapType+"/GameMatrix/"+file.fileName);
 			}
 		});
 		buttonList.add(picLabel);
 	}
 
 	public void setGameMatrixOnPanel(File mapFile){
+		MapDetails setGrid=new MapDetails();
+		String filename=mapFile.getName();
+		
+		setGrid.mapid=Integer.parseInt(filename.substring(filename.lastIndexOf("p") + 1, filename.indexOf(".")));
+		System.out.println(setGrid.mapid);
+		setGrid=setGrid.readFromFile(setGrid);
 		System.out.println(mapFile.getName());
 		mapGrid.removeAll();
 		mapGrid.revalidate();
-		List<String> lines=new ArrayList();
-		Scanner sc=null;
-		String line1=null;
-		try {
-			sc = new Scanner(mapFile);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		while(sc.hasNextLine()) {
-			line1=sc.nextLine().toString().trim();
-			if(line1!=null&&!line1.isEmpty()){
-				lines.add(line1);
-			}
-		}
+		//List<String> lines=new ArrayList();
+		String tempstr=new String(setGrid.mapdata);
+		//tempstr.replaceAll(" ", "");
+		
+		
+		char[] chars=new String(tempstr).toCharArray();
+		char[] tempChar=new char[chars.length];
+		
+		for (int i=0;i<chars.length;i++)
+			System.out.println(chars[i]);
+		
+		//int findrowcolm=(int) Math.sqrt(chars.length);
+		//Scanner sc=null;
+		//String line1=null;
+		//try {
+			//sc = new Scanner(mapFile);
+		//} catch (FileNotFoundException e) {
+			//e.printStackTrace();
+		//}
+		//while(sc.hasNextLine()) {
+			//line1=sc.nextLine().toString().trim();
+			//if(line1!=null&&!line1.isEmpty()){
+				//lines.add(line1);
+			//}
+		//}
 
 		// to array
-		int rows = lines.size();              // number of rows
-		int cols = 0;                         // number of columns
-		for(String line : lines) {
-			cols = Math.max(cols, line.length());
-		}
-		int i = 0,j=0;
+		
+		int rows =setGrid.rowSize;     //; lines.size();              // number of rows
+		int cols = setGrid.columnSize;                         // number of columns
+		//for(String line : lines) {
+			//cols = Math.max(cols, line.length());
+		//}
+		int i = 0,j=0,k=0;
 		MapBuilderModel wl=null;
 		int count=0;
 		tempLoadbuttons=new MapBuilderModel[rows][cols];
 
-		for(String line : lines) {            // for each line, add the 1s
-			char[] chars = line.toCharArray();
-
-			for(j = 0 ; j < chars.length ; ++j) {
+		//for(String line : lines) {            // for each line, add the 1s
+			//char[] chars = line.toCharArray();
+		for (i=0;i<rows;i++)
+		{			
+			for(j = 0 ; j <cols ; j++) {
+		
 				wl=new MapBuilderModel();
-				switch(chars[j]) {
+				switch(chars[k++]) {
 				case '*':
 					wl.setIcon(null);
 					wl.setPath(false);
@@ -223,12 +318,14 @@ public class MapBuilderController    {
 					wl.setIcon(wl.getEnd());
 					wl.setEnd(true);
 					break;
-
+				
 				}
-				count++;
+			
 				tempLoadbuttons[i][j]=wl;
+				count++;
+				
 			}
-			i++;
+		
 
 		}
 
@@ -363,7 +460,7 @@ public class MapBuilderController    {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				p2.dispose();
-				LayoutManager layoutManager = new LayoutManager();
+				LayoutManager abc=new LayoutManager();
 				File file1=new File("Resource/CustomMaps/ScreenShots/Metadata.txt");
 				try {
 					PrintWriter writer=null;
@@ -374,8 +471,21 @@ public class MapBuilderController    {
 					}
 					writer.print(file.fileName+","+file.fileType);
 					writer.close();
-					System.out.println(file.fileName+","+file.fileType);
-					layoutManager.populateFileHeader();
+					System.out.println("FileName="+file.fileName+"FileType="+file.fileType);
+					String tempFileName=file.fileName;
+					//tempFileName=tempFileName.replaceAll("txt","ser");
+					System.out.println("FileName="+tempFileName);
+					
+					playGame.mapid=Integer.parseInt(tempFileName.substring(tempFileName.lastIndexOf("p") + 1, tempFileName.indexOf(".")));
+					System.out.println("MAPID="+playGame.mapid);
+					playGame=playGame.readFromFile(playGame);
+					System.out.println("Mapid="+playGame.mapid);
+					Date date = new Date();
+					
+					playGame.lastPlayedTime.add(time.getTime());
+					playGame.writeToFile(playGame);
+					playGame.readFromFile(playGame);
+					abc.populateFileHeader();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
