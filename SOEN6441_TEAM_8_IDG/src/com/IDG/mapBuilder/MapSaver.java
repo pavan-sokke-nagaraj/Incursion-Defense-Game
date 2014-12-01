@@ -11,7 +11,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -45,7 +49,7 @@ public class MapSaver  {
 	/**
 	 * Text Area to show error messages
 	 */
-	JTextArea tArea1;
+	public static JTextArea tArea1=new JTextArea();
 	/**
 	 * Game panel
 	 */
@@ -53,10 +57,18 @@ public class MapSaver  {
 	/**
 	 * Details of file to be saved
 	 */
-	StringBuffer fileContent=new StringBuffer();
+	//StringBuffer fileContent=new StringBuffer();
 	int row=0,column=0;
 	MapBuilderModel tempFile=null;
 	boolean isEditEnabled;
+	
+	MapDetails mapdetail;
+	MapDetails editmapdetail=new MapDetails();
+	Calendar time = Calendar.getInstance();
+	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+	
+    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    
 	/**
 	 * This function saves the map along with screen shots
 	 * @param buttons Actual Map to be saved
@@ -79,34 +91,37 @@ public class MapSaver  {
 		this.tempFile=tempFile;
 		this.isEditEnabled=isEditEnabled;
 		String [][] gridMap=new String[buttons.length][buttons[0].length];
+		mapdetail=new MapDetails();
 		for (int i=0;i<buttons.length;i++){
 			for (int j=0;j<buttons[0].length;j++){
 				if(buttons[i][j].isStart){
-					fileContent.append("S");
+					mapdetail.mapdata.append("S");
 					gridMap[i][j]="S";
 				}
 				else if(buttons[i][j].isEnd){
-					fileContent.append("E");
+					mapdetail.mapdata.append("E");
 					gridMap[i][j]="E";
 				}
 				else if(buttons[i][j].isPath){
-					fileContent.append("-");
+					mapdetail.mapdata.append("-");
 					gridMap[i][j]="-";
 				}
 				else{
-					fileContent.append("*");
+					mapdetail.mapdata.append("*");
 					gridMap[i][j]="*";
 				}	
 
 			}
-			fileContent.append(System.getProperty("line.separator"));
+			//mapdetail.mapdata.append(System.getProperty("line.separator"));
 		}
+		mapdetail.rowSize=buttons.length;
+		mapdetail.columnSize=buttons[0].length;
 		errorList=new ArrayList();
 		boolean isValid=MapValidityHelper.testMapValidity(gridMap,errorList);
 		StringBuffer erroCode=new StringBuffer();
 		if(!isValid)
 		{
-			fileContent=new StringBuffer();
+			mapdetail.mapdata=new StringBuffer();
 			if (errorList.size()>0)
 			{
 				for(int i=0;i<errorList.size();i++)
@@ -123,30 +138,56 @@ public class MapSaver  {
 
 				if(!isEditEnabled){
 					//Genrating Random File Name
+					int range = 1000 - 0 + 1;
 					tArea1.setText(" ");
 					Random rn = new Random();
-					int range = 1000 - 0 + 1;
-					int fileName =  rn.nextInt(range) + 0;
+					int fileName =rn.nextInt(range) + 0;
+					
+					
 					/***************************************************START MAP SAVE CODE***************************************************/
 					//Code to save file name to a header file
-					try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("Resource/CustomMaps/GameMatrix/GameMatrixHeader.txt", true)))) {
-						out.println("Map"+fileName+".txt");
-					}catch (IOException ed) {
-					}
+					
+					//try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("Resource/CustomMaps/GameMatrix/GameMatrixHeader.txt", true)))) {
+					//	out.println("Map"+fileName+".txt");
+					//}catch (IOException ed) {
+					//}
 					//Creating a Map File 
-					File file =new File("Resource/CustomMaps/GameMatrix/"+"Map"+fileName+".txt");
-					if(!file.exists()){
-						file.createNewFile();
-					}else{
-						PrintWriter writer = new PrintWriter(file);
-						writer.print("");
-						writer.close();
-					}
-					try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)))) {
-						out.println(fileContent.toString());
-					}catch (IOException ed) {
-					}
-					fileContent=new StringBuffer();
+					//File file =new File("Resource/CustomMaps/GameMatrix/"+"Map"+fileName+".txt");
+					//File logfile =new File("Resource/CustomMaps/GameMatrix/"+"Map"+fileName+".log");
+					
+					//if(!file.exists()){
+						//file.createNewFile();
+					//}else{
+				//		PrintWriter writer = new PrintWriter(file);
+					//	writer.print("");
+					//	writer.close();
+					//}
+					
+					 
+				    
+				   	
+				       //get current date time with Date()
+				      
+					   	
+					//try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)))) {
+					//	out.println(mapdetail.mapdata.toString());
+					//}catch (IOException ed) {
+					//}
+					
+					Date date = new Date();
+					
+				    
+					mapdetail.creationTime=time.getTime();
+				   	//mapdetail.lastPlayedDate=null;
+				   	//mapdetail.lastPlayedTime=null;
+				   	mapdetail.mapid=fileName;
+				   //	mapdetail.modifiedDate.add(null);
+				   //	mapdetail.modifiedTime.add(null);	
+				   //	mapdetail.highscore.add(null);
+				   	mapdetail.writeToFile(mapdetail);
+				   	mapdetail.readFromFile(mapdetail);
+				   	
+				   	
 					/***************************************************END MAP SAVE CODE***************************************************/
 
 					/***************************************************START SCREENSHOT CODE***************************************************/
@@ -161,27 +202,54 @@ public class MapSaver  {
 					gameMatrixPanel.printAll (matrixImage.getGraphics());
 					ImageIO.write(matrixImage, "png", new File("Resource/CustomMaps/ScreenShots/"+"ScreenShot"+fileName+".png"));
 					/***************************************************END SCREENSHOT CODE***************************************************/
-				}else{
-					File file =new File("Resource/CustomMaps/GameMatrix/"+tempFile.fileName);
-					if(!file.exists()){
-						file.createNewFile();
-					}else{
-						PrintWriter writer = new PrintWriter(file);
-						writer.print("");
-						writer.close();
-					}
-					try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)))) {
-						out.println(fileContent.toString());
-					}catch (IOException ed) {
-					}
-					fileContent=new StringBuffer();
+				}
+				else{
+					MapDetails e=new MapDetails();
+					//File file =new File("Resource/CustomMaps/GameMatrix/"+tempFile.fileName);
+					System.out.println("Resource/CustomMaps/GameMatrix/"+tempFile.fileName);
+					int mapId;
+					//if(!file.exists()){
+						//file.createNewFile();
+					//}else{
+						//PrintWriter writer = new PrintWriter(file);
+					//	writer.print("");
+					//	writer.close();
+					//}
+					//try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)))) {
+						//out.println(mapdetail.mapdata.toString());
+					//}catch (IOException ed) {
+					//}
+					
+					mapId=Integer.parseInt(tempFile.fileName.substring(tempFile.fileName.lastIndexOf("p") + 1, tempFile.fileName.indexOf(".")));
+					System.out.println("Resource/CustomMaps/GameMatrix/"+"MAp"+mapId+".txt");
+					e.mapid=mapId;
+					e=e.readFromFile(e);
+					Date date = new Date();
+					e.modifiedTime.add(time.getTime());
+					e.mapdata=mapdetail.mapdata;
+					
+					e.writeToFile(e);
+					e.readFromFile(e);
+				   	
+					
 					String tempFileName=tempFile.fileName.replaceAll("txt", "png");
 					tempFileName=tempFileName.replaceAll("Map", "ScreenShot");
+					
 					BufferedImage matrixImage=null;
 					matrixImage = new BufferedImage(gameMatrixPanel.getSize().width, gameMatrixPanel.getSize().height,BufferedImage.TYPE_INT_RGB);
 					gameMatrixPanel.printAll (matrixImage.getGraphics());
-					file =new File("Resource/CustomMaps/ScreenShots/"+tempFileName);
+					File file =new File("Resource/CustomMaps/ScreenShots/"+tempFileName);
+					
 					ImageIO.write(matrixImage, "png", file);
+					
+					//tempFileName=tempFileName.replaceAll("png","ser");
+					//tempFileName=tempFileName.replaceAll("ScreenShot", "Map");
+					//System.out.println("Resource/CustomMaps/GameMatrix/"+tempFileName);
+					//mapId=Integer.parseInt(tempFileName.substring(tempFileName.lastIndexOf("p") + 1, tempFileName.indexOf(".")));
+					//System.out.println("AJAYResource/CustomMaps/ScreenShots/"+mapId);
+					
+					
+					
 				}
 			} catch (Exception ef) {
 				ef.printStackTrace();
@@ -194,6 +262,10 @@ public class MapSaver  {
 				{
 					buttons[i][j].setEnabled(false);
 				}
+			
+				
+			
+				
 			}
 		}
 
