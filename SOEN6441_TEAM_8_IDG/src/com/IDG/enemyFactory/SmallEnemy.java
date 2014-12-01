@@ -153,9 +153,7 @@ public class SmallEnemy extends Rectangle implements EnemyType{
 				}
 			}else{
 				MapSimulatorView.health = MapSimulatorView.health - this.value ;
-				/*MapSimulatorView.enemiesOnMap.remove(this);
-				System.out.println("Died Enemy NO :: "+this.enemyId);
-				*/
+				MapSimulatorView.enemiesOnMap.remove(this);
 				if(MapSimulatorView.enemiesOnMap.size()==0){
 					MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" All Enemies Died Or Escaped");
 					MapSimulatorView.levelLog.append("\n");
