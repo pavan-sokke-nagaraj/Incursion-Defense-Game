@@ -6,6 +6,7 @@ package com.IDG.controller;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.AbstractAction;
@@ -17,7 +18,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.IDG.mapBuilder.MapBuilderController;
-
+import com.IDG.mapBuilder.MapDetails;
 import com.IDG.mapSimulator.Arsenal;
 import com.IDG.mapSimulator.Block;
 import com.IDG.mapSimulator.MapSimulatorView;
@@ -37,7 +38,9 @@ public class LayoutManager {
 	private JMenu fileMenu = new JMenu("Game");
 	private JTabbedPane tab = new JTabbedPane();
 	private MapSimulatorView mapSimulatorView = new MapSimulatorView();
-
+	public MapDetails showHighScore= new MapDetails();
+	public static ArrayList<Integer> passvalue= new ArrayList(5);
+	public static int mapid;
 	public LayoutManager() {
 		// populates the file selector and add to menu tab
 		// populateFileHeader();
@@ -50,7 +53,7 @@ public class LayoutManager {
 		// populate the tabs
 		populateTabs();
 	}
-
+	public static String fileType=null,fileName=null;
 	public JMenuBar getMenuBar() {
 		return menu;
 	}
@@ -81,7 +84,7 @@ public class LayoutManager {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String fileType = null, fileName = null;
+			
 			while (sc.hasNextLine()) {
 				line1 = sc.nextLine().toString().trim();
 				if (line1 != null && !line1.isEmpty()) {
@@ -97,6 +100,10 @@ public class LayoutManager {
 			if (gameValue != null) {
 				Game.getInstance().setPlayingMapName(
 						fileName.substring(0, fileName.lastIndexOf('.')));
+				mapid=Integer.parseInt(LayoutManager.fileName.substring(LayoutManager.fileName.lastIndexOf("p") + 1, LayoutManager.fileName.indexOf(".")));
+				showHighScore.mapid=mapid;
+				showHighScore=showHighScore.readFromFile(showHighScore);
+				passvalue=showHighScore.highscore;
 				mapSimulatorView = new MapSimulatorView();
 				mapSimulatorView.gameValue = gameValue;
 				mapSimulatorView.gridRow = gameValue.length;
