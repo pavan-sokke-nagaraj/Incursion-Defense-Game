@@ -156,7 +156,6 @@ public class StrongEnemy extends Rectangle implements EnemyType{
 			if(currentHealth <= 0){
 				MapSimulatorView.power = MapSimulatorView.power + this.value ;
 				MapSimulatorView.enemiesOnMap.remove(this);
-				System.out.println("Died Enemy NO :: "+this.enemyId);
 				MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemy :: "+this.enemyId+" Died");
 				MapSimulatorView.levelLog.append("\n");
 				MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemy :: "+this.enemyId+" Died");
@@ -176,9 +175,7 @@ public class StrongEnemy extends Rectangle implements EnemyType{
 				}
 			}else{
 				MapSimulatorView.health = MapSimulatorView.health - this.value ;
-				/*MapSimulatorView.enemiesOnMap.remove(this);
-				System.out.println("Died Enemy NO :: "+this.enemyId);
-				*/
+				MapSimulatorView.enemiesOnMap.remove(this);
 				if(MapSimulatorView.enemiesOnMap.size()==0){
 					MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" All Enemies Died Or Escaped");
 					MapSimulatorView.levelLog.append("\n");
