@@ -20,6 +20,7 @@ import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 
+import com.IDG.mapBuilder.MapDetails;
 import com.IDG.mapSimulator.Block;
 import com.IDG.mapSimulator.MapSimulatorView;
 import com.IDG.mapSimulator.Tower;
@@ -51,13 +52,21 @@ public class GameFileManager {
 		char a2Array[][] = new char[20][20];
 		Block block[][] = new Block[20][20];
 		Game game = Game.getInstance();
-		if (file != null) {
-			int tempRow = 0;
-			int tempCol = 0;
-			int row = 0;
-			int column = 0;
-			char a = 0;
-			try {
+		String filename=file.getName();
+		MapDetails loadmap=new MapDetails();
+		loadmap.mapid=Integer.parseInt(filename.substring(filename.lastIndexOf("p") + 1, filename.indexOf(".")));
+		System.out.println(loadmap.mapid);
+		loadmap=loadmap.readFromFile(loadmap);		
+		String tempstr=new String(loadmap.mapdata);
+		
+		char[] chars=new String(tempstr).toCharArray();
+		//if (file != null) {
+			//int tempRow = 0;
+			//int tempCol = 0;
+			int row = loadmap.rowSize;;
+			int column = loadmap.columnSize;
+			//char a = 0;
+			/**try {
 				Scanner input = new Scanner(file);
 				while (input.hasNextLine()) {
 					String line = input.nextLine();
@@ -71,12 +80,12 @@ public class GameFileManager {
 				column = tempCol;
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
-			}
+			}*/
 			block = new Block[row][column];
 			a2Array = new char[row][column];
-			tempRow = 0;
-			tempCol = 0;
-			try {
+			//tempRow = 0;
+			//tempCol = 0;
+			/**try {
 				Scanner input = new Scanner(file);
 				while (input.hasNextLine()) {
 					String line = input.nextLine();
@@ -89,15 +98,17 @@ public class GameFileManager {
 				input.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
-			}
-			for (int i = 0; i < row; i++) {
-				for (int j = 0; j < column; j++) {
-					a = a2Array[i][j];
+			}*/
+			int k=0;
+			for (int i = 0; i < row; i++) 
+			{
+				for (int j = 0; j < column; j++) 
+				{
+					a2Array[i][j]=chars[k++];
 				}
 			}
 			return a2Array;
-		} else
-			return null;
+		
 
 	}
 
