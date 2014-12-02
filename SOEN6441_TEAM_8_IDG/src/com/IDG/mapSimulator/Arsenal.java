@@ -373,7 +373,7 @@ public class Arsenal {
 		MapSimulatorView.gameLog=new StringBuffer();
 		MapSimulatorView.levelLogList=new LinkedList<StringBuffer>();
 		MapSimulatorView.levelLog=new StringBuffer();
-		Tower.collectiveTowerlog=new StringBuffer();
+		MapSimulatorView.collectiveTowerlog=new StringBuffer();
 		clearInfo = true;
 		selectMapTower = false;
 		MapSimulatorView.isGameReset = false;
@@ -450,8 +450,8 @@ public class Arsenal {
 			drawMoney(graphic);
 			tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
 			tower.individualTowerlog.append("\n");
-			Tower.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
-			Tower.collectiveTowerlog.append("\n");
+			MapSimulatorView.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
+			MapSimulatorView.collectiveTowerlog.append("\n");
 			MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
 			MapSimulatorView.levelLog.append("\n");
 			MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
@@ -486,8 +486,8 @@ public class Arsenal {
 					- tower.costToUpgrade;
 			tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
 			tower.individualTowerlog.append("\n");
-			Tower.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
-			Tower.collectiveTowerlog.append("\n");
+			MapSimulatorView.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
+			MapSimulatorView.collectiveTowerlog.append("\n");
 			MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
 			MapSimulatorView.levelLog.append("\n");
 			MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
@@ -549,8 +549,8 @@ public class Arsenal {
 									Tower tower=towerBlocks[heldPosition];
 									tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
 									tower.individualTowerlog.append("\n");
-									Tower.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
-									Tower.collectiveTowerlog.append("\n");
+									MapSimulatorView.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
+									MapSimulatorView.collectiveTowerlog.append("\n");
 									MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
 									MapSimulatorView.levelLog.append("\n");
 									MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
@@ -814,8 +814,8 @@ public class Arsenal {
 		tower.attackStrategy = selectedStratergy;
 		tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
 		tower.individualTowerlog.append("\n");
-		Tower.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
-		Tower.collectiveTowerlog.append("\n");
+		MapSimulatorView.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
+		MapSimulatorView.collectiveTowerlog.append("\n");
 		MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
 		MapSimulatorView.levelLog.append("\n");
 		MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
