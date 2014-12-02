@@ -6,6 +6,7 @@ package com.IDG.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import com.IDG.enemyFactory.EnemyType;
 import com.IDG.mapSimulator.Tower;
@@ -34,37 +35,13 @@ public class GameStateVO implements Serializable {
 
 	private boolean moveEnemy;
 
-	public HashMap<Integer, Tower> getTowerMap() {
-		return towerMap;
-	}
+	public StringBuffer gameLog = new StringBuffer();
 
-	public void setTowerMap(HashMap<Integer, Tower> towerMap) {
-		this.towerMap = towerMap;
-	}
+	public StringBuffer waveLog = new StringBuffer();
 
-	public boolean isMoveEnemy() {
-		return moveEnemy;
-	}
+	public LinkedList<StringBuffer> waveLogList = new LinkedList<StringBuffer>();
 
-	public void setMoveEnemy(boolean moveEnemy) {
-		this.moveEnemy = moveEnemy;
-	}
-
-	public ArrayList<EnemyType> getEnemiesOnMap() {
-		return enemiesOnMap;
-	}
-
-	public void setEnemiesOnMap(ArrayList<EnemyType> enemiesOnMap) {
-		this.enemiesOnMap = enemiesOnMap;
-	}
-
-	public int getWaveLevel() {
-		return waveLevel;
-	}
-
-	public void setWaveLevel(int waveLevel) {
-		this.waveLevel = waveLevel;
-	}
+	public StringBuffer collectiveTowerlog = new StringBuffer();
 
 	public int getGridRow() {
 		return gridRow;
@@ -104,6 +81,70 @@ public class GameStateVO implements Serializable {
 
 	public void setMoney(int money) {
 		this.money = money;
+	}
+
+	public int getWaveLevel() {
+		return waveLevel;
+	}
+
+	public void setWaveLevel(int waveLevel) {
+		this.waveLevel = waveLevel;
+	}
+
+	public ArrayList<EnemyType> getEnemiesOnMap() {
+		return enemiesOnMap;
+	}
+
+	public void setEnemiesOnMap(ArrayList<EnemyType> enemiesOnMap) {
+		this.enemiesOnMap = enemiesOnMap;
+	}
+
+	public HashMap<Integer, Tower> getTowerMap() {
+		return towerMap;
+	}
+
+	public void setTowerMap(HashMap<Integer, Tower> towerMap) {
+		this.towerMap = towerMap;
+	}
+
+	public boolean isMoveEnemy() {
+		return moveEnemy;
+	}
+
+	public void setMoveEnemy(boolean moveEnemy) {
+		this.moveEnemy = moveEnemy;
+	}
+
+	public StringBuffer getGameLog() {
+		return gameLog;
+	}
+
+	public void setGameLog(StringBuffer gameLog) {
+		this.gameLog = gameLog;
+	}
+
+	public StringBuffer getWaveLog() {
+		return waveLog;
+	}
+
+	public void setWaveLog(StringBuffer waveLog) {
+		this.waveLog = waveLog;
+	}
+
+	public LinkedList<StringBuffer> getWaveLogList() {
+		return waveLogList;
+	}
+
+	public void setWaveLogList(LinkedList<StringBuffer> waveLogList) {
+		this.waveLogList = waveLogList;
+	}
+
+	public StringBuffer getCollectiveTowerlog() {
+		return collectiveTowerlog;
+	}
+
+	public void setCollectiveTowerlog(StringBuffer collectiveTowerlog) {
+		this.collectiveTowerlog = collectiveTowerlog;
 	}
 
 }

@@ -10,13 +10,11 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 
@@ -209,6 +207,13 @@ public class GameFileManager {
 		file.delete();
 	}
 
+	/**
+	 * function to delete Game Tower Objects after the game exits
+	 * 
+	 * @author p_sokke
+	 * @version Build 3
+	 * @since Build 3
+	 */
 	public static void deleteGameTowers() {
 		File directory = new File(tempDirectory);
 		for (File file : directory.listFiles()) {
@@ -216,7 +221,17 @@ public class GameFileManager {
 			file.delete();
 		}
 	}
-
+	/**
+	 * 
+	 * function to save game state
+	 * 
+	 * @author p_sokke
+	 * @version Build 3
+	 * @since Build 3
+	 * @param mapSimulatorView
+	 *            Game state to be saved
+	 * 
+	 */
 	public void saveGameState(MapSimulatorView mapSimulatorView) {
 
 		GameStateVO gameStateVO = new GameStateVO();
@@ -228,6 +243,18 @@ public class GameFileManager {
 		gameStateVO.setWaveLevel(mapSimulatorView.waveLevel);
 		gameStateVO.setEnemiesOnMap(mapSimulatorView.enemiesOnMap);
 		gameStateVO.setMoveEnemy(mapSimulatorView.moveEnemy);
+		gameStateVO.setWaveLog(mapSimulatorView.levelLog);
+		gameStateVO.setCollectiveTowerlog(mapSimulatorView.collectiveTowerlog);
+		// if(mapSimulatorView.levelLogList != null &&
+		// mapSimulatorView.levelLogList.size() != 0){
+		// for (Iterator iterator = mapSimulatorView.levelLogList.iterator();
+		// iterator.hasNext();) {
+		// StringBuffer waveBuffer = (StringBuffer) iterator.next();
+		// gameStateVO.getWaveLogList().add(waveBuffer);
+		// }
+		// }
+		gameStateVO.setWaveLogList(mapSimulatorView.levelLogList);
+		gameStateVO.setGameLog(mapSimulatorView.gameLog);
 
 		for (int i = 0; i < mapSimulatorView.gridRow; i++) {
 			for (int j = 0; j < mapSimulatorView.gridColumn; j++) {
@@ -248,21 +275,32 @@ public class GameFileManager {
 			String directory = fileChooser.getCurrentDirectory().toString();
 			String absolutePath = directory + "\\" + fileName + gameExtension;
 			try {
+
+//				 XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(
+//				 new FileOutputStream(absolutePath)));
+//				 encoder.writeObject(gameStateVO);
+//				 encoder.close();
+
 				FileOutputStream fos = new FileOutputStream(absolutePath);
 				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				oos.writeObject(mapSimulatorView); // write Tower object
-				oos.close();
+				oos.writeObject(gameStateVO);
 
-				XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(
-						new FileOutputStream(absolutePath)));
-				encoder.writeObject(gameStateVO);
-				encoder.close();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		}
 	}
 
+	/**
+	 * function to load the game status
+	 * 
+	 * @author p_sokke
+	 * @version Build 3
+	 * @since Build 3
+	 * @param mapSimulatorView
+	 *            current game status
+	 * @return loaded game status
+	 */
 	public MapSimulatorView loadGameState(MapSimulatorView mapSimulatorView) {
 		GameStateVO gameStateVO = new GameStateVO();
 		JFileChooser fileChooser = new JFileChooser();
@@ -273,10 +311,14 @@ public class GameFileManager {
 			String absolutePath = directory + "\\" + filename;
 			try {
 
-				XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(
-						new FileInputStream(absolutePath)));
-				gameStateVO = (GameStateVO) decoder.readObject();
-				decoder.close();
+//				 XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(
+//				 new FileInputStream(absolutePath)));
+//				 gameStateVO = (GameStateVO) decoder.readObject();
+//				 decoder.close();
+
+				FileInputStream fos = new FileInputStream(absolutePath);
+				ObjectInputStream oip = new ObjectInputStream(fos);
+				gameStateVO = (GameStateVO) oip.readObject();
 
 				mapSimulatorView.power = gameStateVO.getMoney();
 				mapSimulatorView.health = gameStateVO.getHealth();
@@ -286,6 +328,11 @@ public class GameFileManager {
 				mapSimulatorView.waveLevel = gameStateVO.getWaveLevel();
 				mapSimulatorView.enemiesOnMap = gameStateVO.getEnemiesOnMap();
 				mapSimulatorView.moveEnemy = gameStateVO.isMoveEnemy();
+				mapSimulatorView.levelLog = gameStateVO.getWaveLog();
+				mapSimulatorView.levelLogList = gameStateVO.getWaveLogList();
+				mapSimulatorView.gameLog = gameStateVO.getGameLog();
+				mapSimulatorView.collectiveTowerlog = gameStateVO
+						.getCollectiveTowerlog();
 
 				for (int i = 0; i < mapSimulatorView.gridRow; i++) {
 					for (int j = 0; j < mapSimulatorView.gridColumn; j++) {
