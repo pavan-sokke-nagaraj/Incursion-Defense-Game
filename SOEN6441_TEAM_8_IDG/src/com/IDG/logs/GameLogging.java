@@ -6,8 +6,6 @@ package com.IDG.logs;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
@@ -33,7 +31,6 @@ public class GameLogging {
 	}
 
 	public boolean createLogPanel(int waveLevel) {
-
 		JPanel loggingWindow;
 
 		loggingWindow = new JPanel();
@@ -42,7 +39,6 @@ public class GameLogging {
 		ButtonGroup group = new ButtonGroup();
 		Boolean flag = true;
 		for (int i = 1; i <= waveLevel; i++) {
-
 			JRadioButton radio = new JRadioButton("WAVE " + i, flag);
 			group.add(radio);
 			selectedWaveLevel = 1;
@@ -50,7 +46,6 @@ public class GameLogging {
 			loggingWindow.add(radio);
 
 			radio.addActionListener(new ActionListener() {
-
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					String asdf = radio.getText().substring(5);
@@ -59,7 +54,6 @@ public class GameLogging {
 			});
 
 		}
-
 		int result = JOptionPane.showConfirmDialog(null, loggingWindow,
 				"SELECT TYPE", JOptionPane.OK_CANCEL_OPTION);
 
@@ -69,84 +63,56 @@ public class GameLogging {
 		} else {
 			return true;
 		}
-
 	}
 
 	public void showTowerLog(int mapTowerXpos, int mapTowerYpos) {
 		if (MapSimulatorView.arsenal.selectMapTower) {
-			Tower tower=(Tower)GameFileManager.getTowerObject(mapTowerXpos,mapTowerYpos);
-			showLog("Tower logs",tower.individualTowerlog);
+			Tower tower = (Tower) GameFileManager.getTowerObject(mapTowerXpos,
+					mapTowerYpos);
+			showLog("Tower logs", tower.individualTowerlog);
 		} else {
 			JOptionPane.showMessageDialog(null,
 					"Please click on a Game Tower to view logs");
 		}
-
 	}
 
 	public void showAllTowerLog() {
-		showLog("All Tower logs",Tower.collectiveTowerlog);
-
+		showLog("All Tower logs", MapSimulatorView.collectiveTowerlog);
 	}
 
 	public void showWaveLog(int waveLevel) {
-		String log=MapSimulatorView.levelLogList.get(0).toString();
+		String log = MapSimulatorView.levelLogList.get(0).toString();
 		if (waveLevel == 0) {
 			JOptionPane.showMessageDialog(null,
 					"No waves have been Finished playing");
 		} else {
 			if (createLogPanel(waveLevel)) {
 				System.out.println(selectedWaveLevel);
-				showLog("Wave " + selectedWaveLevel + " logs",MapSimulatorView.levelLogList.get(selectedWaveLevel-1));
+				showLog("Wave " + selectedWaveLevel + " logs",
+						MapSimulatorView.levelLogList
+								.get(selectedWaveLevel - 1));
 			}
 		}
-
 	}
 
 	public void showGameLog() {
-		showLog("Game logs",MapSimulatorView.gameLog);
+		showLog("Game logs", MapSimulatorView.gameLog);
 	}
 
-	public void showLog(String logMessage,StringBuffer logBuffer) {
-
+	public void showLog(String logMessage, StringBuffer logBuffer) {
 		JFrame logFrame = new JFrame();
 		logFrame.setTitle(logMessage);
 		logFrame.setSize(800, 500);
-		// logFrame.setResizable(false);
 		logFrame.setLocationRelativeTo(null);
-
-//		BufferedReader br;
-//		String logsToDisplay = null;
-//		try {
-//			br = new BufferedReader(new FileReader("D:\\logs.txt"));
-//
-//			StringBuilder sb = new StringBuilder();
-//			String line;
-//
-//			line = br.readLine();
-//
-//			while (line != null) {
-//				sb.append(line);
-//				sb.append(System.lineSeparator());
-//				line = br.readLine();
-//			}
-//			logsToDisplay = sb.toString();
-//			br.close();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//
-//		}
 
 		JTextArea logText = new JTextArea(logBuffer.toString());
 		logText.setEditable(false);
-		// logFrame.add(log);
 
 		JScrollPane areaScrollPane = new JScrollPane(logText);
 		areaScrollPane
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		logFrame.add(areaScrollPane);
 		logFrame.setVisible(true);
-
 	}
 
 }
