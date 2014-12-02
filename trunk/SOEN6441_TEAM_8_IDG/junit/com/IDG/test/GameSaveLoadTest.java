@@ -31,6 +31,9 @@ public class GameSaveLoadTest {
 	public StringBuffer testCollectiveTowerlog = new StringBuffer();
 	public StringBuffer testIndividualTowerlog = new StringBuffer();
 
+	/**
+	 * junit method to test save and load of tower log
+	 */
 	@Test
 	public void testSaveLoadIndividualTowerLog() {
 		testIndividualTowerlog = new StringBuffer("individualTowerlog TEST");
@@ -46,6 +49,9 @@ public class GameSaveLoadTest {
 				testIndividualTowerlog.toString()));
 	}
 
+	/**
+	 * junit method to test save and load of game state
+	 */
 	@Test
 	public void testSaveLoadGameState() {
 		MapSimulatorView mapSimulatorView = new MapSimulatorView();
@@ -66,6 +72,12 @@ public class GameSaveLoadTest {
 		testGameValue(mapSimulatorView.gameValue);
 	}
 
+	/**
+	 * junit method to test save and load of game value
+	 * 
+	 * @param loadGameValue
+	 *            loaded game value
+	 */
 	public void testGameValue(char loadGameValue[][]) {
 		for (int i = 0; i < loadGameValue.length; i++) {
 			for (int j = 0; j < loadGameValue[0].length; j++) {
@@ -74,6 +86,9 @@ public class GameSaveLoadTest {
 		}
 	}
 
+	/**
+	 * junit method to test save and load of game log
+	 */
 	@Test
 	public void testSaveLoadGameLog() {
 		testWaveLevelLog = new StringBuffer("LEVEL LOG TEST");
