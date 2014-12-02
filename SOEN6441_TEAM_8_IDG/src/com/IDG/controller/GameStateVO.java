@@ -12,6 +12,9 @@ import com.IDG.enemyFactory.EnemyType;
 import com.IDG.mapSimulator.Tower;
 
 /**
+ * Class to hold the value objects of game to be saved and loaded during the
+ * game play
+ * 
  * @author Pavan Sokke Nagaraj <pavansn8@gmail.com>
  *
  */
