@@ -1,4 +1,5 @@
 package com.IDG.test;
+
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -31,9 +32,12 @@ import com.IDG.test.TowerTest;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ ArsenalTest.class, GameControllerTest.class,
 		GameFileManagerTest.class, MapValidityTestCase.class, RoomTest.class,
-		TowerTest.class, StrongEnemyTest.class, SmallEnemyTest.class, EnemyFactoryTest.class,
-		EnemyPathTest.class, TowerDistanceTest.class, TowerInfoViewTest.class, MapSimulatorViewTest.class,
-		BlockTest.class, GameTest.class,CalculateEnemyBasedOnStrategy.class,TargetEnemiesBasedOnStrategy.class,SetHighScoreTest.class,MapSaverTest.class
+		TowerTest.class, StrongEnemyTest.class, SmallEnemyTest.class,
+		EnemyFactoryTest.class, EnemyPathTest.class, TowerDistanceTest.class,
+		TowerInfoViewTest.class, MapSimulatorViewTest.class, BlockTest.class,
+		GameTest.class, CalculateEnemyBasedOnStrategy.class,
+		TargetEnemiesBasedOnStrategy.class, SetHighScoreTest.class,
+		MapSaverTest.class, GameSaveLoadTest.class
 
 })
 public class TestAll {
