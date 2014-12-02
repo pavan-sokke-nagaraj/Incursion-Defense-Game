@@ -101,7 +101,7 @@ public class GameFileManagerTest {
 	 */
 	@Test
 	public void testLoadSavedGame_1() throws Exception {
-		File file = new File("Resource/DefaultMaps/GameMatrix/Map129.txt");
+		File file = new File("Resource/DefaultMaps/GameMatrix/Map167.txt");
 
 		char[][] result = GameFileManager.loadSavedGame(file);
 
@@ -119,7 +119,7 @@ public class GameFileManagerTest {
 	 */
 	@Test
 	public void testLoadSavedGame_2() throws Exception {
-		File file = new File("Resource/DefaultMaps/GameMatrix/Map129.txt");
+		File file = new File("Resource/DefaultMaps/GameMatrix/Map167.txt");
 
 		char[][] result = GameFileManager.loadSavedGame(file);
 
@@ -137,7 +137,7 @@ public class GameFileManagerTest {
 	 */
 	@Test
 	public void testLoadSavedGame_3() throws Exception {
-		File file = new File("Resource/DefaultMaps/GameMatrix/Map129.txt");
+		File file = new File("Resource/DefaultMaps/GameMatrix/Map167.txt");
 
 		char[][] result = GameFileManager.loadSavedGame(file);
 
