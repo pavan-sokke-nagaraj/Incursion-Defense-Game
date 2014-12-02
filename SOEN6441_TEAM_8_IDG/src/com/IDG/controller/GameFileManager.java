@@ -355,7 +355,10 @@ public class GameFileManager {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
+			return mapSimulatorView;
 		}
-		return mapSimulatorView;
+		
+		else
+			return null;
 	}
 }
