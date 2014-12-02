@@ -255,6 +255,7 @@ public class GameFileManager {
 		// }
 		gameStateVO.setWaveLogList(mapSimulatorView.levelLogList);
 		gameStateVO.setGameLog(mapSimulatorView.gameLog);
+		gameStateVO.mapid=LayoutManager.mapid;
 
 		for (int i = 0; i < mapSimulatorView.gridRow; i++) {
 			for (int j = 0; j < mapSimulatorView.gridColumn; j++) {
@@ -303,9 +304,15 @@ public class GameFileManager {
 	 */
 	public MapSimulatorView loadGameState(MapSimulatorView mapSimulatorView) {
 		GameStateVO gameStateVO = new GameStateVO();
+		MapDetails newGameLoaded= new MapDetails();
 		JFileChooser fileChooser = new JFileChooser();
 		int openValue = fileChooser.showOpenDialog(Game.getInstance());
 		if (openValue == JFileChooser.APPROVE_OPTION) {
+			newGameLoaded.mapid=LayoutManager.mapid;
+			System.out.println("AJAY"+LayoutManager.mapid);
+			newGameLoaded=newGameLoaded.readFromFile(newGameLoaded);
+			newGameLoaded.gamestatus.add("TERMINATED");
+			newGameLoaded.writeToFile(newGameLoaded);
 			String filename = fileChooser.getSelectedFile().getName();
 			String directory = fileChooser.getCurrentDirectory().toString();
 			String absolutePath = directory + "\\" + filename;
@@ -331,8 +338,8 @@ public class GameFileManager {
 				mapSimulatorView.levelLog = gameStateVO.getWaveLog();
 				mapSimulatorView.levelLogList = gameStateVO.getWaveLogList();
 				mapSimulatorView.gameLog = gameStateVO.getGameLog();
-				mapSimulatorView.collectiveTowerlog = gameStateVO
-						.getCollectiveTowerlog();
+				mapSimulatorView.collectiveTowerlog = gameStateVO.getCollectiveTowerlog();
+				mapSimulatorView.mapid=gameStateVO.mapid;
 
 				for (int i = 0; i < mapSimulatorView.gridRow; i++) {
 					for (int j = 0; j < mapSimulatorView.gridColumn; j++) {
