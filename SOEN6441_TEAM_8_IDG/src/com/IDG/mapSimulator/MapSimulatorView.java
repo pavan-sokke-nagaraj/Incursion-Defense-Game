@@ -411,7 +411,7 @@ public class MapSimulatorView extends JPanel implements Runnable {
 							|| tower.attackDelay > tower.maxAttackDelay) {
 						tower.hasHitOnce = false;
 						ArrayList<EnemyType> currentEnemyList = tower
-								.calculateEnemy(enemiesOnMap, towerX, towerY);
+								.calculateEnemy(tower,enemiesOnMap, towerX, towerY,i,j);
 						if (currentEnemyList != null) {
 							for (int k = 0; k < currentEnemyList.size(); k++) {
 								EnemyType currentEnemy = currentEnemyList
