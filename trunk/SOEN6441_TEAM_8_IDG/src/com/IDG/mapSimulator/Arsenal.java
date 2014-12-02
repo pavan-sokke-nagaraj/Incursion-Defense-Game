@@ -139,7 +139,7 @@ public class Arsenal {
 	/**
 	 * Button for exit after completion game.
 	 */
-	public static Rectangle exitgame1; 
+	public static Rectangle exitgame1;
 	/**
 	 * Different strategy patterns
 	 */
@@ -149,7 +149,7 @@ public class Arsenal {
 	public Rectangle randomTargetStratergy;
 	public boolean isStrtergySelect = false;
 	public int selectedStratergy;
-	public MapDetails exitupdatetofile =new MapDetails();
+	public MapDetails exitupdatetofile = new MapDetails();
 
 	/**
 	 * class constructor to initialize tower data, health data, money data
@@ -161,11 +161,14 @@ public class Arsenal {
 			towers[i] = new Rectangle(box1Xpos + (gap * i) + (towerWidth * i),
 					box1Ypos, towerWidth, towerWidth);
 			if (i == 0) {
-				towerBlocks[i] = new Tower('G', 50, 1, 1,25,25, 1,30, 30, 3);// Freezing//attack delay=50//Random
+				towerBlocks[i] = new Tower('G', 50, 1, 1, 25, 25, 1, 30, 30, 3);// Freezing//attack
+																				// delay=50//Random
 			} else if (i == 1) {
-				towerBlocks[i] = new Tower('R', 150, 1, 1, 100, 100,2, 70, 10, 2);// Burning//attack delay=70//Random
+				towerBlocks[i] = new Tower('R', 150, 1, 1, 100, 100, 2, 70, 10,
+						2);// Burning//attack delay=70//Random
 			} else if (i == 2) {
-				towerBlocks[i] = new Tower('B', 150, 1, 2, 200, 200,2, 15, 40, 1);// Splashing//attack Delay = Max Health
+				towerBlocks[i] = new Tower('B', 150, 1, 2, 200, 200, 2, 15, 40,
+						1);// Splashing//attack Delay = Max Health
 			} else if (i == 3) {
 				towerBlocks[i] = new Tower('D', 0, 0, 0, 0, 0, 1, 10, 2, 2);
 			}
@@ -181,7 +184,7 @@ public class Arsenal {
 		gameResetButton = new Rectangle(box2Xpos + 165, 565 + 125 - 100, 160,
 				60);
 		exitGameButton = new Rectangle(box2Xpos + 330, 565 + 125 - 100, 150, 60);
-		exitgame1=new Rectangle(10,400,150,60);
+		exitgame1 = new Rectangle(10, 400, 150, 60);
 		weakTargetStratergy = new Rectangle(box2Xpos + 300, box2Ypos + 30, 160,
 				30);
 		strongTargetStratergy = new Rectangle(box2Xpos + 300, box2Ypos + 70,
@@ -194,8 +197,9 @@ public class Arsenal {
 		pauseButton = new Rectangle(box2Xpos + 0, 565 + 125 - 100 + 70, 250,
 				100);
 
-//		logButton = new Rectangle(box2Xpos + 255, 565 + 125 - 100 + 70, 230, 100);
-		logButton = new Rectangle(50, 50, 230, 100);
+		logButton = new Rectangle(box2Xpos + 255, 565 + 125 - 100 + 70, 230,
+				100);
+		// logButton = new Rectangle(50, 50, 230, 100);
 
 		towerLogButton = new Rectangle(logButton.x + 3, logButton.y + 3, 110,
 				45);
@@ -353,8 +357,7 @@ public class Arsenal {
 	 *            Graphic variable to draw the Components
 	 */
 
-	public static void resetGame ()
-	{
+	public static void resetGame() {
 		MapSimulatorView.gameLog.append("Game Has been Reset");
 		MapSimulatorView.gameLog.append("\n");
 		MapSimulatorView.waveLevel = 0;
@@ -371,50 +374,53 @@ public class Arsenal {
 			}
 
 		}
-		MapSimulatorView.gameLog=new StringBuffer();
-		MapSimulatorView.levelLogList=new LinkedList<StringBuffer>();
-		MapSimulatorView.levelLog=new StringBuffer();
-		MapSimulatorView.collectiveTowerlog=new StringBuffer();
+		MapSimulatorView.gameLog = new StringBuffer();
+		MapSimulatorView.levelLogList = new LinkedList<StringBuffer>();
+		MapSimulatorView.levelLog = new StringBuffer();
+		MapSimulatorView.collectiveTowerlog = new StringBuffer();
 		clearInfo = true;
 		selectMapTower = false;
 		MapSimulatorView.isGameReset = false;
 		Game.getInstance().setGamePaused(false);
-		
+
 	}
 
-	public static void drawhighscore(Graphics graphic,ArrayList<Integer> tempabc)
-	{
+	public static void drawhighscore(Graphics graphic,
+			ArrayList<Integer> tempabc) {
 		graphic.setColor(Color.YELLOW);
-		graphic.fillRect(box1Xpos+300, box1Ypos-55,200, 250);
+		graphic.fillRect(box1Xpos + 300, box1Ypos - 55, 200, 250);
 		graphic.setColor(Color.BLACK);
-		graphic.drawString("HIGH SCORE", box1Xpos+300 , box1Ypos - 15);
-		int j=0;
-		
-		for (int i=0;i<tempabc.size();i++)
-		{	j=j+20;
-			graphic.drawString(Integer.toString(tempabc.get(i)) ,box1Xpos+350 , 90+j);
+		graphic.drawString("HIGH SCORE", box1Xpos + 300, box1Ypos - 15);
+		int j = 0;
+
+		for (int i = 0; i < tempabc.size(); i++) {
+			j = j + 20;
+			graphic.drawString(Integer.toString(tempabc.get(i)),
+					box1Xpos + 350, 90 + j);
 		}
 	}
-	static int ctr=0;
-	public static void drawendofgame (Graphics graphic,ArrayList<Integer> tempabc)
-	{
+
+	static int ctr = 0;
+
+	public static void drawendofgame(Graphics graphic,
+			ArrayList<Integer> tempabc) {
 		ctr++;
-		//Arsenal.resetGame();
+		// Arsenal.resetGame();
 		graphic.setColor(Color.BLACK);
-		
-		graphic.fillRect(0, 0, 1239,709);
+
+		graphic.fillRect(0, 0, 1239, 709);
 		graphic.setColor(Color.YELLOW);
 		graphic.setFont(new Font("TimesRoman", Font.BOLD, 70));
-		if(MapSimulatorView.isGameWon)
-		graphic.drawString("GAME WON!!", 10, 70);
+		if (MapSimulatorView.isGameWon)
+			graphic.drawString("GAME WON!!", 10, 70);
 		else
 			graphic.drawString("GAME LOST!!", 10, 70);
 		graphic.setFont(new Font("TimesRoman", Font.PLAIN, 30));
 		graphic.drawString("HIGH SCORE", 10, 120);
-		int j=0;
-		for (int i=0;i<tempabc.size();i++)
-		{	j=j+40;
-			graphic.drawString(Integer.toString(tempabc.get(i)) ,10, 120+j);
+		int j = 0;
+		for (int i = 0; i < tempabc.size(); i++) {
+			j = j + 40;
+			graphic.drawString(Integer.toString(tempabc.get(i)), 10, 120 + j);
 		}
 		graphic.fillRect(exitgame1.x, exitgame1.y, exitgame1.width,
 				exitgame1.height);
@@ -422,8 +428,9 @@ public class Arsenal {
 		graphic.setFont(new Font("Courier New", Font.BOLD, 20));
 		graphic.drawString("EXIT GAME", exitgame1.x + 20, exitgame1.y + 20);
 		System.out.println(ctr);
-	
+
 	}
+
 	/**
 	 * Draws the Money Component
 	 * 
@@ -449,13 +456,33 @@ public class Arsenal {
 		if (tower.costToSell > 0) {
 			MapSimulatorView.power = MapSimulatorView.power + tower.costToSell;
 			drawMoney(graphic);
-			tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
+			tower.individualTowerlog.append(new SimpleDateFormat(
+					"yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())
+					+ " Tower "
+					+ tower.towerId
+					+ " has been sold at value of "
+					+ tower.costToSell);
 			tower.individualTowerlog.append("\n");
-			MapSimulatorView.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
+			MapSimulatorView.collectiveTowerlog.append(new SimpleDateFormat(
+					"yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())
+					+ " Tower "
+					+ tower.towerId
+					+ " has been sold at value of "
+					+ tower.costToSell);
 			MapSimulatorView.collectiveTowerlog.append("\n");
-			MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
+			MapSimulatorView.levelLog.append(new SimpleDateFormat(
+					"yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())
+					+ " Tower "
+					+ tower.towerId
+					+ " has been sold at value of "
+					+ tower.costToSell);
 			MapSimulatorView.levelLog.append("\n");
-			MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been sold at value of "+tower.costToSell);
+			MapSimulatorView.gameLog.append(new SimpleDateFormat(
+					"yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())
+					+ " Tower "
+					+ tower.towerId
+					+ " has been sold at value of "
+					+ tower.costToSell);
 			MapSimulatorView.gameLog.append("\n");
 			MapSimulatorView.gameValue[mapTowerXpos][mapTowerYpos] = '*';
 			MapSimulatorView.room.block[mapTowerXpos][mapTowerYpos].createId = '*';
@@ -466,7 +493,7 @@ public class Arsenal {
 			selectMapTower = false;
 			mapTowerXpos = -1;
 			mapTowerYpos = -1;
-			
+
 			tower.drawTowerInformation(graphic);
 			GameFileManager
 					.deleteTowerObject(tower, mapTowerXpos, mapTowerYpos);
@@ -485,15 +512,31 @@ public class Arsenal {
 		if (MapSimulatorView.power >= tower.costToUpgrade) {
 			MapSimulatorView.power = MapSimulatorView.power
 					- tower.costToUpgrade;
-			tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
+			tower.individualTowerlog.append(new SimpleDateFormat(
+					"yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())
+					+ " Tower "
+					+ tower.towerId
+					+ " has been upgrade at value of " + tower.costToUpgrade);
 			tower.individualTowerlog.append("\n");
-			MapSimulatorView.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
+			MapSimulatorView.collectiveTowerlog.append(new SimpleDateFormat(
+					"yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())
+					+ " Tower "
+					+ tower.towerId
+					+ " has been upgrade at value of " + tower.costToUpgrade);
 			MapSimulatorView.collectiveTowerlog.append("\n");
-			MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
+			MapSimulatorView.levelLog.append(new SimpleDateFormat(
+					"yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())
+					+ " Tower "
+					+ tower.towerId
+					+ " has been upgrade at value of " + tower.costToUpgrade);
 			MapSimulatorView.levelLog.append("\n");
-			MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been upgrade at value of "+tower.costToUpgrade);
+			MapSimulatorView.gameLog.append(new SimpleDateFormat(
+					"yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())
+					+ " Tower "
+					+ tower.towerId
+					+ " has been upgrade at value of " + tower.costToUpgrade);
 			MapSimulatorView.gameLog.append("\n");
-			
+
 			drawMoney(graphic);
 			++tower.level;
 			++tower.range;
@@ -547,17 +590,54 @@ public class Arsenal {
 									int xpos = MapSimulatorView.room.block[i][j].x;
 									int ypos = MapSimulatorView.room.block[i][j].y;
 									MapSimulatorView.room.block[i][j].createId = heldValue;
-									Tower tower=towerBlocks[heldPosition];
-									tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
+									Tower tower = towerBlocks[heldPosition];
+									tower.individualTowerlog
+											.append(new SimpleDateFormat(
+													"yyyyMMdd_HHmmss")
+													.format(Calendar
+															.getInstance()
+															.getTime())
+													+ " Tower "
+													+ tower.towerId
+													+ " has been placed at X :: "
+													+ xpos + " , Y :: " + ypos);
 									tower.individualTowerlog.append("\n");
-									MapSimulatorView.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
-									MapSimulatorView.collectiveTowerlog.append("\n");
-									MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
+									MapSimulatorView.collectiveTowerlog
+											.append(new SimpleDateFormat(
+													"yyyyMMdd_HHmmss")
+													.format(Calendar
+															.getInstance()
+															.getTime())
+													+ " Tower "
+													+ tower.towerId
+													+ " has been placed at X :: "
+													+ xpos + " , Y :: " + ypos);
+									MapSimulatorView.collectiveTowerlog
+											.append("\n");
+									MapSimulatorView.levelLog
+											.append(new SimpleDateFormat(
+													"yyyyMMdd_HHmmss")
+													.format(Calendar
+															.getInstance()
+															.getTime())
+													+ " Tower "
+													+ tower.towerId
+													+ " has been placed at X :: "
+													+ xpos + " , Y :: " + ypos);
 									MapSimulatorView.levelLog.append("\n");
-									MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" has been placed at X :: "+xpos+" , Y :: "+ypos);
+									MapSimulatorView.gameLog
+											.append(new SimpleDateFormat(
+													"yyyyMMdd_HHmmss")
+													.format(Calendar
+															.getInstance()
+															.getTime())
+													+ " Tower "
+													+ tower.towerId
+													+ " has been placed at X :: "
+													+ xpos + " , Y :: " + ypos);
 									MapSimulatorView.gameLog.append("\n");
-									GameFileManager.saveTowerObject(
-											tower, i, j);
+									GameFileManager
+											.saveTowerObject(tower, i, j);
 									MapSimulatorView.power = MapSimulatorView.power
 											- towerBlocks[heldPosition].costToBuy;
 									holdsTower = false;
@@ -588,16 +668,24 @@ public class Arsenal {
 			} else if (waveButton.contains(MapSimulatorView.mse)) {
 
 				if (MapSimulatorView.waveLevel <= 10) {
-					//MapSimulatorView.levelLog.add(particularLevelLog);
-					//MapSimulatorView.levelLog=new StringBuffer();
-					int actualHealth=0,currentHealth=0,value=0,enemyActualSpeed=0,enemyCurrentSpeed=0;
-					int numberOFEnemies=0;
+					// MapSimulatorView.levelLog.add(particularLevelLog);
+					// MapSimulatorView.levelLog=new StringBuffer();
+					int actualHealth = 0, currentHealth = 0, value = 0, enemyActualSpeed = 0, enemyCurrentSpeed = 0;
+					int numberOFEnemies = 0;
 					MapSimulatorView.moveEnemy = true;
 					MapSimulatorView.isGameLost = false;
 					MapSimulatorView.isGameWon = false;
 					MapSimulatorView.waveLevel++;
-					MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Start of Level :: "+MapSimulatorView.waveLevel);
-					MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Start of Level :: "+MapSimulatorView.waveLevel);
+					MapSimulatorView.levelLog.append(new SimpleDateFormat(
+							"yyyyMMdd_HHmmss").format(Calendar.getInstance()
+							.getTime())
+							+ " Start of Level :: "
+							+ MapSimulatorView.waveLevel);
+					MapSimulatorView.gameLog.append(new SimpleDateFormat(
+							"yyyyMMdd_HHmmss").format(Calendar.getInstance()
+							.getTime())
+							+ " Start of Level :: "
+							+ MapSimulatorView.waveLevel);
 					if (MapSimulatorView.gridRow != 0
 							|| MapSimulatorView.gridColumn != 0) {
 						MapSimulatorView.enemyPath = EnemyPath.copyPath();
@@ -630,22 +718,46 @@ public class Arsenal {
 							numberOFEnemies = 7 + (MapSimulatorView.waveLevel * 2);
 						}
 						MapSimulatorView.levelLog.append("\n");
-						MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Total No of Enemies :: "+numberOFEnemies);
+						MapSimulatorView.levelLog.append(new SimpleDateFormat(
+								"yyyyMMdd_HHmmss").format(Calendar
+								.getInstance().getTime())
+								+ " Total No of Enemies :: " + numberOFEnemies);
 						MapSimulatorView.levelLog.append("\n");
-						MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemies Health:: "+actualHealth);
+						MapSimulatorView.levelLog.append(new SimpleDateFormat(
+								"yyyyMMdd_HHmmss").format(Calendar
+								.getInstance().getTime())
+								+ " Enemies Health:: " + actualHealth);
 						MapSimulatorView.levelLog.append("\n");
-						MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemies Value:: "+value);
+						MapSimulatorView.levelLog.append(new SimpleDateFormat(
+								"yyyyMMdd_HHmmss").format(Calendar
+								.getInstance().getTime())
+								+ " Enemies Value:: " + value);
 						MapSimulatorView.levelLog.append("\n");
-						MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemy Speed:: "+enemyActualSpeed);
+						MapSimulatorView.levelLog.append(new SimpleDateFormat(
+								"yyyyMMdd_HHmmss").format(Calendar
+								.getInstance().getTime())
+								+ " Enemy Speed:: " + enemyActualSpeed);
 						MapSimulatorView.levelLog.append("\n");
 						MapSimulatorView.gameLog.append("\n");
-						MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Total No of Enemies :: "+numberOFEnemies);
+						MapSimulatorView.gameLog.append(new SimpleDateFormat(
+								"yyyyMMdd_HHmmss").format(Calendar
+								.getInstance().getTime())
+								+ " Total No of Enemies :: " + numberOFEnemies);
 						MapSimulatorView.gameLog.append("\n");
-						MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemies Health:: "+actualHealth);
+						MapSimulatorView.gameLog.append(new SimpleDateFormat(
+								"yyyyMMdd_HHmmss").format(Calendar
+								.getInstance().getTime())
+								+ " Enemies Health:: " + actualHealth);
 						MapSimulatorView.gameLog.append("\n");
-						MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemies Value:: "+value);
+						MapSimulatorView.gameLog.append(new SimpleDateFormat(
+								"yyyyMMdd_HHmmss").format(Calendar
+								.getInstance().getTime())
+								+ " Enemies Value:: " + value);
 						MapSimulatorView.gameLog.append("\n");
-						MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Enemy Speed:: "+enemyActualSpeed);
+						MapSimulatorView.gameLog.append(new SimpleDateFormat(
+								"yyyyMMdd_HHmmss").format(Calendar
+								.getInstance().getTime())
+								+ " Enemy Speed:: " + enemyActualSpeed);
 						MapSimulatorView.gameLog.append("\n");
 						for (int i = 0; i < numberOFEnemies; i++) {
 							MapSimulatorView.enemiesOnMap
@@ -694,36 +806,34 @@ public class Arsenal {
 				MapSimulatorView.waveLevel = 0;
 				MapSimulatorView.moveEnemy = false;
 				MapSimulatorView.enemiesOnMap.clear();
-				exitupdatetofile.mapid=LayoutManager.mapid;
-				 exitupdatetofile=exitupdatetofile.readFromFile(exitupdatetofile);
-				 exitupdatetofile.gamestatus.add("TERMINATED");
-				 exitupdatetofile.writeToFile(exitupdatetofile);
-				GameFileManager gameFileManager = new GameFileManager() ;
+				exitupdatetofile.mapid = LayoutManager.mapid;
+				exitupdatetofile = exitupdatetofile
+						.readFromFile(exitupdatetofile);
+				exitupdatetofile.gamestatus.add("TERMINATED");
+				exitupdatetofile.writeToFile(exitupdatetofile);
+				GameFileManager gameFileManager = new GameFileManager();
 				gameFileManager.deleteGameTowers();
 				System.exit(0);
-				} 
-			else if (exitgame1.contains(MapSimulatorView.mse))
-			{
-				if (MapSimulatorView.isGameLost||MapSimulatorView.isGameWon)
-				{
-				MapSimulatorView.waveLevel=0;
-				MapSimulatorView.moveEnemy = false;
-				MapSimulatorView.enemiesOnMap.clear();
-				 exitupdatetofile.mapid=LayoutManager.mapid;
-				 exitupdatetofile=exitupdatetofile.readFromFile(exitupdatetofile);
-				 if (MapSimulatorView.isGameLost)
-						 
-				 exitupdatetofile.gamestatus.add("GAME LOST");
-				 if(MapSimulatorView.isGameWon)
-					 exitupdatetofile.gamestatus.add("GAME WON");
-				 exitupdatetofile.writeToFile(exitupdatetofile);
-				 GameFileManager gameFileManager = new GameFileManager() ;
+			} else if (exitgame1.contains(MapSimulatorView.mse)) {
+				if (MapSimulatorView.isGameLost || MapSimulatorView.isGameWon) {
+					MapSimulatorView.waveLevel = 0;
+					MapSimulatorView.moveEnemy = false;
+					MapSimulatorView.enemiesOnMap.clear();
+					exitupdatetofile.mapid = LayoutManager.mapid;
+					exitupdatetofile = exitupdatetofile
+							.readFromFile(exitupdatetofile);
+					if (MapSimulatorView.isGameLost)
+
+						exitupdatetofile.gamestatus.add("GAME LOST");
+					if (MapSimulatorView.isGameWon)
+						exitupdatetofile.gamestatus.add("GAME WON");
+					exitupdatetofile.writeToFile(exitupdatetofile);
+					GameFileManager gameFileManager = new GameFileManager();
 					gameFileManager.deleteGameTowers();
-				 
-				 System.exit(0);
+
+					System.exit(0);
 				}
-			}
-			else if (pauseButton.contains(MapSimulatorView.mse)) {
+			} else if (pauseButton.contains(MapSimulatorView.mse)) {
 				if (Game.getInstance().isGamePaused()) {
 					Game.getInstance().setGamePaused(false);
 				} else {
@@ -732,18 +842,18 @@ public class Arsenal {
 				}
 			} else if (towerLogButton.contains(MapSimulatorView.mse)) {
 				GameLogging log = new GameLogging();
-				 log.showTowerLog(mapTowerXpos, mapTowerYpos);
+				log.showTowerLog(mapTowerXpos, mapTowerYpos);
 			} else if (allTowerLogButton.contains(MapSimulatorView.mse)) {
 				GameLogging log = new GameLogging();
-				 log.showAllTowerLog();
+				log.showAllTowerLog();
 			} else if (waveLogButton.contains(MapSimulatorView.mse)) {
-				 GameLogging log = new GameLogging();
-				 log.showWaveLog(MapSimulatorView.waveLevel);
+				GameLogging log = new GameLogging();
+				log.showWaveLog(MapSimulatorView.waveLevel);
 			} else if (gameLogButton.contains(MapSimulatorView.mse)) {
 				GameLogging log = new GameLogging();
-				 log.showGameLog();
-			} 
-			
+				log.showGameLog();
+			}
+
 		}
 	}
 
@@ -816,13 +926,33 @@ public class Arsenal {
 		Tower tower = GameFileManager
 				.getTowerObject(mapTowerXpos, mapTowerYpos);
 		tower.attackStrategy = selectedStratergy;
-		tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
+		tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss")
+				.format(Calendar.getInstance().getTime())
+				+ " Tower "
+				+ tower.towerId
+				+ " new Enemy Choosing Strategy is  "
+				+ tower.attackStrategy);
 		tower.individualTowerlog.append("\n");
-		MapSimulatorView.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
+		MapSimulatorView.collectiveTowerlog.append(new SimpleDateFormat(
+				"yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())
+				+ " Tower "
+				+ tower.towerId
+				+ " new Enemy Choosing Strategy is  " + tower.attackStrategy);
 		MapSimulatorView.collectiveTowerlog.append("\n");
-		MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
+		MapSimulatorView.levelLog
+				.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar
+						.getInstance().getTime())
+						+ " Tower "
+						+ tower.towerId
+						+ " new Enemy Choosing Strategy is  "
+						+ tower.attackStrategy);
 		MapSimulatorView.levelLog.append("\n");
-		MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+" new Enemy Choosing Strategy is  "+tower.attackStrategy);
+		MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss")
+				.format(Calendar.getInstance().getTime())
+				+ " Tower "
+				+ tower.towerId
+				+ " new Enemy Choosing Strategy is  "
+				+ tower.attackStrategy);
 		MapSimulatorView.gameLog.append("\n");
 		GameFileManager.saveTowerObject(tower, mapTowerXpos, mapTowerYpos);
 		isStrtergySelect = false;
@@ -854,11 +984,10 @@ public class Arsenal {
 
 	private void drawGameLogsWindow(Graphics graphic) {
 
-		
 		graphic.setColor(Color.GREEN);
 		graphic.fillRect(logButton.x, logButton.y, logButton.width,
 				logButton.height);
-		
+
 		graphic.setColor(Color.BLACK);
 		graphic.fillRect(towerLogButton.x, towerLogButton.y,
 				towerLogButton.width, towerLogButton.height);
@@ -868,25 +997,27 @@ public class Arsenal {
 				waveLogButton.height);
 		graphic.fillRect(gameLogButton.x, gameLogButton.y, gameLogButton.width,
 				gameLogButton.height);
-		
 
-//		
-//		towerLogButton = new Rectangle(logButton.x + 3, logButton.y + 3, 110,
-//				45);
-//		allTowerLogButton = new Rectangle(logButton.x + 117, logButton.y + 3,
-//				110, 45);
-//		waveLogButton = new Rectangle(logButton.x + 3, logButton.y + 52, 110,
-//				45);
-//		gameLogButton = new Rectangle(logButton.x + 117, logButton.y + 52, 110,
-//				45);
-		
+		//
+		// towerLogButton = new Rectangle(logButton.x + 3, logButton.y + 3, 110,
+		// 45);
+		// allTowerLogButton = new Rectangle(logButton.x + 117, logButton.y + 3,
+		// 110, 45);
+		// waveLogButton = new Rectangle(logButton.x + 3, logButton.y + 52, 110,
+		// 45);
+		// gameLogButton = new Rectangle(logButton.x + 117, logButton.y + 52,
+		// 110,
+		// 45);
 
 		graphic.setColor(Color.WHITE);
 		graphic.setFont(new Font("Courier New", Font.BOLD, 18));
-		graphic.drawString("TOWER", towerLogButton.x + 30, towerLogButton.y + 18);
+		graphic.drawString("TOWER", towerLogButton.x + 30,
+				towerLogButton.y + 18);
 		graphic.drawString(" LOG", towerLogButton.x + 30, towerLogButton.y + 40);
-		graphic.drawString("ALL TOWER", allTowerLogButton.x + 5, allTowerLogButton.y + 18);
-		graphic.drawString(" LOG", allTowerLogButton.x + 30, allTowerLogButton.y + 40);
+		graphic.drawString("ALL TOWER", allTowerLogButton.x + 5,
+				allTowerLogButton.y + 18);
+		graphic.drawString(" LOG", allTowerLogButton.x + 30,
+				allTowerLogButton.y + 40);
 		graphic.drawString("WAVE", waveLogButton.x + 30, waveLogButton.y + 18);
 		graphic.drawString(" LOG", waveLogButton.x + 30, waveLogButton.y + 40);
 		graphic.drawString("GAME", gameLogButton.x + 30, gameLogButton.y + 18);
