@@ -32,7 +32,7 @@ public class Colosseum extends JFrame {
 		setSize(Game.getInstance().GAME_FRAME_WIDTH, Game.getInstance().GAME_FRAME_HEIGHT);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		// Create an instance of layout to pin the menu bar,game editor and
 		// simulator panels
 		LayoutManager menu = new LayoutManager();
