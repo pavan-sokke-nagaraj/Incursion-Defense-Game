@@ -38,21 +38,21 @@ public class CalculateEnemyBasedOnStrategy {
 	@Test
 	public void test_ATTACK_FIRST_NEAR_TOWER_ENEMY() {
 		nnTower.attackStrategy=nnTower.ATTACK_FIRST_NEAR_TOWER_ENEMY;
-		returnEnemyList=nnTower.calculateEnemy(enemies,50,50);
+		returnEnemyList=nnTower.calculateEnemy(nnTower,enemies,50,50,0,0);
 		assertEquals(((StrongEnemy)(returnEnemyList.get(0))).enemyId,1);
 	}
 	
 	@Test
 	public void test_ATTACK_MAX_HEALTH_ENEMY() {
 		nnTower.attackStrategy=nnTower.ATTACK_MAX_HEALTH_ENEMY;
-		returnEnemyList=nnTower.calculateEnemy(enemies,50,50);
+		returnEnemyList=nnTower.calculateEnemy(nnTower,enemies,50,50,0,0);
 		assertEquals(((StrongEnemy)(returnEnemyList.get(0))).enemyId,2);
 	}
 	
 	@Test
 	public void test_ATTACK_MIN_HEALTH_ENEMY() {
 		nnTower.attackStrategy=nnTower.ATTACK_MIN_HEALTH_ENEMY;
-		returnEnemyList=nnTower.calculateEnemy(enemies,50,50);
+		returnEnemyList=nnTower.calculateEnemy(nnTower,enemies,50,50,0,0);
 		assertEquals(((StrongEnemy)(returnEnemyList.get(0))).enemyId,1);
 	}
 
