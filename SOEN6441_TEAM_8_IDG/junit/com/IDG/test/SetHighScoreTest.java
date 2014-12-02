@@ -9,7 +9,14 @@ import org.junit.Test;
 import com.IDG.controller.LayoutManager;
 import com.IDG.mapBuilder.MapDetails;
 import com.IDG.mapSimulator.MapSimulatorView;
-
+/**
+ * This Class contains the Test cases for High Score Validation.
+ * 
+ *
+ *
+ * @author Kariappa
+ * @version 1.0
+ */
 public class SetHighScoreTest {
 
 MapDetails highScore=new MapDetails();
