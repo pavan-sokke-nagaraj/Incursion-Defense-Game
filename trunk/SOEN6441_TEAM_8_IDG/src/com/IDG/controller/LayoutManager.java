@@ -170,6 +170,8 @@ public class LayoutManager {
 				GameFileManager gameFileManager = new GameFileManager();
 				mapSimulatorView = gameFileManager
 						.loadGameState(mapSimulatorView);
+				if(mapSimulatorView!=null)
+				{
 				loadClicked=true;
 				LayoutManager.mapid=mapSimulatorView.mapid;
 				showHighScore.mapid=LayoutManager.mapid;
@@ -178,6 +180,7 @@ public class LayoutManager {
 				showHighScore.lastPlayedTime.add(time.getTime());
 				LayoutManager.passvalue=showHighScore.highscore;
 				showHighScore.writeToFile(showHighScore);
+				}
 			}
 		}
 	});
