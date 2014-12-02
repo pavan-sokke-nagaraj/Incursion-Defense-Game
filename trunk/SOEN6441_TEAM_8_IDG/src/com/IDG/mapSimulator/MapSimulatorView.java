@@ -278,39 +278,10 @@ public class MapSimulatorView extends JPanel implements Runnable {
 				updateMapwithDetails.mapid=Integer.parseInt(LayoutManager.fileName.substring(LayoutManager.fileName.lastIndexOf("p") + 1, LayoutManager.fileName.indexOf(".")));
 				
 				updateMapwithDetails=updateMapwithDetails.readFromFile(updateMapwithDetails);
-				if (updateMapwithDetails.highscore.size()>=5)
-				{
-					System.out.println(":Size of array:"+updateMapwithDetails.highscore.size());
-					updateMapwithDetails.highscore.sort(null);
-					Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
-					System.out.println("Last high score is "+updateMapwithDetails.highscore.get(4));
-					System.out.println("Power is "+MapSimulatorView.power);
-					if(updateMapwithDetails.highscore.get(4).intValue()<(MapSimulatorView.power))
-					{
-						updateMapwithDetails.highscore.remove(4);
-						updateMapwithDetails.highscore.add(MapSimulatorView.power);
-						updateMapwithDetails.highscore.sort(null);
-						Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
-						
-						System.out.println("Score Changed");
-						
-					}
-					
-				}
-				else
-				{
-					System.out.println(":reached Else part");
-					updateMapwithDetails.highscore.sort(null);
-					Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
-					updateMapwithDetails.highscore.add(MapSimulatorView.power);
-					updateMapwithDetails.highscore.sort(null);
-					Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
-					
-				}
-				
+				updateMapwithDetails=LayoutManager.setHighScore(updateMapwithDetails);
 				healthcounter=1;
 				LayoutManager.passvalue=updateMapwithDetails.highscore;
-				updateMapwithDetails.writeToFile(updateMapwithDetails);
+				
 				Arsenal.resetGame();
 				Arsenal.drawhighscore(graphic,updateMapwithDetails.highscore);
 			Arsenal.drawendofgame(graphic, updateMapwithDetails.highscore);
@@ -327,39 +298,11 @@ public class MapSimulatorView extends JPanel implements Runnable {
 				MapSimulatorView.levelLog.append("\n");
 				updateMapwithDetails.mapid=Integer.parseInt(LayoutManager.fileName.substring(LayoutManager.fileName.lastIndexOf("p") + 1, LayoutManager.fileName.indexOf(".")));
 				updateMapwithDetails=updateMapwithDetails.readFromFile(updateMapwithDetails);
-				if (updateMapwithDetails.highscore.size()>=5)
-				{	
-					System.out.println(":Size of array:"+updateMapwithDetails.highscore.size());
-					updateMapwithDetails.highscore.sort(null);
-					Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
-					System.out.println("Last high score is "+updateMapwithDetails.highscore.get(4));
-					System.out.println("Power is "+MapSimulatorView.power);
-					if(updateMapwithDetails.highscore.get(4).intValue()<(MapSimulatorView.power))
-					{
-					updateMapwithDetails.highscore.remove(4);
-					updateMapwithDetails.highscore.add(MapSimulatorView.power);
-					updateMapwithDetails.highscore.sort(null);
-					Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
-					
-					System.out.println("Score Changed");
-					}
-						
-				}
-				else
-				{
-					System.out.println(":reached Else part");
-				updateMapwithDetails.highscore.sort(null);
-				Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
-				updateMapwithDetails.highscore.add(MapSimulatorView.power);
-				updateMapwithDetails.highscore.sort(null);
-				Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
 				
-				
-				}
-				
+				updateMapwithDetails=LayoutManager.setHighScore(updateMapwithDetails);
 				healthcounter=1;
 				LayoutManager.passvalue=updateMapwithDetails.highscore;
-				updateMapwithDetails.writeToFile(updateMapwithDetails);
+				
 				//Arsenal.resetGame();
 				Arsenal.drawhighscore(graphic,updateMapwithDetails.highscore);
 				Arsenal.drawendofgame(graphic, updateMapwithDetails.highscore);
