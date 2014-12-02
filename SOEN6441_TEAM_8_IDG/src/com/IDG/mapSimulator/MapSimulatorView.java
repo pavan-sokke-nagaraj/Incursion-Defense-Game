@@ -134,6 +134,8 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	public static StringBuffer gameLog=new StringBuffer();	
 	
 	public static StringBuffer collectiveTowerlog = new StringBuffer(); 
+	
+	public static int mapid=0;
 
 	/**
 	 * Constructs a new object of our map simulator and start the paintThread
@@ -270,8 +272,11 @@ public class MapSimulatorView extends JPanel implements Runnable {
 				MapSimulatorView.gameLog.append("\n");
 				MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Wave Ended as Game is Lost");
 				MapSimulatorView.levelLog.append("\n");
-				
+				if(LayoutManager.loadClicked)
+					updateMapwithDetails.mapid=MapSimulatorView.mapid;
+				else
 				updateMapwithDetails.mapid=Integer.parseInt(LayoutManager.fileName.substring(LayoutManager.fileName.lastIndexOf("p") + 1, LayoutManager.fileName.indexOf(".")));
+				
 				updateMapwithDetails=updateMapwithDetails.readFromFile(updateMapwithDetails);
 				if (updateMapwithDetails.highscore.size()>=5)
 				{
