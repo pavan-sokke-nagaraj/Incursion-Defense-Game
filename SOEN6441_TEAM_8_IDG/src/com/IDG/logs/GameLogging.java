@@ -20,16 +20,30 @@ import com.IDG.mapSimulator.MapSimulatorView;
 import com.IDG.mapSimulator.Tower;
 
 /**
+ * Class file to handle game logging
+ * 
  * @author Pavan Sokke Nagaraj <pavansn8@gmail.com>
+ * @version Build 3
+ * @since Build 3
  *
  */
 public class GameLogging {
 
+	/**
+	 * Variable to hold the selected wave level to show logs
+	 */
 	private int selectedWaveLevel;
 
 	public GameLogging() {
 	}
 
+	/**
+	 * method to construct the log panel
+	 * 
+	 * @param waveLevel
+	 *            number of waves
+	 * @return return if the wave is selected or not
+	 */
 	public boolean createLogPanel(int waveLevel) {
 		JPanel loggingWindow;
 
@@ -65,6 +79,14 @@ public class GameLogging {
 		}
 	}
 
+	/**
+	 * method to show tower log
+	 * 
+	 * @param mapTowerXpos
+	 *            tower's x position in game grid
+	 * @param mapTowerYpos
+	 *            tower's y position in game grid
+	 */
 	public void showTowerLog(int mapTowerXpos, int mapTowerYpos) {
 		if (MapSimulatorView.arsenal.selectMapTower) {
 			Tower tower = (Tower) GameFileManager.getTowerObject(mapTowerXpos,
@@ -76,10 +98,19 @@ public class GameLogging {
 		}
 	}
 
+	/**
+	 * method to show all tower logs
+	 */
 	public void showAllTowerLog() {
 		showLog("All Tower logs", MapSimulatorView.collectiveTowerlog);
 	}
 
+	/**
+	 * method to show selected wave log
+	 * 
+	 * @param waveLevel
+	 *            selected wave to show logs
+	 */
 	public void showWaveLog(int waveLevel) {
 		String log = MapSimulatorView.levelLogList.get(0).toString();
 		if (waveLevel == 0) {
@@ -95,10 +126,21 @@ public class GameLogging {
 		}
 	}
 
+	/**
+	 * method to show the game log
+	 */
 	public void showGameLog() {
 		showLog("Game logs", MapSimulatorView.gameLog);
 	}
 
+	/**
+	 * method to draw a text panel and show logs
+	 * 
+	 * @param logMessage
+	 *            header of the text panel to be shown
+	 * @param logBuffer
+	 *            string to be draw3n on text panel
+	 */
 	public void showLog(String logMessage, StringBuffer logBuffer) {
 		JFrame logFrame = new JFrame();
 		logFrame.setTitle(logMessage);
