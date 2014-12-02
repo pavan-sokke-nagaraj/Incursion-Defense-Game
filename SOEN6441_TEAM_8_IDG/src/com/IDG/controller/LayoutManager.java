@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 import javax.swing.AbstractAction;
@@ -41,6 +43,8 @@ public class LayoutManager {
 	public MapDetails showHighScore= new MapDetails();
 	public static ArrayList<Integer> passvalue= new ArrayList(5);
 	public static int mapid;
+	public static boolean saveClicked=false;
+	public static boolean loadClicked=false;
 	public LayoutManager() {
 		// populates the file selector and add to menu tab
 		// populateFileHeader();
@@ -153,6 +157,7 @@ public class LayoutManager {
 			if (Game.getInstance().Mode == Game.GameMode.Simulator) {
 				GameFileManager gameFileManager = new GameFileManager();
 				gameFileManager.saveGameState(mapSimulatorView);
+				saveClicked=true;
 			}
 		}
 	});
@@ -160,11 +165,19 @@ public class LayoutManager {
 	JMenuItem loadGame = new JMenuItem(new AbstractAction("Load Game") {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
-
+			Calendar time = Calendar.getInstance();
 			if (Game.getInstance().Mode == Game.GameMode.Simulator) {
 				GameFileManager gameFileManager = new GameFileManager();
 				mapSimulatorView = gameFileManager
 						.loadGameState(mapSimulatorView);
+				loadClicked=true;
+				LayoutManager.mapid=mapSimulatorView.mapid;
+				showHighScore.mapid=LayoutManager.mapid;
+				showHighScore=showHighScore.readFromFile(showHighScore);
+				Date date = new Date();
+				showHighScore.lastPlayedTime.add(time.getTime());
+				LayoutManager.passvalue=showHighScore.highscore;
+				showHighScore.writeToFile(showHighScore);
 			}
 		}
 	});
