@@ -136,6 +136,9 @@ public class Arsenal {
 	 * Button for game to exit
 	 */
 	public Rectangle exitGameButton;
+	/**
+	 * Button for exit after completion game.
+	 */
 	public static Rectangle exitgame1; 
 	/**
 	 * Different strategy patterns
@@ -701,6 +704,8 @@ public class Arsenal {
 				} 
 			else if (exitgame1.contains(MapSimulatorView.mse))
 			{
+				if (MapSimulatorView.isGameLost||MapSimulatorView.isGameWon)
+				{
 				MapSimulatorView.waveLevel=0;
 				MapSimulatorView.moveEnemy = false;
 				MapSimulatorView.enemiesOnMap.clear();
@@ -716,6 +721,7 @@ public class Arsenal {
 					gameFileManager.deleteGameTowers();
 				 
 				 System.exit(0);
+				}
 			}
 			else if (pauseButton.contains(MapSimulatorView.mse)) {
 				if (Game.getInstance().isGamePaused()) {
