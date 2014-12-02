@@ -37,7 +37,28 @@ public class MapDetails implements Serializable {
     	
    public void writeToFile (MapDetails e)
    {
-	   try
+	   if(e.mapid==955||e.mapid==608||e.mapid==167)
+	   {
+		   try
+	      {
+		   
+	         FileOutputStream fileOut=new FileOutputStream("Resource/DefaultMaps/GameMatrix/Map"+e.mapid+".txt");
+	         
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	         out.writeObject(e);
+	         out.close();
+	         fileOut.close();
+	         System.out.printf("Serialized data is saved in /Resource/DefaultMaps/GameMatrix/Map"+e.mapid+".txt");
+	      }catch(IOException i)
+	      {
+	          i.printStackTrace();
+	      }
+
+	   }
+	   
+	   else
+	   {
+		   try
 	      {
 		   
 	         FileOutputStream fileOut=new FileOutputStream("Resource/CustomMaps/GameMatrix/Map"+e.mapid+".txt");
@@ -51,13 +72,39 @@ public class MapDetails implements Serializable {
 	      {
 	          i.printStackTrace();
 	      }
-   }
+
+	   }
+	  }
 
 
    public MapDetails readFromFile (MapDetails e1)
    {
 	   MapDetails e=e1;
-   try
+	if(e.mapid==955||e.mapid==608||e.mapid==167)
+	{
+		 try
+		   {
+		      FileInputStream fileIn = new FileInputStream("Resource/DefaultMaps/GameMatrix/Map"+e.mapid+".txt");
+		      ObjectInputStream in = new ObjectInputStream(fileIn);
+		      e = (MapDetails) in.readObject();
+		      in.close();
+		      fileIn.close();
+		   }catch(IOException i)
+		   {
+		      i.printStackTrace();
+		      //return e;
+		   }catch(ClassNotFoundException c)
+		   {
+		      System.out.println("Employee class not found");
+		      c.printStackTrace();
+		      //return e;
+		   }
+	}
+   
+	else
+	{
+		try
+	
    {
       FileInputStream fileIn = new FileInputStream("Resource/CustomMaps/GameMatrix/Map"+e.mapid+".txt");
       ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -74,17 +121,8 @@ public class MapDetails implements Serializable {
       c.printStackTrace();
       //return e;
    }
-  /** System.out.println(" ");
-   System.out.println("Deserialized Map...");
-   System.out.println(e.mapdata);
-   System.out.println("Creation date" + e.creationDate);
-   System.out.println("Creation Time: " + e.creationTime);
-   System.out.println("Modified date: " + e.modifiedDate);
-   System.out.println("Modified time: "+ e.modifiedTime);
-   System.out.println("Lastplayed Time"+ e.lastPlayedTime);
-   System.out.println("Lastplayed Date: " + e.lastPlayedDate);
-   System.out.println("Mapid: " + e.mapid);
-   **/
+	}
+  
    return e;
    }
 
