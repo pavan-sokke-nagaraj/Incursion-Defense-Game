@@ -122,14 +122,18 @@ public class MapSimulatorView extends JPanel implements Runnable {
 	public static boolean isGameWon = false;
 	
 	public static int healthcounter=0;
+	
 	public static ArrayList<Integer> temphighscore= new ArrayList(); 
 
 	MapDetails updateMapwithDetails= new MapDetails();
+	
 	public static LinkedList<StringBuffer> levelLogList=new LinkedList<StringBuffer>();
 
 	public static StringBuffer levelLog=new StringBuffer();
 
 	public static StringBuffer gameLog=new StringBuffer();	
+	
+	public static StringBuffer collectiveTowerlog = new StringBuffer(); 
 
 	/**
 	 * Constructs a new object of our map simulator and start the paintThread
@@ -421,8 +425,8 @@ public class MapSimulatorView extends JPanel implements Runnable {
 								}
 								tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
 								tower.individualTowerlog.append("\n");
-								Tower.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
-								Tower.collectiveTowerlog.append("\n");
+								collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
+								collectiveTowerlog.append("\n");
 								MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());
 								MapSimulatorView.levelLog.append("\n");
 								MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+" Tower "+tower.towerId+ " used Damage Strategy :: "+tower.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+tower.getEnemySelectionStrategy()+"to hit Enemy "+currentEnemy.getEnemyId());

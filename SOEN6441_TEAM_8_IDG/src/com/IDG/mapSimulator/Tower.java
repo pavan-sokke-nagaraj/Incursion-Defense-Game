@@ -105,7 +105,6 @@ public class Tower extends Observable implements Serializable {
 
 	public StringBuffer individualTowerlog= new StringBuffer();
 
-	public static StringBuffer collectiveTowerlog = new StringBuffer(); 
 	/**
 	 * class tower constructor to set the default values
 	 */
@@ -289,8 +288,8 @@ public class Tower extends Observable implements Serializable {
 								enemy.setCurrentHealth(enemy.getCurrentHealth()-this.damage);
 								tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+"Out of Range Burning Effect "+" Tower "+this.towerId+ " used Damage Strategy :: "+this.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+this.getEnemySelectionStrategy()+"to hit Enemy "+enemy.getEnemyId());
 								tower.individualTowerlog.append("\n");
-								Tower.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+"Out of Range Burning Effect "+" Tower "+this.towerId+ " used Damage Strategy :: "+this.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+this.getEnemySelectionStrategy()+"to hit Enemy "+enemy.getEnemyId());
-								Tower.collectiveTowerlog.append("\n");
+								MapSimulatorView.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+"Out of Range Burning Effect "+" Tower "+this.towerId+ " used Damage Strategy :: "+this.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+this.getEnemySelectionStrategy()+"to hit Enemy "+enemy.getEnemyId());
+								MapSimulatorView.collectiveTowerlog.append("\n");
 								MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+"Out of Range Burning Effect "+" Tower "+this.towerId+ " used Damage Strategy :: "+this.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+this.getEnemySelectionStrategy()+"to hit Enemy "+enemy.getEnemyId());
 								MapSimulatorView.levelLog.append("\n");
 								MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+"Out of Range Burning Effect "+" Tower "+this.towerId+ " used Damage Strategy :: "+this.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+this.getEnemySelectionStrategy()+"to hit Enemy "+enemy.getEnemyId());
