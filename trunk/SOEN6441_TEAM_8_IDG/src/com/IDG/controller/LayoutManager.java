@@ -41,11 +41,12 @@ public class LayoutManager {
 	private JMenu fileMenu = new JMenu("Game");
 	private JTabbedPane tab = new JTabbedPane();
 	private MapSimulatorView mapSimulatorView = new MapSimulatorView();
-	public MapDetails showHighScore= new MapDetails();
-	public static ArrayList<Integer> passvalue= new ArrayList(5);
+	public MapDetails showHighScore = new MapDetails();
+	public static ArrayList<Integer> passvalue = new ArrayList(5);
 	public static int mapid;
-	public static boolean saveClicked=false;
-	public static boolean loadClicked=false;
+	public static boolean saveClicked = false;
+	public static boolean loadClicked = false;
+
 	public LayoutManager() {
 		// populates the file selector and add to menu tab
 		// populateFileHeader();
@@ -58,7 +59,9 @@ public class LayoutManager {
 		// populate the tabs
 		populateTabs();
 	}
-	public static String fileType=null,fileName=null;
+
+	public static String fileType = null, fileName = null;
+
 	public JMenuBar getMenuBar() {
 		return menu;
 	}
@@ -89,7 +92,7 @@ public class LayoutManager {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			while (sc.hasNextLine()) {
 				line1 = sc.nextLine().toString().trim();
 				if (line1 != null && !line1.isEmpty()) {
@@ -105,10 +108,12 @@ public class LayoutManager {
 			if (gameValue != null) {
 				Game.getInstance().setPlayingMapName(
 						fileName.substring(0, fileName.lastIndexOf('.')));
-				mapid=Integer.parseInt(LayoutManager.fileName.substring(LayoutManager.fileName.lastIndexOf("p") + 1, LayoutManager.fileName.indexOf(".")));
-				showHighScore.mapid=mapid;
-				showHighScore=showHighScore.readFromFile(showHighScore);
-				passvalue=showHighScore.highscore;
+				mapid = Integer.parseInt(LayoutManager.fileName.substring(
+						LayoutManager.fileName.lastIndexOf("p") + 1,
+						LayoutManager.fileName.indexOf(".")));
+				showHighScore.mapid = mapid;
+				showHighScore = showHighScore.readFromFile(showHighScore);
+				passvalue = showHighScore.highscore;
 				mapSimulatorView = new MapSimulatorView();
 				mapSimulatorView.gameValue = gameValue;
 				mapSimulatorView.gridRow = gameValue.length;
@@ -151,42 +156,43 @@ public class LayoutManager {
 		});
 	}
 
-	public static  MapDetails setHighScore (MapDetails updateMapwithDetails)
-	   {
-		   if (updateMapwithDetails.highscore.size()>=5)
-			{
-				System.out.println(":Size of array:"+updateMapwithDetails.highscore.size());
-				updateMapwithDetails.highscore.sort(null);
-				Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
-				System.out.println("Last high score is "+updateMapwithDetails.highscore.get(4));
-				System.out.println("Power is "+MapSimulatorView.power);
-				if(updateMapwithDetails.highscore.get(4).intValue()<(MapSimulatorView.power))
-				{
-					updateMapwithDetails.highscore.remove(4);
-					updateMapwithDetails.highscore.add(MapSimulatorView.power);
-					updateMapwithDetails.highscore.sort(null);
-					Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
-					
-					System.out.println("Score Changed");
-					
-				}
-				
-			}
-			else
-			{
-				System.out.println(":reached Else part");
-				updateMapwithDetails.highscore.sort(null);
-				Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
+	public static MapDetails setHighScore(MapDetails updateMapwithDetails) {
+		if (updateMapwithDetails.highscore.size() >= 5) {
+			System.out.println(":Size of array:"
+					+ updateMapwithDetails.highscore.size());
+			updateMapwithDetails.highscore.sort(null);
+			Collections.sort(updateMapwithDetails.highscore,
+					Collections.reverseOrder());
+			System.out.println("Last high score is "
+					+ updateMapwithDetails.highscore.get(4));
+			System.out.println("Power is " + MapSimulatorView.power);
+			if (updateMapwithDetails.highscore.get(4).intValue() < (MapSimulatorView.power)) {
+				updateMapwithDetails.highscore.remove(4);
 				updateMapwithDetails.highscore.add(MapSimulatorView.power);
 				updateMapwithDetails.highscore.sort(null);
-				Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
-				
+				Collections.sort(updateMapwithDetails.highscore,
+						Collections.reverseOrder());
+
+				System.out.println("Score Changed");
+
 			}
-			
-		   updateMapwithDetails.writeToFile(updateMapwithDetails);
-		   return updateMapwithDetails;
-	   }
-	
+
+		} else {
+			System.out.println(":reached Else part");
+			updateMapwithDetails.highscore.sort(null);
+			Collections.sort(updateMapwithDetails.highscore,
+					Collections.reverseOrder());
+			updateMapwithDetails.highscore.add(MapSimulatorView.power);
+			updateMapwithDetails.highscore.sort(null);
+			Collections.sort(updateMapwithDetails.highscore,
+					Collections.reverseOrder());
+
+		}
+
+		updateMapwithDetails.writeToFile(updateMapwithDetails);
+		return updateMapwithDetails;
+	}
+
 	JMenuItem saveGame = new JMenuItem(new AbstractAction("Save Game") {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
@@ -194,7 +200,7 @@ public class LayoutManager {
 			if (Game.getInstance().Mode == Game.GameMode.Simulator) {
 				GameFileManager gameFileManager = new GameFileManager();
 				gameFileManager.saveGameState(mapSimulatorView);
-				saveClicked=true;
+				saveClicked = true;
 			}
 		}
 	});
@@ -207,16 +213,15 @@ public class LayoutManager {
 				GameFileManager gameFileManager = new GameFileManager();
 				mapSimulatorView = gameFileManager
 						.loadGameState(mapSimulatorView);
-				if(mapSimulatorView!=null)
-				{
-				loadClicked=true;
-				LayoutManager.mapid=mapSimulatorView.mapid;
-				showHighScore.mapid=LayoutManager.mapid;
-				showHighScore=showHighScore.readFromFile(showHighScore);
-				Date date = new Date();
-				showHighScore.lastPlayedTime.add(time.getTime());
-				LayoutManager.passvalue=showHighScore.highscore;
-				showHighScore.writeToFile(showHighScore);
+				if (mapSimulatorView != null) {
+					loadClicked = true;
+					LayoutManager.mapid = mapSimulatorView.mapid;
+					showHighScore.mapid = LayoutManager.mapid;
+					showHighScore = showHighScore.readFromFile(showHighScore);
+					Date date = new Date();
+					showHighScore.lastPlayedTime.add(time.getTime());
+					LayoutManager.passvalue = showHighScore.highscore;
+					showHighScore.writeToFile(showHighScore);
 				}
 			}
 		}
