@@ -11,7 +11,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Map;
+
+import com.IDG.mapSimulator.MapSimulatorView;
 
 public class MapDetails implements Serializable {
 
@@ -92,12 +96,12 @@ public class MapDetails implements Serializable {
 		   }catch(IOException i)
 		   {
 		      i.printStackTrace();
-		      //return e;
+	
 		   }catch(ClassNotFoundException c)
 		   {
 		      System.out.println("Employee class not found");
 		      c.printStackTrace();
-		      //return e;
+		     
 		   }
 	}
    
@@ -114,17 +118,19 @@ public class MapDetails implements Serializable {
    }catch(IOException i)
    {
       i.printStackTrace();
-      //return e;
+     
    }catch(ClassNotFoundException c)
    {
-      System.out.println("Employee class not found");
+      
       c.printStackTrace();
-      //return e;
+     
    }
 	}
   
    return e;
    }
+   
+   
 
 }
 
