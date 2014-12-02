@@ -42,6 +42,8 @@ public class GameStateVO implements Serializable {
 	public LinkedList<StringBuffer> waveLogList = new LinkedList<StringBuffer>();
 
 	public StringBuffer collectiveTowerlog = new StringBuffer();
+	
+	public int mapid;
 
 	public int getGridRow() {
 		return gridRow;
