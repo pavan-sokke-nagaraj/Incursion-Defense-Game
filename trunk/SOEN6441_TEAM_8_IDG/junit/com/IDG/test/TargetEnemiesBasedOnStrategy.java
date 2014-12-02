@@ -33,7 +33,7 @@ public class TargetEnemiesBasedOnStrategy {
 	public void testBurningStrategy() {
 		tower.towerAttackType=2;
 		mapSimulatorView.attackEnemiesBasedOnStrategies(tower, currentEnemy, null, 0, 0);
-		assertEquals(80,currentEnemy.currentHealth);
+		assertEquals(90,currentEnemy.currentHealth);
 	}
 	
 	@Test
