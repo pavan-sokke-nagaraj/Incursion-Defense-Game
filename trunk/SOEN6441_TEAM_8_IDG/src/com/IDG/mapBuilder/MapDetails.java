@@ -16,6 +16,14 @@ import java.util.Date;
 import java.util.Map;
 
 import com.IDG.mapSimulator.MapSimulatorView;
+/**
+ * Stores all Map related data
+ * 
+ * @author Kariappa 
+ * @version Build 1
+ * @since Build 3
+ *
+ */
 
 public class MapDetails implements Serializable {
 	/**
