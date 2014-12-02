@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -150,6 +151,42 @@ public class LayoutManager {
 		});
 	}
 
+	public static  MapDetails setHighScore (MapDetails updateMapwithDetails)
+	   {
+		   if (updateMapwithDetails.highscore.size()>=5)
+			{
+				System.out.println(":Size of array:"+updateMapwithDetails.highscore.size());
+				updateMapwithDetails.highscore.sort(null);
+				Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
+				System.out.println("Last high score is "+updateMapwithDetails.highscore.get(4));
+				System.out.println("Power is "+MapSimulatorView.power);
+				if(updateMapwithDetails.highscore.get(4).intValue()<(MapSimulatorView.power))
+				{
+					updateMapwithDetails.highscore.remove(4);
+					updateMapwithDetails.highscore.add(MapSimulatorView.power);
+					updateMapwithDetails.highscore.sort(null);
+					Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
+					
+					System.out.println("Score Changed");
+					
+				}
+				
+			}
+			else
+			{
+				System.out.println(":reached Else part");
+				updateMapwithDetails.highscore.sort(null);
+				Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
+				updateMapwithDetails.highscore.add(MapSimulatorView.power);
+				updateMapwithDetails.highscore.sort(null);
+				Collections.sort(updateMapwithDetails.highscore,Collections.reverseOrder());
+				
+			}
+			
+		   updateMapwithDetails.writeToFile(updateMapwithDetails);
+		   return updateMapwithDetails;
+	   }
+	
 	JMenuItem saveGame = new JMenuItem(new AbstractAction("Save Game") {
 		@Override
 		public void actionPerformed(ActionEvent actionEvent) {
