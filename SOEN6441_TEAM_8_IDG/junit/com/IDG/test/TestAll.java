@@ -20,7 +20,12 @@ import com.IDG.test.TowerTest;
  * the tests within its package as well as within any subpackages of its
  * package.
  * 
- * @author Raman
+ * @author Kanwal
+ * @author Kariappa
+ * @author Pavan
+ * @author Arjun
+ * @author Guan Wang
+ * @author Reem
  * @version $Revision: 1.0 $
  */
 @RunWith(Suite.class)
