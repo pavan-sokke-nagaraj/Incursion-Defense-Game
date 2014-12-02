@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Observable;
 import java.util.Random;
 
+import com.IDG.controller.GameFileManager;
 import com.IDG.enemyFactory.EnemyType;
 
 /**
@@ -256,7 +257,7 @@ public class Tower extends Observable implements Serializable {
 	 * @param towY Y Coordinat of Tower
 	 * @return List of enemies in range
 	 */
-	public ArrayList<EnemyType> calculateEnemy(ArrayList<EnemyType> enemies,int towX,int towY){
+	public ArrayList<EnemyType> calculateEnemy(Tower tower,ArrayList<EnemyType> enemies,int towX,int towY,int x,int y){
 
 		EnemyType[] enemiesInRange=new EnemyType[enemies.size()];
 		ArrayList enemyDistanceList=new ArrayList();
@@ -286,14 +287,15 @@ public class Tower extends Observable implements Serializable {
 						for(int j=0;j<2;j++){
 							if(enemy.getCurrentHealth()>0){
 								enemy.setCurrentHealth(enemy.getCurrentHealth()-this.damage);
-								this.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+"Out of Range Burning Effect "+" Tower "+this.towerId+ " used Damage Strategy :: "+this.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+this.getEnemySelectionStrategy()+"to hit Enemy "+enemy.getEnemyId());
-								this.individualTowerlog.append("\n");
+								tower.individualTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+"Out of Range Burning Effect "+" Tower "+this.towerId+ " used Damage Strategy :: "+this.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+this.getEnemySelectionStrategy()+"to hit Enemy "+enemy.getEnemyId());
+								tower.individualTowerlog.append("\n");
 								Tower.collectiveTowerlog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+"Out of Range Burning Effect "+" Tower "+this.towerId+ " used Damage Strategy :: "+this.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+this.getEnemySelectionStrategy()+"to hit Enemy "+enemy.getEnemyId());
 								Tower.collectiveTowerlog.append("\n");
 								MapSimulatorView.levelLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+"Out of Range Burning Effect "+" Tower "+this.towerId+ " used Damage Strategy :: "+this.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+this.getEnemySelectionStrategy()+"to hit Enemy "+enemy.getEnemyId());
 								MapSimulatorView.levelLog.append("\n");
 								MapSimulatorView.gameLog.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())+"Out of Range Burning Effect "+" Tower "+this.towerId+ " used Damage Strategy :: "+this.getEnemyDamageStrategy()+" and Enemy Selection Strategy :: "+this.getEnemySelectionStrategy()+"to hit Enemy "+enemy.getEnemyId());
 								MapSimulatorView.gameLog.append("\n");
+								GameFileManager.saveTowerObject(tower, x, y);
 							}
 						}
 						enemy.setBurning(false);
